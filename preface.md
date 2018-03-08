@@ -71,6 +71,7 @@ title: 前言
 推荐经典入门教材：
 
 * ★★★★☆ Ernest Adams / Andrew Rollings _游戏设计基础_ [豆瓣读书](https://book.douban.com/subject/3529767/)
+* ★★★★★ Tracy Fullerton _游戏设计梦工厂_ [豆瓣读书](https://book.douban.com/subject/26780782/)
 
 **2) 3D建模与计算机动画（CG）**
 
@@ -86,7 +87,6 @@ CG 课程范围比较广泛，数字媒体专业包括计算机原画设计、3D
 
 推荐经典入门教材：
 
-* ★★★★★ Tracy Fullerton _游戏设计梦工厂_ [豆瓣读书](https://book.douban.com/subject/26780782/)
 * ★★★☆☆ 戈德  _面向对象的游戏开发_  [豆瓣读书](https://book.douban.com/subject/1392493/)
 * ★★★★☆ : Jason Gregory _游戏引擎架构_ [豆瓣读书](https://book.douban.com/subject/25815142/)
 
