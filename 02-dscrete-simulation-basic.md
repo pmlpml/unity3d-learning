@@ -40,7 +40,10 @@ title: 离散仿真引擎基础
     - 添加子对象
     - 遍历对象树
     - 清除所有子对象
-* 预设（Prefabs）有什么好处？与对象克隆 (clone or copy or Instantiate of Unity Object) 关系？
+* 资源预设（Prefabs）与 对象克隆 (clone)
+    - 预设（Prefabs）有什么好处？
+    - 预设与对象克隆 (clone or copy or Instantiate of Unity Object) 关系？
+    - 制作 table 预制，写一段代码将 table 预制资源实例化成游戏对象
 * 尝试解释组合模式（Composite Pattern / 一种设计模式）。使用 BroadcastMessage() 方法
     - 向子对象发送消息
 
