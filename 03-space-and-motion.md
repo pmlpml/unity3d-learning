@@ -8,7 +8,7 @@ title: 空间与运动
 
 ## 课程相关资源
 
-https://github.com/pmlpml/unity3d-learning/tree/motion
+[资源与代码下载](https://github.com/pmlpml/unity3d-learning/tree/motion)
 
 
 
