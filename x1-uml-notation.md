@@ -126,7 +126,7 @@ _visibility name : type multiplicity = default {property-string}_
 
 **类实例作为属性**，以下三种形式是等价的：
 
-![attribute-notation](images/x1/attribute-notaion.png)
+![attribute-notations](images/x1/attribute-notaions.png)
 
 都表示 GameObject 有 tranform 对象作为实例。在用关联线表示法时图（b）（c），多重性表示它是否是集合类型，例如：GameObject 使用 Component 对象的实例集合作为属性。
 
