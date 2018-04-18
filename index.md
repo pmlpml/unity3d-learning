@@ -4,7 +4,7 @@ layout: default
 
 # [](#TOC)目录
 
-&nbsp;  
+&nbsp;&nbsp; 
 
 ## [前言](preface)
 ## [一、游戏的本质](01-nature-of-game)
