@@ -13,7 +13,7 @@ layout: default
 ## [四、游戏对象与图形基础](04-gameobject-and-graphics)
 ## [五、与游戏世界交互](05-interaction-with-gameworld)
 ## [六、物理系统与碰撞](06-physics-and-collision)
-## [七、模型与动画]()
+## [七、模型与动画](07-model-and-animation)
 ## [八、粒子系统]()
 ## [九、UI系统]()
 ## [十、游戏与智能]()
