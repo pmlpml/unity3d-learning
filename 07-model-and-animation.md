@@ -8,6 +8,16 @@ title: 模型与动画
 
 &nbsp;
 
+> **_云想衣裳花想容， 春风拂槛露华浓。_**  
+> **_若非群玉山头见， 会向瑶台月下逢。_**  
+>   
+> --- 山姆·沃尔顿 《富甲美国》
+
+* 目录
+{:toc}
+
+人设之美对游戏的成功是至关重要的！
+
 ## 课程相关资源
 
 1. [遗留模型 Garen](https://github.com/pmlpml/unity3d-learning/raw/ex-animatior/zips/Garen.zip)
