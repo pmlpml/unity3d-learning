@@ -6,6 +6,10 @@ title: 游戏的本质
 # 一、游戏的本质
 {:.no_toc}
 
+> **_You've got to find what you love_**  
+>   
+> --- Steve Jobs, Stanford Report, June 14, 2005
+>  
 > **_找准定位，然后做到极致_**  
 >   
 > --- 山姆·沃尔顿 《富甲美国》
