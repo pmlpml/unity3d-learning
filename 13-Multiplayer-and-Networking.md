@@ -17,13 +17,13 @@ title: 多人游戏与网络
 
 ## 二、从零开始设置多人游戏项目
 
-_注：以下内容来自 unity 5.5 手册 Setting up a Multiplayer Project from Scratch, 主要内容由谷歌翻译完成_
+_注：以下内容来自 unity 5.5 手册 Setting up a Multiplayer Project from Scratch, 由谷歌预翻译。作者整理_
 
 本文档介绍了设置简单多人游戏项目的步骤。这个循序渐进的过程是普适的，可以帮助我们理解 UNet 的一些基本概念。
 
-**请创建一个新的空Unity项目**，开启网络游戏之旅。
+**1、请创建一个新的空Unity项目**，开启网络游戏之旅。
 
-**NetworkManager 设置**
+**2、NetworkManager 设置**
 
 第一步是在项目中创建 NetworkManager 对象：
 
@@ -41,7 +41,7 @@ _注：以下内容来自 unity 5.5 手册 Setting up a Multiplayer Project from
 
 有关更多详细信息，请参阅使用 NetworkManager。
 
-**设置玩家预制**
+**3、设置玩家预制**
 
 下一步是设置代表游戏中玩家的 Unity Prefab。默认情况下，NetworkManager通过克隆玩家预制来为每个玩家实例化一个对象。在这个例子中，玩家对象将是一个简单的立方体。
 
@@ -65,7 +65,7 @@ _注：以下内容来自 unity 5.5 手册 Setting up a Multiplayer Project from
 
 详细信息 参考 Player Objects
 
-**注册玩家预制**
+**4、注册玩家预制**
 
 一旦玩家预制被创建，它就必须在网络系统上注册。
 
@@ -78,7 +78,7 @@ _注：以下内容来自 unity 5.5 手册 Setting up a Multiplayer Project from
 
 现在，请第一次保存该项目。从菜单 File -\> Save 保存项目。你也应该保存场景, 让我们称这个场景为 “offline” 场景。
 
-**玩家运动（单人版）**
+**5、玩家运动（单人版）**
 
 第一版游戏功能是移动玩家对象。在没有联网的情况下完成，因此它工作在单人模式下。
 
