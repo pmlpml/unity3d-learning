@@ -6,9 +6,11 @@ title: 前言
 # 前言
 {:.no_toc}
 
-> **_精诚所至，金石为开_**  
+> **_You've got to find what you love_**  
 >   
-> --- 《庄子·渔父》
+> --- Steve Jobs, Stanford Report, June 14, 2005
+>  
+
 
 * 目录
 {:toc}
