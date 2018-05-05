@@ -15,11 +15,11 @@ title: 多人游戏与网络
 
 ## 1、网络游戏
 
-## 2、从零开始设置多人游戏（练习）
+## 2、从零开始设置多人游戏
 
 本部分介绍了设置简单多人游戏项目的步骤。这个 step-by-step 的过程是通用的，可以帮助理解 UNet 的一些基本概念。
 
-_注：以下内容主要来自 unity 5.5 手册 Setting up a Multiplayer Project from Scratch, 由谷歌预翻译，作者重新整理_
+_以下内容主要来自 unity 5.5 手册 Setting up a Multiplayer Project from Scratch, 作者翻译并重新整理_
 
 **请创建一个新的空Unity项目**，开启网络游戏之旅。
 
@@ -27,7 +27,7 @@ _注：以下内容主要来自 unity 5.5 手册 Setting up a Multiplayer Projec
 
 本级主要介绍[玩家对象](https://docs.unity3d.com/Manual/UNetPlayers.html)，并研究如何实现本地创建的玩家对象在网络上被创建、运动控制与同步。
 
-*注：玩家对象 在 Unity 5 版本称为 _Player Objects_。从 Unity 2017 称为 _Player GameObject_
+![](images/drf/info.png) _玩家对象 在 Unity 5 版本称为 _Player Objects_。从 Unity 2017 称为 _Player GameObject_
 
 ![](images/drf/notebook.png) **编程练习 13-1：**
 
@@ -326,7 +326,7 @@ public class PlayerMove : NetworkBehaviour
 
 ![](images/ch13/UNetTut11.png)
 
-注：请注意 Bullet 和 PlayCube 预知 NetworkTransform 组件 **Transform Syns Mod** 的不同 
+![](images/drf/info.png) 请注意 Bullet 和 PlayCube 预知 NetworkTransform 组件 **Transform Syns Mod** 的不同 
 
 * 选择 NetworkManager 并打开 “Spawn Info” 折叠
 * 用 Add 按钮添加一个新的 spawn 预制件
