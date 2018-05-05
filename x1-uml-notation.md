@@ -224,7 +224,7 @@ using System;
 /// </summary>
 public interface ISceneController
 {
-	void LoadResources();
+    void LoadResources();
 }
 ```
 
@@ -244,40 +244,40 @@ using UnityEngine;
 /// </summary>
 public class FirstController : MonoBehaviour, ISceneController, IUserAction {
 
-	// the first scripts
-	void Awake () {
-		SSDirector director = SSDirector.getInstance ();
-		director.setFPS (60);
-		director.currentSceneController = this;
-		director.currentSceneController.LoadResources ();
-	}
-	 
-	// loading resources for the first scence
-	public void LoadResources () {
-		GameObject sunset = Instantiate<GameObject> (
-			                    Resources.Load <GameObject> ("prefabs/sun"),
-			                    Vector3.zero, Quaternion.identity);
-		sunset.name = "sunset";
-		Debug.Log ("load sunset ...\n");
-	}
+    // the first scripts
+    void Awake () {
+        SSDirector director = SSDirector.getInstance ();
+        director.setFPS (60);
+        director.currentSceneController = this;
+        director.currentSceneController.LoadResources ();
+    }
+     
+    // loading resources for the first scence
+    public void LoadResources () {
+        GameObject sunset = Instantiate<GameObject> (
+                                Resources.Load <GameObject> ("prefabs/sun"),
+                                Vector3.zero, Quaternion.identity);
+        sunset.name = "sunset";
+        Debug.Log ("load sunset ...\n");
+    }
 
-	#region IUserAction implementation
-	public void GameOver ()
-	{
-		SSDirector.getInstance ().NextScene ();
-	}
-	#endregion
+    #region IUserAction implementation
+    public void GameOver ()
+    {
+        SSDirector.getInstance ().NextScene ();
+    }
+    #endregion
 
 
-	// Use this for initialization
-	void Start () {
-		//give advice first
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//give advice first
-	}
+    // Use this for initialization
+    void Start () {
+        //give advice first
+    }
+    
+    // Update is called once per frame
+    void Update () {
+        //give advice first
+    }
 ```
 
 导演类的代码：
@@ -288,39 +288,39 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SSDirector : System.Object {
-	// singlton instance
-	private static SSDirector _instance;
+    // singlton instance
+    private static SSDirector _instance;
 
-	public ISceneController currentSceneController { get; set;}
+    public ISceneController currentSceneController { get; set;}
 
-	// https://blog.csdn.net/qiaoquan3/article/details/51339242
-	public bool Paused { get { return Time.timeScale == 0; } set {Time.timeScale = value?0:1;} } 
+    // https://blog.csdn.net/qiaoquan3/article/details/51339242
+    public bool Paused { get { return Time.timeScale == 0; } set {Time.timeScale = value?0:1;} } 
 
-	// get instance anytime anywhare!
-	public static SSDirector getInstance() {
-		if (_instance == null) {
-			_instance = new SSDirector ();
-		}
-		return _instance;
-	}
+    // get instance anytime anywhare!
+    public static SSDirector getInstance() {
+        if (_instance == null) {
+            _instance = new SSDirector ();
+        }
+        return _instance;
+    }
 
-	public int getFPS() {
-		return Application.targetFrameRate;
-	}
+    public int getFPS() {
+        return Application.targetFrameRate;
+    }
 
-	public void setFPS(int fps) {
-		Application.targetFrameRate = fps;
-	}
+    public void setFPS(int fps) {
+        Application.targetFrameRate = fps;
+    }
 
-	public void NextScene(){
-		Debug.Log ("Waiting next Scene now...");
-		#if UNITY_EDITOR  
-		UnityEditor.EditorApplication.isPlaying = false;
-		//UnityEditor.EditorApplication.Exit(0);
-		#else  
-		Application.Quit();  
-		#endif  
-	}
+    public void NextScene(){
+        Debug.Log ("Waiting next Scene now...");
+        #if UNITY_EDITOR  
+        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.Exit(0);
+        #else  
+        Application.Quit();  
+        #endif  
+    }
 }
 ```
 
