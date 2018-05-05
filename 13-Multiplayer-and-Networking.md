@@ -23,13 +23,13 @@ _注：以下内容主要来自 unity 5.5 手册 Setting up a Multiplayer Projec
 
 **请创建一个新的空Unity项目**，开启网络游戏之旅。
 
-### 2.1 联网运动对象
-
-![](images/programming.png) **编程练习**
+### 2.1 玩家对象联网运动
 
 本级主要介绍[玩家对象](https://docs.unity3d.com/Manual/UNetPlayers.html)，并研究如何实现本地创建的玩家对象在网络上被创建、运动控制与同步。
 
 *注：玩家对象 在 Unity 5 版本称为 _Player Objects_。从 Unity 2017 称为 _Player GameObject_
+
+![](images/drf/notebook.png) **编程练习 13-1：**
 
 设置内容包括：
 
@@ -225,6 +225,8 @@ NetworkBehaviour 基类还有其他有用的虚函数，详见 Spawning。
 ### 2.2 联网相互射击
 
 多人游戏中的一个共同特点是让玩家发射子弹。当子弹与玩家对象发生碰撞时，就会消灭对方。
+
+![](images/drf/notebook.png) **编程练习 13-2：**
 
 设置内容包括：
 
@@ -430,6 +432,8 @@ public class Bullet : MonoBehaviour
 ### 2.3 玩家状态同步
 
 与子弹射击有关的一个共同特征是玩家对象具有满血开始的“生命值”属性，然后当玩家受到子弹击中伤害时减少, 这个值需要在网络中同步。
+
+![](images/drf/notebook.png) **编程练习 13-3：**
 
 **1）玩家状态（非联网生命值）**
 
