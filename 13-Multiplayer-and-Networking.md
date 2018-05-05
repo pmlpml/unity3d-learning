@@ -418,9 +418,9 @@ public class Bullet : MonoBehaviour
 
         if (hitPlayer != null)
         {
-			print ("hit player");
-			Destroy(gameObject);
-			Destroy(hit);
+            print ("hit player");
+            Destroy(gameObject);
+            Destroy(hit);
         }
     }
 }
