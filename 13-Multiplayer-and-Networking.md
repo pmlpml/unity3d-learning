@@ -852,6 +852,8 @@ public class Combat :  NetworkBehaviour
     - 普通网络对象： 
 * 非网络对象
 
+![](images/drf/folder_smart.png) 本练习[最终代码](https://github.com/pmlpml/unity3d-learning/archive/ex-unet.zip)下载
+
 
 
 
