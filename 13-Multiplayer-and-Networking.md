@@ -326,7 +326,7 @@ public class PlayerMove : NetworkBehaviour
 
 ![](images/ch13/UNetTut11.png)
 
-![](images/drf/info.png) 请注意 Bullet 和 PlayCube 预知 NetworkTransform 组件 **Transform Syns Mod** 的不同 
+![](images/drf/advanced.png) 请注意 Bullet 和 PlayCube 预知 NetworkTransform 组件 **Transform Syns Mod** 的不同 
 
 * 选择 NetworkManager 并打开 “Spawn Info” 折叠
 * 用 Add 按钮添加一个新的 spawn 预制件
@@ -391,7 +391,7 @@ public class PlayerMove : NetworkBehaviour
 }
 ```
 
-此代码使用 [Command] 在服务器上在运行该代码，并向所有客户端 Spawn 创建的 Bullet 对象。有关更多信息，请参阅 [Networked Actions/Remote Actions](https://docs.unity3d.com/2018.1/Documentation/Manual/UNetActions.html)。
+此代码使用 [Command] 指令在服务器上在运行该代码，并向所有客户端 Spawn 创建的 Bullet 对象。有关更多信息，请参阅 [Networked Actions/Remote Actions](https://docs.unity3d.com/2018.1/Documentation/Manual/UNetActions.html)。
 
 * 构建，然后启动作为主机的独立应用
 * 在编辑器中进入运行模式并作为客户端连接
@@ -455,7 +455,7 @@ public class Combat : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
-        Debug.Log("health value = " + health.toSting());
+        Debug.Log("health value = " + health.ToSting());
         if (health <= 0)
         {
             health = 0;
@@ -467,7 +467,7 @@ public class Combat : MonoBehaviour
 
 子弹脚本需要更新，以在命中时调用 TakeDamage 函数。
 
-*打开 bullet 脚本
+* 打开 bullet 脚本
     - 在碰撞处理函数中添加一个来自 Combat 脚本的 TakeDamage 函数调用
 
 ```cs
@@ -481,6 +481,7 @@ public class Bullet : MonoBehaviour
         var hitPlayer = hit.GetComponent<PlayerMove>();
         if (hitPlayer != null)
         {
+            // Subscribe and Publish model may be good here!
             var combat = hit.GetComponent<Combat>();
             combat.TakeDamage(30);
 
@@ -568,14 +569,14 @@ public class HealthBar : MonoBehaviour
 
 **2）玩家状态（网络健康）**
 
-生命值变化在游戏中广泛应用。每个客户机看到不同的玩家的生命值不同。运行状况应只应用于服务器，并将更改复制到客户端。我们称服务器为生命之“服务授权”。
+生命值变化在游戏中广泛应用。每个客户机看到不同的玩家的生命值不同。运行状况应只应用于服务器，并将更改复制到客户端。我们称服务器为生命值之“服务器权限”。
 
-* 打开战斗脚本
+* 打开 Combat 脚本
     - 将脚本更改为 NetworkBehaviour
-    - 使生命之属性装饰为 [SyncVar]
+    - [SyncVar] 指令生命值属性具有 “服务器权限”
     - 将 isServer 检查添加到 TakeDamage 中，所以它只会应用在服务器上
 
-有关SyncVars的更多信息，请参阅 [State Synchronization]()。
+有关 SyncVars 的更多信息，请参阅 [State Synchronization]()。
 
 ```cs
 using UnityEngine;
@@ -603,13 +604,18 @@ public class Combat :  NetworkBehaviour
 }
 ```
 
+* 保存该项目
+* 构建并运行游戏并查看玩家对象的生命值
+
 **3）死亡和重生**
 
-目前，除了日志消息之外，当玩家的健康状况达到零时，目前没有任何事情发生。为了让游戏更具游戏性，当健康状况达到零时，玩家应该以完全健康的方式传送回起始位置。
+目前，当玩家的生命值达到零时，没有任何事情发生。为了让游戏更具游戏性，当健康状况达到零时，玩家应死亡并以完全健康的方式传送回起始位置。
 
-打开战斗脚本
-添加一个[ClientRpc]功能重新生成玩家对象。有关更多信息，请参阅联网操作。
-当运行状况达到零时，调用服务器上的重新启动功能
+* 打开 Combat 脚本
+    - 添加一个 [ClientRpc] 指示 RpcRespawn 函数具有 “本地权限”。有关更多信息，请参阅 Networked Actions。
+    - 当生命值达到零时，调用服务器上的 RpcRespawn 函数操作，[ClientRpc] 指令在所有客户端执行该函数。
+
+```cs
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -645,24 +651,44 @@ public class Combat :  NetworkBehaviour
         }
     }
 }
-在这个游戏中，客户端控制玩家对象的位置 - 玩家对象在客户端具有“本地权限”。如果服务器只是将玩家的位置设置为开始位置，则客户端将覆盖该位置，因为客户端具有权限。为了避免这种情况，服务器通知拥有的客户端将播放器对象移动到开始位置。
+```
 
-构建并运行游戏
-将玩家对象从开始位置移开
-在一名玩家身上射击子弹，直到他们的健康状况达到零
-玩家对象应该传送到开始位置。
-非玩家对象
-虽然玩家对象是在客户端连接到主机时产生的，但大多数游戏都存在游戏世界中存在的非玩家对象，例如敌人。在本节中添加了一个产卵者，它可以创建可以被射杀的非玩家对象。
+在这个游戏中，客户端控制玩家对象的位置 - 玩家对象在客户端具有“本地权限”。如果服务器只是将玩家的位置设置为开始位置，则客户端将覆盖该位置，因为客户端具有权限。为了避免这种情况，服务器通知拥有的客户端将玩家对象移动到开始位置。
 
-从GameObject菜单中创建一个新的空游戏对象
-将该对象重命名为“EnemySpawner”
-选择EnemySpawner对象
-选择添加组件按钮并将NetworkIdentity添加到该对象
-在NetworkIdentity中单击“仅服务器”复选框。这使得产卵者不会被发送给客户。
-选择Add Component按钮并创建一个名为“EnemySpawner”的新脚本
-编辑新脚本
-使其成为NetworkBehaviour
-实现虚拟功能OnStartServer来创建敌人
+* 构建并运行游戏
+* 将玩家对象从开始位置移开
+* 在一名玩家身上射击子弹，直到他们的健康状况达到零
+* 玩家对象应该传送到开始位置
+
+![](images/drf/splash_green.png)  网络编程的要点是你首先了解当前代码在服务器上运行还是在本地运行，并远程调用。
+
+* [Command] ：本地玩家对象执行的代码，调用服务器执行的函数
+* [ClientRpc] ：服务器执行的代码，调用所有客户端执行函数
+* [SyncVar]：服务器授权变量，Spwan 自动同步到客户端
+
+### 2.4 管理繁殖的对象
+
+玩家对象是由玩家控制，并繁殖到客户端。但是大量的对象是服务器控制并繁殖到客户端，例如子弹、敌人等。这样集中管理这些繁殖到客户端就显得非常有意义。
+
+本节设置的内容是：
+
+* 在服务器端创建一个对象工厂的原型 EnemySpawner
+
+![](images/drf/notebook.png) **编程练习 13-4：**
+
+**1）创建“敌人”繁殖厂**
+
+* 从 GameObject 菜单中创建一个新的空游戏对象
+* 将该对象重命名为 “EnemySpawner”
+* 选择 EnemySpawner 对象
+* 选择 Add Component 按钮并将 NetworkIdentity 添加到该对象
+* 在 NetworkIdentity 中单击 “Server Only” 复选框。这使得 EnemySpawner 不会在客户端生成。
+* 选择 Add Component 按钮并创建一个名为 “EnemySpawner” 的新脚本
+* 编辑新脚本
+* 使其成为 NetworkBehaviour
+* 实现虚函数 OnStartServer 来创建敌人
+
+```cs
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -688,24 +714,28 @@ public class EnemySpawner : NetworkBehaviour {
         }
     }
 }
-现在创建一个敌人预制件：
+```
 
-从GameObject菜单中创建一个新的Capsule。
-将对象重命名为“Enemy”
-选择添加组件按钮将一个NetworkIdentity组件添加到敌人
-选择添加组件按钮将NetworkTransform组件添加到敌人
-将Enemy对象拖到资产视图中以创建预制件
-应该有一个现在称为“敌人”的预制资产
-从场景中删除Enemy对象
-选择敌人预制
-选择添加组件按钮并将战斗脚本添加到敌人
-选择Add Component按钮并将HealthBar脚本添加到敌人
-选择NetworkManager并在Spawn Info中添加一个新的可重复使用的预制件
-将新的spawn预制设置为敌方预制
-子弹脚本设置为仅适用于玩家。现在更新项目符号脚本以处理任何具有Combat脚本的对象：
+**2）创建 “Enemy” 预制**
 
-打开项目符号脚本
-更改碰撞检查以使用Combat而不是PlayerMove：
+* 从 GameObject 菜单中创建一个新的 Capsule。
+* 将对象重命名为 “Enemy”
+* 选择添加组件按钮将一个 NetworkIdentity 组件添加到 Enemy
+* 选择添加组件按钮将 NetworkTransform 组件添加到 Enemy
+* 将 Enemy 对象拖到资源视图中以创建预制件
+* 从场景中删除 Enemy 对象
+* 选择 Enemy 预制
+* 选择添加组件按钮并将 Combat 脚本添加到 Enemy
+* 选择 Add Component 按钮并将 HealthBar 脚本添加到 Enemy
+* 选择 NetworkManager 并在 Spawn Info 中添加一个新的可重复使用的预制
+* 将新的 spawn 预制设置为敌方预制
+
+bullet 脚本设置为仅适用于玩家。现在更新 bullet 脚本以处理任何具有 Combat 脚本的对象：
+
+* 打开 bullet 脚本
+* 更改碰撞检测以使用 Combat 而不是 PlayerMove：
+
+```cs
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -721,24 +751,30 @@ public class Bullet : MonoBehaviour
         }
     }
 }
-连接敌人物品的敌人：
+```
+**3）测试 “Enemy”**
 
-选择EnemySpawner对象
-找到EnemySpawner组件上的“Enemy”插槽
-将敌人预制物拖入插槽
-将numEnemies值设置为4
-测试敌人：
+* 选择EnemySpawner 对象
+* 找到 EnemySpawner 组件上的 “Enemy” 插槽
+* 将 Enemy 预制物拖入插槽
+* 将 numEnemies 值设置为4
 
-构建并运行游戏
-当作为主持人开始时，应该在随机位置创建四个敌人
-玩家应该能够射击敌人，他们的健康状况应该下降
-当客户加入时，他们应该看到处于相同位置的敌人，以及与服务器上相同的健康值
-摧毁敌人
-虽然敌人可以用子弹射击并且他们的健康状况下降，但是像玩家一样重生。当他们的健康达到零而不是重生时，敌人应该被毁灭。
+测试：
 
-打开战斗脚本
-添加一个“destroyOnDeath”变量
-当健康状况达到零时检查destroyOnDeath
+* 构建并运行游戏
+* 当作为 Host 开始时，应该在随机位置创建四个敌人
+* 玩家应该能够射击敌人，他们的健康状况应该下降
+* 当客户加入时，他们应该看到处于相同位置的敌人，以及与服务器上相同的健康值
+
+**4）摧毁敌人**
+
+敌人可以用子弹射击并且他们的生命值下降，当他们的生命之达到零而不是重生时，但不像玩家对象一样重生。敌人应该被毁灭。
+
+* 打开战斗脚本
+    - 添加一个 “destroyOnDeath” 变量
+    - 当生命值达到零时，检查 destroyOnDeath
+
+```cs
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -782,39 +818,41 @@ public class Combat :  NetworkBehaviour
         }
     }
 }
+```
 
-选择敌人预制
-将敌人的destroyOnDeath复选框设置为true
-现在当生命值为零时敌人将被摧毁，但玩家将重生。
+* 选择 Enemy 预制
+* 设置 destroyOnDeath 选择框为 true
 
-派生玩家的位置
-玩家目前全部出现在创建时的零点。这意味着它们可能在彼此之上。玩家应该在不同的地点产卵。NetworkStartPosition组件可用于执行此操作。
+运行 HOST 和 Client ，现在当生命值为零时敌人将被摧毁，但玩家将重生。
 
-创建一个新的空GameObject
+**5）为每个玩家对象指定 Home**
 
-将该对象重命名为“Pos1”
+目前所有玩家对象出现在零点。这意味着它们可能在彼此之上。玩家应该在不同的地点。NetworkStartPosition 组件可用于执行此操作。
 
-选择添加组件按钮并添加NetworkStartPosition组件
+* 创建一个新的空 GameObject
+* 将该对象重命名为 “Pos1”
+* 选择添加组件按钮并添加 NetworkStartPosition 组件
+* 将Pos1对象移动到位置（-3,0,0）
+* 创建第二个空的 GameObject
+* 将对象重命名为 “Pos2”
+* 选择添加组件按钮并添加 NetworkStartPosition 组件
+* 将Pos2对象移到位置（3,0,0）
+* 找到 NetworkManager 并选择它。
+* 打开 “Spawn Info” 折页
+* 将 “Player Spawn Method” 更改为 “Round Robin”
+* 构建并运行游戏
 
-将Pos1对象移动到位置（-3,0,0）
+现在应该在 Pos1 和 Pos2 对象的位置创建玩家对象。
 
-创建第二个空的GameObject
+![](images/drf/splash_green.png) 网络游戏对象的种类：
 
-将对象重命名为“Pos2”
+* 网络对象：有 NetworkIdentity 组件， 使用 NetworkBehaviour 组件
+    - 玩家对象 ：注册为 player 的预制
+    - server only 对象: 不在 client 出现的对象
+    - 普通网络对象： 
+* 非网络对象
 
-选择添加组件按钮并添加NetworkStartPosition组件
 
-将Pos2对象移到位置（3,0,0）
-
-找到NetworkManager并选择它。
-
-打开“产卵信息”折页
-
-将“玩家衍生方法”更改为“循环法”
-
-构建并运行游戏
-
-现在应该在Pos1和Pos2对象的位置创建播放器对象，而不是零。
 
 
 
