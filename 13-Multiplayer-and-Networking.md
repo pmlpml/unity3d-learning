@@ -101,9 +101,9 @@ Unity 典型的网络游戏结构：
 
 ![](https://docs.unity3d.com/2018.1/Documentation/uploads/Main/NetworkLocalPlayers.png)
 
-**网络权限**，指网络游戏对象在本地、服务器被控制的权利。
+**4、网络权限**，指网络游戏对象在本地、服务器被控制的权利。
 
-**4、远程动作**
+**5、远程动作**
 
 服务器调用客户端对应游戏对象的方法（Client RPC），或反之（Command）。
 
