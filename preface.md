@@ -6,6 +6,7 @@ title: 前言
 # 前言
 {:.no_toc}
 
+>   
 > **_You've got to find what you love_**  
 >   
 > --- Steve Jobs, Stanford Report, June 14, 2005
@@ -152,6 +153,23 @@ CG 课程范围比较广泛，数字媒体专业包括计算机原画设计、3D
 
 ![Game-Architecture](images/game-architecture.png)
 
+课程内容围绕离散仿真引擎，讲述游戏的编程与数据的管理与应用。
+
+## 5、本文的管理
+
+### 5.1 教程常用符号
+
+
+
+![](images/drf/advanced.png) 维护中的文档
+
+![](images/drf/info.png) 注意！
+
+![](images/drf/movies.png) Unity 操作练习
+
+![](images/drf/splash_green.png) 编程练习
+
+![](images/drf/folder_smart.png) 教程代码下载
 
 ### 4.5、代码资源
 
