@@ -35,7 +35,7 @@ title: AR/MR
 * AR，把虚拟世界的物体叠加在现实世界的影像或视频中的物体上，玩家在现实的背景上与虚拟世界物体互动。
 * MR，将现实世界事物实时在虚拟世界中重构，这些现实物体、虚拟物体与玩家三者互动。
 
-![](images/ch12/vr-ar-mr-oculus.png)   ![](images/ch12/vr-ar-mr-hololens.png)
+![](images/ch12/vr-ar-mr-oculus-hololens.png)    
 
 上图中，VR 设备（Oculus） 和 AR 设备（HoloLens） 有着本质的区别。 实际应用中，我们对 AR 和 MR 技术通常是不区分，简称 AR/MR 技术。
 
