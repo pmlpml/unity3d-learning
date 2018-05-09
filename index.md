@@ -18,7 +18,7 @@ layout: default
 ## [九、UI系统]()
 ## [十、游戏与智能]()
 ## [十一、数据驱动的设计]()
-## [十二、AR/MR 技术](12-ar-and-mr)
+## [十二、AR/MR 技术](12-AR-and-MR)
 ## [十三、多人游戏与网络](13-Multiplayer-and-Networking)
 ## [十四、集成脚本引擎]()
 ## [十五、游戏优化]()
