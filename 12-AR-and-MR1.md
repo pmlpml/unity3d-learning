@@ -19,7 +19,7 @@ title: AR/MR
 
 ### 1.1 什么是 AR/MR？
 
-什么是 AR？网上有无数定义，让我们先看一个简单应用：
+什么是 AR？让我们先看一个简单应用：
 
 ![](images/ch12/ar-take-photo.png)
 
