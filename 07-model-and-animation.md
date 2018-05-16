@@ -21,7 +21,7 @@ title: 模型与动画
 ## 课程相关资源
 
 1. [遗留模型 Garen](https://github.com/pmlpml/unity3d-learning/raw/ex-animatior/zips/Garen.zip)
-2. [birds](https://github.com/pmlpml/unity3d-learning/raw/ex-animatior/zips/birds.zip)
+2. [遗留模型 birds](https://github.com/pmlpml/unity3d-learning/raw/ex-animatior/zips/dexsoft-birds.zip)
 
 ## 作业与练习
 
