@@ -14,7 +14,7 @@ layout: default
 ## [五、与游戏世界交互](05-interaction-with-gameworld)
 ## [六、物理系统与碰撞](06-physics-and-collision)
 ## [七、模型与动画](07-model-and-animation)
-## [八、粒子系统]()
+## [八、粒子系统](08-particle-system)
 ## [九、UI系统]()
 ## [十、游戏与智能]()
 ## [十一、数据驱动的设计]()
