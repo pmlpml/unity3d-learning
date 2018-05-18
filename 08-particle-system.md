@@ -156,7 +156,7 @@ title: 粒子系统与流动效果
 
 ![](images/ch08/FETut7.png)
 
-这时，你已看到了最后的效果。任务完成
+这时，你已看到了最后的效果。任务完成！
 
 ![](images/drf/library_bookmarked.png) 要点：
 
