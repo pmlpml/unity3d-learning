@@ -173,7 +173,132 @@ title: 粒子系统与流动效果
 
 ![](images/drf/help.png) 创建 MyDecal 对象，并设置
 
-## 3、
+完成设置后，请保存为预制。
+
+## 3、粒子系统的使用与控制
+
+粒子部件是一个非常复杂的对象，分为许多子部件，每个子部件也有许多属性，你很难精通这些部件，因此制作与控制粒子系统同样是复杂的问题。
+本部分考虑我们获取一个粒子效果预知后，如何使用或控制。
+
+### 3.1 直接实例化使用粒子系统
+
+* 设置粒子系统 main 的属性
+    - Play On Awake 属性设置为 True
+    - 一般情况下， Lopping 属性设置为 False
+
+在预制资源上，添加以下代码
+
+```cs
+using UnityEngine;
+using System.Collections;
+
+public class DestroyEffect : MonoBehaviour {
+
+	public float t = 0f;
+
+	void Update ()
+	{
+		t += Time.deltaTime;
+		if (t > 1.5f) {
+			Destroy(transform.gameObject);
+		}
+	
+	}
+}
+```
+
+在需要粒子效果时，直接使用 `Instantiate(...)` 该效果。
+
+### 3.2 使用 ParticleSystem 组件简单控制
+
+手册给了[样例代码](https://docs.unity3d.com/Manual/PartSysExplosion.html),
+请看 ParticleSystem 的 API 查看如何 Play，Stop 等操作
+
+### 3.3 模拟汽车尾气
+
+更高级的控制是用粒子系统模拟现实，我们需要通过编码，使游戏开发人员通过定制的可理解参数控制物理现象。官方在手册中给出[汽车尾气模拟](https://docs.unity3d.com/Manual/PartSysExhaust.html)的案例。
+
+阅读之前，先体验以下尾气模拟的效果：
+
+![](images/drf/movies.png) 操作 08-4
+
+* 导入标准粒子资源
+    - 从菜单 Assets -\> Import Package -\> Particles 导入系统提供的粒子资源
+    - 将标准资源中 ParticleSystems/Prefabs 下 Smoke 拖入场景 （2018版是 Somke4）
+    - 选择粒子材料  ParticleSmokeBlack （2018版是 Somke4）
+    - 用鼠标拖动 Smoke 对象模拟汽车运动，类似汽车尾气现象将呈现
+
+* 选择 ParticleSystem 的 Force over Lifetime
+    - 粒子推动力为 (-1，0，0) 
+
+![](images/ch08/PartSysExhaustScreenshot.png)
+
+通过手册给出给的代码，你可以用更直观的参数使用粒子。
+
+```cs
+using UnityEngine;
+using System.Collections;
+
+public class PartScriptTestCS : MonoBehaviour {
+
+    public float engineRevs;
+    public float exhaustRate;
+
+    ParticleSystem exhaust;
+
+
+    void Start () {
+        exhaust = GetComponent<ParticleSystem>();
+    }
+
+
+    void Update () {
+        exhaust.emissionRate = engineRevs * exhaustRate;
+    }
+
+}
+```
+
+### 3.4 粒子级别控制
+
+![](images/drf/advanced.png)  请参考脚本手册 [TriggerModule](https://docs.unity3d.com/ScriptReference/ParticleSystem.TriggerModule.html)，中文参考 [案例](http://www.cnblogs.com/CaomaoUnity3d/p/7056673.html)
+
+### 3.5 小结
+
+![](images/drf/library_bookmarked.png) 要点：
+
+* 适当找一些资源，通过粒子组合可满足很多游戏场景需要
+* 用一些简单程序控制粒子，可满足绝大多数应用需要
+
+## 4、粒子流编程
+
+![](images/drf/notebook.png) **编程练习 08-1：**
+
+![](images/drf/advanced.png) 请参考翻译文章 [Unity制作神奇的粒子海洋！](http://www.manew.com/thread-47123-1-1.html)
+
+[源代码地址](https://github.com/RafalWilinski/Particle-Sea)
+
+## 5、作业与练习
+
+本次作业基本要求是**三选一**
+
+1、简单粒子制作
+
+* 按参考资源要求，制作一个粒子系统，[参考资源](http://www.cnblogs.com/CaomaoUnity3d/p/5983730.html)
+* 使用 3.3 节介绍，用代码控制使之在不同场景下效果不一样
+
+2、完善官方的“汽车尾气”模拟
+
+* 使用官方 Vehicle 资源的 car， 使用 Smoke 粒子系统模拟启动发动、运行、故障等场景效果
+
+3、参考 http://i-remember.fr/en 网站，使用粒子流编程控制制作一些效果， 如“网站首页的光环效果”。
+
+* 可参考以前作业
+
+
+
+
+
 
 
 
