@@ -289,11 +289,12 @@ public class PartScriptTestCS : MonoBehaviour {
 
 2、完善官方的“汽车尾气”模拟
 
-* 使用官方 Vehicle 资源的 car， 使用 Smoke 粒子系统模拟启动发动、运行、故障等场景效果
+* 使用官方资源资源 Vehicle 的 car， 使用 Smoke 粒子系统模拟启动发动、运行、故障等场景效果
 
-3、参考 http://i-remember.fr/en 网站，使用粒子流编程控制制作一些效果， 如“网站首页的光环效果”。
+3、参考 http://i-remember.fr/en 这类网站，使用粒子流编程控制制作一些效果， 如“粒子光环”
 
 * 可参考以前作业
+
 
 
 
