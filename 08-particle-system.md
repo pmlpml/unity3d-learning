@@ -152,6 +152,7 @@ title: 粒子系统与流动效果
 * 展开 particle 主控
     - 设置 Duration 为 1
     - 设置 Start Lifetime 为 1.5
+    - 设置 Start Speed 为 0
     - 设置 Start Size 为 6
     - 设置 Scaling Mode 为 Shape
     - 设置 Max Particles 为 4
@@ -214,7 +215,7 @@ public class DestroyEffect : MonoBehaviour {
 手册给了[样例代码](https://docs.unity3d.com/Manual/PartSysExplosion.html),
 请看 ParticleSystem 的 API 查看如何 Play，Stop 等操作
 
-### 3.3 模拟汽车尾气
+### 3.3 模拟汽车尾气（拟物控制）
 
 更高级的控制是用粒子系统模拟现实，我们需要通过编码，使游戏开发人员通过定制的可理解参数控制物理现象。官方在手册中给出[汽车尾气模拟](https://docs.unity3d.com/Manual/PartSysExhaust.html)的案例。
 
@@ -258,6 +259,10 @@ public class PartScriptTestCS : MonoBehaviour {
 
 }
 ```
+
+这段代码让用户更加容易的使用粒子系统产生不同引擎效果。它定义了引擎类型、引擎磨损程度与排烟效果之间的关系，这样用户通过调整这些易于理解的参数就可以控制效果。
+
+![](images/drf/library_bookmarked.png) 这是本课程的基本要求！
 
 ### 3.4 粒子级别控制
 
