@@ -13,12 +13,18 @@ title: 粒子系统与流动效果
 * 目录
 {:toc}
 
+## 课程内容与资源
+
 ![](images/game-architecture-model.png)
 
-## 课程资源
+**1、资源下载**
 
 ![](images/drf/open_alt.png) [Fx Explosion](https://github.com/pmlpml/unity3d-learning/raw/ex-particle-system/zips/Fx-Explosion-Pack.zip)
 
+**相关知识**
+
+* [高内聚，低耦合]()
+* [协程]()
 
 ## 1、粒子系统概述
 
