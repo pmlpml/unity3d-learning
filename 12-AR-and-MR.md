@@ -6,9 +6,9 @@ title: AR/MR
 # 第 12 章 AR/MR 技术
 {:.no_toc}
  
-> **_路漫漫其修远兮，吾将上下而求索_**  
+> **_So keep looking until you find it. Don't settle._**  
 >   
-> --- 屈原 《离骚》
+> --- Steve Jobs, Stanford Report, June 14, 2005
 
 * 目录
 {:toc}

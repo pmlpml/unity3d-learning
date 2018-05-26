@@ -3,12 +3,12 @@ layout: default
 title: 多人游戏与网络
 ---
 
-# 第 13 章 多人游戏与网络
+# 第十三章、多人游戏与网络
 {:.no_toc}
 
-> **_万人操弓，共射一招，招无不中_**  
+> **_So you have to trust that the dots will somehow connect in your future. You have to trust in something - your gut, destiny, life, karma, whatever._**  
 >   
-> --- 【先秦】 《吕氏春秋》
+> --- Steve Jobs, Stanford Report, June 14, 2005
 
 * 目录
 {:toc}
