@@ -21,7 +21,7 @@ title: 粒子系统与流动效果
 
 ![](images/drf/open_alt.png) [Fx Explosion](https://github.com/pmlpml/unity3d-learning/raw/ex-particle-system/zips/Fx-Explosion-Pack.zip)
 
-**相关知识**
+**2、相关知识**
 
 * [高内聚，低耦合]()
 * [协程]()
