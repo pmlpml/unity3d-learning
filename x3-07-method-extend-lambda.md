@@ -135,7 +135,26 @@ public delegate void Action<in T1, in T2>(
         };
 ```
 
+在 Unity 中典型应用场景如程序：
+
+```cs
+private IEnumerator waitThenCallback(float time, Action callback)
+{
+   yield return new WaitForSeconds(time);
+   callback();
+}
+
+void Start()
+{
+  splashScreen.show();
+
+  StartCoroutine(waitThenCallback(5, () => 
+         { Debug.Log("Five seconds have passed!"); }));
+}
+```
+
 ![](images/drf/ichat.png) 函数回调 和 接口回调 的区别与联系？它们的适用场景？
+
 
 更多参考微软手册 [Anonymous Functions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/anonymous-functions)
 
