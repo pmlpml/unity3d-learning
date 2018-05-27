@@ -135,7 +135,7 @@ public delegate void Action<in T1, in T2>(
         };
 ```
 
-
+![](images/drf/ichat.png) 函数回调 和 接口回调 的区别与联系？它们的适用场景？
 
 更多参考微软手册 [Anonymous Functions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/anonymous-functions)
 
