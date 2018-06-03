@@ -169,9 +169,11 @@ CG 课程范围比较广泛，数字媒体专业包括计算机原画设计、3D
 
 ![](images/drf/library_bookmarked.png) 要点
 
+![](images/drf/exclamation.png) 注意事项
+
 ![](images/drf/open_alt.png) 第三方资源下载
 
-![](images/drf/advanced.png) 维护中的文档
+![](images/drf/advanced.png) 维护中的章节
 
 ![](images/drf/info.png) 提示
 
