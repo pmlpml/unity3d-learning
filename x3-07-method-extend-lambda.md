@@ -183,7 +183,7 @@ transform.DOPause();
 
 ### 3.2 DOMove 的实现思路
 
-要实现类扩展，显然必须实现如下代码
+要实现 transform 类扩展，显然必须实现如下代码
 
 ```cs
 public static class exciting_programming{
