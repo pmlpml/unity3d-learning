@@ -129,7 +129,7 @@ UML图很好，程序略有过度设计。
 * [2018 简单粒子制作](https://shimo.im/sheet/1WnryzlOYbcfzmSC)
 仿佛看到了 Balala 魔杖的效果。在平凡素材上做出一样的效果，才是我们的追求。 AnimationCurve 好强大的工具！
 
-### 10.2 粒子效果制作
+### 10.2 模拟物理控制
 
 * [2018 汽车尾气模拟](https://xungerrrr.github.io/2018/05/29/Unity-3D-%E6%B1%BD%E8%BD%A6%E5%B0%BE%E6%B0%94%E6%A8%A1%E6%8B%9F/)
 几乎有了赛车游戏的原型！赞
