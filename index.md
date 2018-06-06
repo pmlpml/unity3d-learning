@@ -42,7 +42,7 @@ layout: default
 ### [X3-06、协程、线程]()
 ### [X3-07、方法扩展、Lambda 表达式](x3-07-method-extend-lambda)
 ### [X3-08、类型安全、垃圾回收]()
-## [附件4、优秀作业汇总](x4-ex)
+## [附件4、作业优秀博客汇总](x4-ex)
 
 
 &nbsp; &nbsp;
