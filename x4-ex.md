@@ -188,7 +188,7 @@ UI 精灵制作，协程动画都玩的很溜
 
 ### 12.1 导航寻路技术
 
-* [Navmesh之使用](https://blog.csdn.net/zzj051319/article/details/71687833)  
+* [2017 Navmesh之使用](https://blog.csdn.net/zzj051319/article/details/71687833)  
 老师不会玩这么复杂的设置，自学、相互学习就对了。
 
 ### 12.2 坦克对战
