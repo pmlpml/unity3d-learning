@@ -15,11 +15,11 @@ title: 作业优秀博客汇总
 * 2018 最佳技术博客 [c486c](https://blog.csdn.net/c486c/article/category/7540020)
 * 2018 优秀博客 [zhongwq](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-%E5%8F%AF%E5%B1%95%E5%BC%80%E5%85%AC%E5%91%8A%E7%89%88/)、
 * 2017 最佳技术博客 [zzj051319](https://blog.csdn.net/zzj051319/article/category/6787969)
-* 2017 优秀博客 [csRyan](https://www.jianshu.com/nb/10147646)、[x2_yt](https://blog.csdn.net/x2_yt/article/details/71330103)、[程序东](http://www.chenxd59.cn/?cat=2)
+* 2017 优秀博客 [csRyan](https://www.jianshu.com/nb/10147646)、[x2_yt](https://blog.csdn.net/x2_yt/article/details/71330103)、[程序东](http://www.chenxd59.cn/?cat=2)、[飘零叔叔](http://marshallw.me/category/unity3d/3d%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/)
 * 2016 最佳技术博客 [simba_scorpio](https://blog.csdn.net/simba_scorpio/article/category/6112708)
 * 2016 优秀博客 [kinpzz](https://blog.kinpzz.com/categories/unity3d/)
 
-## 2、博客表达技巧与创新
+## 2、博客表达技巧与游戏创新
 
 ### 2.1 写读者欢迎的游戏博客
 
@@ -29,7 +29,7 @@ title: 作业优秀博客汇总
 
 _虚席以待_
 
-### 2.2 师兄师姐谈游戏创新
+### 2.2 师兄师姐谈游戏创新（竞赛经验谈）
 
 * [2018 完美世界GameJam参赛总结—《解字》游戏的设计与开发](https://blog.csdn.net/kotomineshiki/article/details/80503447)
 
@@ -42,7 +42,7 @@ _虚席以待_
 
 ## 4、IMGUI小游戏（井子棋等） 
 
-* [IMGUI pk 3D版](https://blog.csdn.net/Lyn_B/article/details/79706644）  
+* [IMGUI pk 3D版](https://blog.csdn.net/Lyn_B/article/details/79706644)    
 有意思，第一课是可以做3d版的游戏的啊！有共用的逻辑或代码吗？ 
 
 * [带简单AI的井子棋](https://blog.csdn.net/peanutdo1t/article/details/79706261)  
@@ -74,7 +74,7 @@ AI?
 * [分离动作管理器的3D版牧师与魔鬼](http://blog.csdn.net/zzj051319/article/details/63268398)  
 UML图很好，程序略有过度设计。
 
-##7、飞碟（UFO）
+## 7、飞碟（UFO）
 
 ### 7.1 基础版（仅使用射线，动作管理）
 
@@ -93,7 +93,7 @@ UML图很好，程序略有过度设计。
 
 ## 8、射箭/第一人称（Arrow）
 
-* [2018打靶游戏](https://blog.csdn.net/c486c/article/details/80058316)   
+* [2018 打靶游戏](https://blog.csdn.net/c486c/article/details/80058316)   
 游戏设计融汇贯穿了前面所有面向对象设计的技巧，结构清晰，可作为学习参考！！！ 
 
 * [射箭游戏](http://blog.csdn.net/zzj051319/article/details/68953009)  
@@ -102,18 +102,19 @@ UML图很好，程序略有过度设计。
 * [设计简单的射箭小游戏](http://139.199.175.246/?p=186)  
 设计好，博客表达好。
 
- ## 9、巡逻兵（Patrolman） 
+## 9、巡逻兵（Patrolman） 
  
- * 【推】[2018 单巡魔兵](https：//blog .csdn.net/c486c/article/details/80153548)
- 使用了Unity官方教程巡逻兵资源，编出了官方教程无法企及的编程水平！ 
- * [2018 智能巡逻兵](https://xungerrrr.github.io/2018/05/11/Unity-3D-％E6％99％BA％E8％83％BD％E5％B7％A1％E9％80％BB％E5％85％B5/)  
- 博客行文流畅，结构合理，非常值得入门者阅读。 
+* 【推】[2018 单巡魔兵](https：//blog .csdn.net/c486c/article/details/80153548)
+使用了Unity官方教程巡逻兵资源，编出了官方教程无法企及的编程水平！ 
+
+* [2018 智能巡逻兵](https://xungerrrr.github.io/2018/05/11/Unity-3D-％E6％99％BA％E8％83％BD％E5％B7％A1％E9％80％BB％E5％85％B5/)  
+博客行文流畅，结构合理，非常值得入门者阅读。 
  
- * [2018 巡逻兵游戏制作](https://blog.csdn.net/ousuixin/article/details/80284881)  
- 人设动画设计非常美好， **战斗画面优美**。在商店搜索 unitychan，dragon，stonewall 获取 unity酱，战龙，石墙资源。
+* [2018 巡逻兵游戏制作](https://blog.csdn.net/ousuixin/article/details/80284881)  
+人设动画设计非常美好， **战斗画面优美**。在商店搜索 unitychan，dragon，stonewall 获取 unity酱，战龙，石墙资源。
 
 * 【推】[2017 巡逻兵 GetAwayFromPatrols](http://blog.csdn.net/qq_33000225/article/details/70045292)  
-大神之做。游设很美，使用了不少设计模式，程序设计也美。
+大神之作。开创了本作业游设风格。使用了不少设计模式，程序设计也美。
 
 * [2017 巡逻兵小游戏（订阅与发布模式）](http://139.199.175.246/?p=201)  
 不仅程序设计做的好，我们也会找资源。
@@ -125,14 +126,18 @@ UML图很好，程序略有过度设计。
 
 ### 10.1 粒子效果制作
 
-* [2018 ]
+* [2018 简单粒子制作](https://shimo.im/sheet/1WnryzlOYbcfzmSC)
+仿佛看到了 Balala 魔杖的效果。在平凡素材上做出一样的效果，才是我们的追求。 AnimationCurve 好强大的工具！
 
-### 10.1 粒子光环 
+### 10.2 粒子效果制作
+
+* [2018 汽车尾气模拟](https://xungerrrr.github.io/2018/05/29/Unity-3D-%E6%B1%BD%E8%BD%A6%E5%B0%BE%E6%B0%94%E6%A8%A1%E6%8B%9F/)
+几乎有了赛车游戏的原型！赞
+
+### 10.3 粒子光环 
 
 * [2016 粒子光环](https://blog.csdn.net/simba_scorpio/article/details/51251126)  
 大神神作，无人超越
-
-
 
 ## 11、UI系统
 
@@ -166,13 +171,22 @@ UI 精灵制作，协程动画都玩的很溜
 * [2017 使用UI系统与动画实现简单对话泡泡](http://139.199.175.246/?p=209)  
 效果不错
 
-### 11.5 DOTween 实现研究
+### 11.5 DOTween 仿写
+
+* [2017 DOTween插件仿写 - 造轮子从仿造开始](https://www.jianshu.com/p/2a201125159a)，[个人博客](http://splitmusic.cn/2017/06/08/unity3D-learn5/)  
+作者参考了官方的源代码，并突出了 Tween（补间动画类）核心概念的实现，并结合了动作工厂的思路管理这些 Tween。
 
 * [2018 DOTween实现](https://lyrix28.github.io/2018/06/04/tween/)  
 代码要点应该没问题，设计表达能力需要提升
 
+* [2017 DoTween的实现](https://blog.csdn.net/MyCodecOdecoDecodE/article/details/71445408)  
+这是放弃的节奏！内容复杂了一些，组织也的确不容易
 
 ## 12、人工智能
+
+### 12.1 寻路技术
+
+### 12.2 坦克对战
 
 ## 13、数据驱动的游戏设计
 
