@@ -16,7 +16,7 @@ layout: default
 ## [七、模型与动画](07-model-and-animation)
 ## [八、粒子系统](08-particle-system)
 ## [九、UI系统](09-ui.md)
-## [十、游戏与智能]()
+## [十、游戏智能](10-intelligent.md)
 ## [十一、数据驱动的设计]()
 ## [十二、AR/MR 技术](12-AR-and-MR)
 ## [十三、多人游戏与网络](13-Multiplayer-and-Networking)
@@ -40,9 +40,9 @@ layout: default
 ### [X3-04、继承、多态]()
 ### [X3-05、代理、事件]()
 ### [X3-06、协程、线程]()
-### [X3-07、方法扩展、Lambda 表达式](x3-07-method-extend-lambda)
+### [X3-07、方法扩展、Lambda 表达式](x3-07-method-extend-lambda.md)
 ### [X3-08、类型安全、垃圾回收]()
-## [附件4、作业优秀博客汇总](x4-ex)
+## [附件4、作业优秀博客汇总](x4-ex.md)
 
 
 &nbsp; &nbsp;
