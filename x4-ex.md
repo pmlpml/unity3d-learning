@@ -128,7 +128,7 @@ UML图很好，程序略有过度设计。
 
 ### 10.1 粒子效果制作
 
-* [2018 简单粒子制作](https://shimo.im/sheet/1WnryzlOYbcfzmSC)
+* [2018 简单粒子制作](https://shimo.im/sheet/1WnryzlOYbcfzmSC)  
 仿佛看到了 Balala 魔杖的效果。在平凡素材上做出一样的效果，才是我们的追求。 AnimationCurve 好强大的工具！
 
 ### 10.2 模拟物理控制
@@ -146,7 +146,7 @@ UML图很好，程序略有过度设计。
 ### 11.1 血条制作
 
 * [2018 血条制作](https://chaunceyzhangx.github.io/2018/06/05/Unity-3D-%E8%A1%80%E6%9D%A1%E5%88%B6%E4%BD%9C/) 
-* [分别使用IMGUI和UGUI实现血条的预制设计](https://blog.csdn.net/Runner1st/article/details/80582780)   
+* [2018 分别使用IMGUI和UGUI实现血条的预制设计](https://blog.csdn.net/Runner1st/article/details/80582780)   
 表达清晰，易于学习
 
 ### 11.2 背包（装备）系统
@@ -155,7 +155,7 @@ UML图很好，程序略有过度设计。
 介绍详细，Drag 效果不错。
 
 * [2018 天色天歌天音 - Unity 换装游戏](https://siskonemilia.github.io/Unity3D/Get-Started-with-Unity3D-6/)  
-似乎是“吓死人的技术”
+似乎是“吓人的技术”
 
 ### 11.3 可展开公告牌/滚动选择版
 
