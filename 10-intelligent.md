@@ -158,7 +158,7 @@ public class PlaceTarget : MonoBehaviour {
 
 ### 3.3 更复杂的导航应用
 
-![](images/drf/advanced.png) 参见师兄的实践 []()
+![](images/drf/advanced.png) 参见师兄的实践 [Navmesh使用](https://blog.csdn.net/pmlpml)
 
 
 
