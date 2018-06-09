@@ -156,6 +156,14 @@ public class PlaceTarget : MonoBehaviour {
 
 ![](images/drf/ichat.png) 做一个门打开、关闭的效果，如何实现？
 
+### 3.3 更复杂的导航应用
+
+![](images/drf/advanced.png) 参见师兄的实践 []()
+
+
+
+
+
 
 
 
