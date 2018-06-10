@@ -263,7 +263,7 @@ public class PlaceTarget : MonoBehaviour {
 
 2、 坦克对战游戏 AI 设计
 
-从商店下载游戏：“Kawaii” Tank，构建 AI 对战坦克。具体要求
+从商店下载游戏：“Kawaii” Tank 或 其他坦克模型，构建 AI 对战坦克。具体要求
 
 * 使用“感知-思考-行为”模型，建模 AI 坦克
 * 场景中要放置一些障碍阻挡对手视线
