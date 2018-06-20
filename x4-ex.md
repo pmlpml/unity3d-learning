@@ -13,7 +13,7 @@ title: 作业优秀博客汇总
 ## 1、最有价值个人博客（Valuable Person Blogs）
 
 * 2018 最佳技术博客 [c486c](https://blog.csdn.net/c486c/article/category/7540020)
-* 2018 优秀博客 [zhongwq](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-%E5%8F%AF%E5%B1%95%E5%BC%80%E5%85%AC%E5%91%8A%E7%89%88/)、
+* 2018 优秀博客 [zhongwq](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-%E5%8F%AF%E5%B1%95%E5%BC%80%E5%85%AC%E5%91%8A%E7%89%88/)
 * 2017 最佳技术博客 [zzj051319](https://blog.csdn.net/zzj051319/article/category/6787969)
 * 2017 优秀博客 [csRyan](https://www.jianshu.com/nb/10147646)、[x2_yt](https://blog.csdn.net/x2_yt/article/details/71330103)、[程序东](http://www.chenxd59.cn/?cat=2)、[飘零叔叔](http://marshallw.me/category/unity3d/3d%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/)
 * 2016 最佳技术博客 [simba_scorpio](https://blog.csdn.net/simba_scorpio/article/category/6112708)
@@ -145,9 +145,12 @@ UML图很好，程序略有过度设计。
 
 ### 11.1 血条制作
 
-* [2018 血条制作](https://chaunceyzhangx.github.io/2018/06/05/Unity-3D-%E8%A1%80%E6%9D%A1%E5%88%B6%E4%BD%9C/) 
 * [2018 分别使用IMGUI和UGUI实现血条的预制设计](https://blog.csdn.net/Runner1st/article/details/80582780)   
 表达清晰，易于学习
+
+* [2018 血条制作](https://chaunceyzhangx.github.io/2018/06/05/Unity-3D-%E8%A1%80%E6%9D%A1%E5%88%B6%E4%BD%9C/) 
+不错
+
 
 ### 11.2 背包（装备）系统
 
@@ -196,10 +199,23 @@ UI 精灵制作，协程动画都玩的很溜
 * [2017 unity3d 没有navMesh的AI坦克大战的实现](https://blog.csdn.net/kunailin/article/details/72528913)  
 如此逼真的坦克模型，从AI设计到模型控制，一定很爽。
 
-* [2017 使用NavMesh实现坦克大战游戏](http://www.chenxd59.cn/?p=213)  
+* 【推】[2017 使用NavMesh实现坦克大战游戏](http://www.chenxd59.cn/?p=213)  
 使用了官网教学案例素材
 
-### 12.3 势能场应用
+* [2018 Tanks](https://yuandi-sherry.github.io/2018/06/19/Week15-Tanks/)  
+coroutine 使用的不错
+
+### 12.3 状态图应用
+* 【推】 [2018 P&D 过河游戏智能帮助实现](https://blog.csdn.net/DDghsot/article/details/80714784)  
+表示，算法同样重要。4个牧师和恶魔怎么过河？答案在这里
+
+* [2018 P&D 过河游戏智能帮助实现](https://blog.csdn.net/dickdick111/article/details/80734573)    
+每一份试图讲解好原理的努力都值得记录
+
+*  [2018 牧师与恶魔过河游戏——智能提示](https://blog.csdn.net/ShenDW818/article/details/80727300)  
+矩阵表示
+
+### 12.4 势能场应用
 
 _虚席以待_
 
@@ -209,7 +225,12 @@ _虚席以待_
 
 ## 14、AR 技术与创新
 
-_虚席以待_
+* [2018 简单AR游戏](https://blog.csdn.net/c486c/article/details/80738535)  
+入门好教程哦
+
+* 【推】[2018 AR版的坦克对战](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013-AR%E7%89%88%E7%9A%84%E5%9D%A6%E5%85%8B%E5%AF%B9%E6%88%98/)  
+综合使用了AR识别、虚拟摇杆、设计模式、寻路导航等技术，值得推荐
+
 
 ## 15、联网游戏
 
