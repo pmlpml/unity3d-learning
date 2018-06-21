@@ -228,6 +228,9 @@ _虚席以待_
 * [2018 简单AR游戏](https://blog.csdn.net/c486c/article/details/80738535)  
 入门好教程哦
 
+* [2018 Ar-Running Cat](https://blog.csdn.net/qq_36312784/article/details/80716689)
+虚拟按钮，无尽模式奔跑效果不错。  
+
 * 【推】[2018 AR版的坦克对战](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B013-AR%E7%89%88%E7%9A%84%E5%9D%A6%E5%85%8B%E5%AF%B9%E6%88%98/)  
 综合使用了AR识别、虚拟摇杆、设计模式、寻路导航等技术，值得推荐
 
