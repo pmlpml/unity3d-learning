@@ -20,7 +20,7 @@ layout: default
 ## [十一、数据驱动的设计](11-data-driven-design)
 ## [十二、AR/MR 技术](12-AR-and-MR)
 ## [十三、多人游戏与网络](13-Multiplayer-and-Networking)
-## [十四、集成脚本引擎]()
+## [十四、集成脚本引擎](14-script-integration)
 ## [十五、游戏优化]()
 ## [附件1、UML符号与面向对象设计](x1-uml-notation)
 ## [附件2、设计模式在游戏中的应用]()
