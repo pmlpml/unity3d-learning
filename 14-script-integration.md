@@ -6,7 +6,7 @@ title: 集成脚本引擎
 # 第十一章、集成脚本引擎
 {:.no_toc}
 
-> **_Don't let the noise of other's opinions drown out your own inner voice. And most important, have the courage to follow your heart and intuition. _**  
+> **_Don't let the noise of other's opinions drown out your own inner voice. And most important, have the courage to follow your heart and intuition._**  
 >   
 > --- Steve Jobs, Stanford Report, June 14, 2005
 
