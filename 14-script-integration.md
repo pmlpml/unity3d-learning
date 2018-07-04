@@ -97,6 +97,8 @@ Todo: 未来给案例
 
 ## 3、Unity 插件技术与 Lua 插件安装
 
+插件是扩展 Unity 能力的利器。AR，或你编写的优化算法都必须通过插件的方式供 Unity 使用。
+
 ### 3.1 Unity 插件（plugin）
 
 Unity 支持两种插件，[官网文档](https://docs.unity3d.com/Manual/Plugins.html)：
