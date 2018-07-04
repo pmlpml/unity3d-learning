@@ -399,7 +399,7 @@ void Start () {
         LuaDLL.luaL_openlibs(_L);
 
         //read vector[]
-        String luaStr = @"_g = {{x=1,y=2},{x=3,y=4},{x=5,y=6}}";
+        String luaStr = @"_g = { {x=1,y=2},{x=3,y=4},{x=5,y=6} }";
         LuaDLL.lua_dostring (_L, luaStr);
         LuaDLL.lua_getglobal (_L, "_g");
         int index = LuaDLL.lua_gettop (_L);
