@@ -99,14 +99,14 @@ Todo: 未来给案例
 
 Unity 支持两种插件，[官网文档](https://docs.unity3d.com/Manual/Plugins.html)：
 
-* Managed: C# 编译的字节码（.dll）
-* Native: 本台支持的库，这里特指 C/C++ 类 C 语言编译的动态库（.dll, .so）
+* Managed: DotNet 平台，如 C# 编译的字节码（.dll）
+* Native: 本地操作系统支持的动态库，这里特指 C/C++ 类 C 语言编译的动态库（.dll, .so）
 
-## 3.2 Lua 动态库编译
+### 3.2 Lua 动态库编译
 
 如果如果你有 苹果 Mac 或 Linux PC， 可参照 SLua 的 make， 强力建议你自己 make 各个平台的库。
 
-## 3。3 Lua 插件安装 
+### 3.3 Lua 插件安装 
 
 ![](images/drf/movies.png) 操作 14-02，插件部署练习：
 
@@ -174,7 +174,7 @@ api 中 index 参数表示数据在栈中位置，index 为负数，如 -1 表�
 index 为正数，表示位置， 如 1 是栈底，2，3 类推；  
 lua_gettop 返回当前栈的高度；0 表示 空栈。
   
-### 4.3 读 Lua 虚拟机的一个变量
+### 4.3 读 Lua 虚拟机的变量
 
 ![](images/drf/movies.png) 操作 14-03，读写 lua 变量练习：
 
@@ -218,13 +218,13 @@ Debug.logger.Log( LuaDLL.lua_tointeger (_L, -1) );
 LuaDLL.lua_pop(_L,1) ;
 ```
 
-`lua_setglobal` [手册描述](http://www.lua.org/manual/5.1/manual.html#lua_setglobal) ，请翻译并解释！
+`lua_setglobal` ，请翻译[手册描述](http://www.lua.org/manual/5.1/manual.html#lua_setglobal)，并解释 API 行为！
 
 ## 5、 HOST 与 Lua 互操作入门
 
 ![](images/drf/movies.png) 操作 14-04，相互调用函数练习：
 
-研究代码：
+该段代码第一部分是 HOST 调用 Luau 虚拟机中的 `foo (x,y)`，然后，Lua 程序调用 HOST 的 `dofile("luafile.lua")` 函数
 
 ```cs
 using UnityEngine;
@@ -246,33 +246,31 @@ public class Lua_func : MonoBehaviour {
                 IntPtr _L = LuaDLL.luaL_newstate ();
                 LuaDLL.luaL_openlibs(_L);
 
-                // call lua fuction
+                // define lua fuction
                 String func = @"
 function foo (x,y)
         return x+y
 end
                 ";
                 LuaDLL.lua_dostring (_L,func);
+                // call lua fuction
                 LuaDLL.lua_getglobal (_L, "foo");               // push the lua function var on the stack
                 LuaDLL.lua_pushnumber (_L, 6);                  // push paramters on the stack
                 LuaDLL.lua_pushnumber (_L, 3);
                 // http://www.lua.org/manual/5.1/manual.html#lua_call
                 LuaDLL.lua_call (_L, 2, 1);                     //call foo with two parameter on Stack. [-(nargs+1), +nresults, e]
+                // get result
                 int i = LuaDLL.lua_tointeger (_L, -1);
                 LuaDLL.lua_pop(_L,1) ;
                 txt.text = i.ToString();
 
+                // define cFunction in Lua machine，and then call it 
                 LuaDLL.lua_pushcfunction (_L, dofile);  // set LuaCSFunction
                 LuaDLL.lua_setglobal (_L, "dofile");    // assign to "dofile"
                 LuaDLL.lua_dostring (_L, "dofile(\"tail.lua\")");       //call dofile(_L) in c#
 
 
                 LuaDLL.lua_close (_L);
-        }
-
-        // Update is called once per frame
-        void Update () {
-
         }
 
         // lua dofile("luafile.lua") callback handler, must static
