@@ -13,7 +13,7 @@ title: 作业优秀博客汇总
 ## 1、最有价值个人博客（Valuable Person Blogs）
 
 * 2018 最佳技术博客 [c486c](https://blog.csdn.net/c486c/article/category/7540020)
-* 2018 优秀博客 [zhongwq](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-%E5%8F%AF%E5%B1%95%E5%BC%80%E5%85%AC%E5%91%8A%E7%89%88/)
+* 2018 优秀博客 [zhongwq](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-%E5%8F%AF%E5%B1%95%E5%BC%80%E5%85%AC%E5%91%8A%E7%89%88/)、[yaoxh6](https://blog.csdn.net/yaoxh6/article/category/6451113)、[bkjs626](https://blog.csdn.net/bkjs626/article/category/7536863)、[lossatsea](https://blog.csdn.net/lossatsea)
 * 2017 最佳技术博客 [zzj051319](https://blog.csdn.net/zzj051319/article/category/6787969)
 * 2017 优秀博客 [csRyan](https://www.jianshu.com/nb/10147646)、[x2_yt](https://blog.csdn.net/x2_yt/article/details/71330103)、[程序东](http://www.chenxd59.cn/?cat=2)、[飘零叔叔](http://marshallw.me/category/unity3d/3d%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/)
 * 2016 最佳技术博客 [simba_scorpio](https://blog.csdn.net/simba_scorpio/article/category/6112708)
@@ -239,6 +239,19 @@ _虚席以待_
 
 
 ## 15、联网游戏
+
+* 【推】[2018 初识GameSparks多人游戏插件]()  
+作者做了一个在线回合制游戏 - 五子棋，游戏简单原理绝不简单。你打算自己做个游戏云服务器吗？
+
+* [2018 多人游戏与网络](ttps://blog.csdn.net/yaoxh6/article/details/80794021)  
+阅读数很高，但要加强关键部分原理的叙说
+
+* [2018 unity3d-多人坦克对战](https://blog.csdn.net/bkjs626/article/category/7536863)  
+热爱编程的坦克迷
+
+* [2018 联网双人赛车游戏](https://blog.csdn.net/lossatsea/article/details/80822646)  
+从博客可以看到该同学学习态度的变化和表达能力的提升！
+
 
 * [联网拳击游戏（1-4）](http://blog.csdn.net/wqtkod/article/details/71684454)  
 尽管游戏设计与编程技巧不足，对联网游戏一些知识介绍是不错的（共四篇）。
