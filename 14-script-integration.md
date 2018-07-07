@@ -80,20 +80,57 @@ Lua，一种简单、高效的语言，一直是各类游戏引擎钟爱的嵌�
 
 输入 `print ("hello world!")` 然后按 run 按钮
 
-### 2.2 lua 初览
+### 2.2 lua 语言初步
 
-以下内容来自维基百科，建议课后继续阅读：
+我们已假设你熟悉 C/C++ 或 javascript 语言，因而在线 [参考手册](https://www.lua.org/manual/5.1/) 比较合适你阅读。
+
+在手册第二章，你需要阅读：
+
+* 语法习惯（Lexical Conventions）：包括 关键词、操作符、字串与数字的表示
+* 值与类型（Values and Types）
+    - lua 值是第一类成员（_first-class values_），它们可以存到变量中，作为函数参数。
+    - 有 8 种类型的值：_nil, boolean, number, string, function, userdata, thread, table_
+
+**值是第一类成员** 是动态类型脚本语言的核心概念，等你理解了它的含义，脚本语言就过关了！以 function 类型值为例，它看作第一类成员，所以可以作为变量值、作为函数参数、参与运算等等。
+
+* 面向对象语言，如java，核心 _first-class objects_
+* 函数式语言包括 go 等核心 _first-class functions_
+
+以下一些代码能帮你理解一些基本的 Lua 语法
+
+**1、赋值**
+
+```lua
+a = {}                 -- construct a global table a
+i = 3
+i, a[i] = i+1, 20
+print (i, a[i], a[3])
+```
+
+结果是 `4       nil	20`。因为，左边先解释得到地址，后计算值，因此不会影响 `a[4]` 
+
+**2、函数定义**
+
+```lua
+function factorial(n)
+  local x = 1
+  for i = 2, n do
+    x = x * i
+  end
+  return x
+end
+
+print(factorial(3)) 
+```
+
+这段代码展示了它的函数定义、局部变量定义、控制语句等。具体有哪些控制结构，参见手册！
+
+
+建议课后继续阅读： 
 
 * [使用 Lua 编写可嵌入式脚本](http://www.ibm.com/developerworks/cn/linux/l-lua.html)
 * [Lua (programming language)](https://en.wikipedia.org/wiki/Lua_(programming_language))
 
-在执行器中执行维基百科文档中一些代码
-
-* 条件、循环
-* 函数与闭包
-* 表、数组
-
-Todo: 未来给案例
 
 ## 3、Unity 插件技术与 Lua 插件安装
 
@@ -103,28 +140,28 @@ Todo: 未来给案例
 
 Unity 支持两种插件，[官网文档](https://docs.unity3d.com/Manual/Plugins.html)：
 
-* Managed: DotNet 平台，如 C# 编译的字节码（.dll）
-* Native: 本地操作系统支持的动态库，这里特指 C/C++ 类 C 语言编译的动态库（.dll, .so）
+* Managed plugin: 是使用 Visual Studio 等工具创建的托管 .NET 程序集。它们仅包含 .NET 代码，这意味着它们无法访问 .NET 库不支持的任何功能。但是，Unity使用的标准 .NET 工具可以访问托管代码来编译脚本。因此，托管插件代码和 Unity 脚本代码之间的使用差异很小，除了插件是在 Unity 外部编译，且可能没有源代码。
+* Native: 是特定机器硬件与操作系统平台的本机代码库。他们可以访问操作系统调用和第三方代码库等功能，否则 Unity 将无法使用这些功能。但是，Unity 的工具无法以托管库的方式访问这些库。常指 C/C++ 类 C 语言编译的动态库（.dll, .so）
 
 ### 3.2 Lua 动态库编译
 
-如果如果你有 苹果 Mac 或 Linux PC， 可参照 SLua 的 make， 强力建议你自己 make 各个平台的库。
+如果你有 苹果 Mac 或 Linux PC， 可参照 SLua 的 make。 强力建议你自己 make 各个平台的库。
 
 ### 3.3 Lua 插件安装 
 
 ![](images/drf/movies.png) 操作 14-02，插件部署练习：
 
-SLua 已编译的版本是 5.1.5，
+SLua 已编译的版本是 Lua 5.1.5，
 
-1、下载 sLua 解压。主要目的是免去各平台下编译的烦恼，以及一些可供学习的原代码  
+1、下载 SLua 解压。主要目的是免去各平台下编译的烦恼，以及一些可供学习的原代码  
 2、创建一个新项目 lua  
-3、在 Assets 下创建目录 Plugins **注意大小写**！  
+3、在 Assets 下创建目录 `Plugins` **注意 Plugins 大小写**！  
 
 注意：各平台插件原生代码默认目录 [Plugin Inspector](https://docs.unity3d.com/Manual/PluginInspector.html) Setting!
 
 4、加载平台本地动态库
 
-将编译好的动态库（dll,so），从sLua对应目录拖入 Plugins。例如开发平台 64 位 window，则拖入 x64。
+将编译好的动态库（dll,so），从 SLua 对应目录拖入 Plugins。例如开发平台 64 位 window，则拖入 x64。
 
 未来，你编译哪个平台，就加载哪个平台库。
 
@@ -136,27 +173,33 @@ SLua 已编译的版本是 5.1.5，
 
 6、OK！ 运行，不应该出现任何错误。
 
+**不出错非常重要**！不闪退就好啊。下面我们进一步验证安装。
+
 ## 4、Lua 虚拟机 与 Lua 栈
 
-### 4.1 Lua 嵌入式 C API 浏览
+### 4.1 Lua 应用程序接口
 
-浏览：[Lua 手册](http://www.lua.org/manual/5.3/) ！ 要点是最后的 Index, 选择一个 API
+Lua 既可以作为独立应用，但多数情况下会嵌入其他应用，如游戏、Nginx 或 其他应用，方便动态扩展业务功能，提升应用的灵活性。
 
-其中： [The Application Program Interface](http://www.lua.org/manual/5.3/manual.html#4)
+[Lua 手册](http://www.lua.org/manual/5.3/) ！ 的最后给出了 lua 语言标准库 和 与应用程序接口 C API。
+
+* 语言标准库包括： _basic, math, string, io, coroutine, os, debug, package_
+* C API 包括： C API, auxiliary library
+* 环境变量与常数
 
 ### 4.2 Lua 虚拟机
 
 **Lua 虚拟机** 即一个 Lua 程序的执行环境 或 沙箱。它由 `lua_newstate` 创建。
 
-每个线程只能有一个 Lua 虚拟机。因此，仅有且只有第一个 Lua 虚拟机在 **程序主线程** 中，可以访问 Unity 的对象。
+每个线程 **只能有一个 Lua 虚拟机**。因此，仅有且只有第一个 Lua 虚拟机在 **程序主线程** 中，可以访问 Unity 的游戏对象。
 
-Unity 不支持除主线程以外的线程访问游戏对象，或与渲染相关的任何对象。当然，值类型、JsonUtility 通常是线程安全的
+![](images/drf/exclamation.png)  **Unity 不支持除主线程以外的线程访问游戏对象**，或与渲染相关的任何对象。当然，值类型、JsonUtility 通常是线程安全的
 
 ### 4.2 Lua 栈
 
 每个虚拟机都有一个与应用程序交换数据的栈。这个栈默认有 **20 个元素**。应用程序必须保证栈的安全、正确使用。
 
-Lua 每个 api 都有一个标志，[-o, +p, x] 表示出栈参数，入栈结果，是否返回异常。例如：:
+Lua 每个 api 都有一个标志，[-o, +p, x] 表示 [ 出栈参数个数，入栈结果个数，是否返回异常] 。例如：:
 
 ```
 lua_getglobal         [-0, +1, e]
@@ -165,7 +208,7 @@ int lua_getglobal (lua_State *L, const char *name);
 Pushes onto the stack the value of the global name. Returns the type of that value
 ```
 
-分别表示调用该 API ，没有元素出栈，有一个元素入栈，会有异常。
+分别表示调用该 API ，没有元素出栈，有一个结果元素入栈，会有异常。
 
 ```
 lua_tointeger          [-0, +0, –]
@@ -177,8 +220,12 @@ Equivalent to lua_tointegerx with isnum equal to NULL.
 api 中 index 参数表示数据在栈中位置，index 为负数，如 -1 表示栈顶，-2，-3 类推；  
 index 为正数，表示位置， 如 1 是栈底，2，3 类推；  
 lua_gettop 返回当前栈的高度；0 表示 空栈。
-  
-### 4.3 读 Lua 虚拟机的变量
+
+## 5、 应用（HOST） 与 Lua 虚拟机互操作入门  
+
+这部分讲述如何利用虚拟机的栈，实现 应用程序 与 lua 之间数据交换和函数调用。
+
+### 5.1 访问 Lua 虚拟机的全局变量
 
 ![](images/drf/movies.png) 操作 14-03，读写 lua 变量练习：
 
@@ -194,8 +241,8 @@ public class my : MonoBehaviour {
                 LuaDLL.luaL_openlibs(_L);               // open lua libs
 
                 LuaDLL.lua_dostring (_L,"num = 3");     // Excute a simple lua Script
-                LuaDLL.lua_getglobal (_L, "num");       // push the lua var on the stack
-                int i = LuaDLL.lua_tointeger (_L, -1);  // read return value
+                LuaDLL.lua_getglobal (_L, "num");       // push the lua var named ‘num’ on the stack
+                int i = LuaDLL.lua_tointeger (_L, -1);  // read return value on the top of stack
                 LuaDLL.lua_pop(_L,1) ;                  // pop, your must maintain the stack carefully!!!
                 Debug.logger.Log(i);
                 //this.transform.position = new Vector3 (0, i, 0);
@@ -207,7 +254,7 @@ public class my : MonoBehaviour {
 
 这个程序非常简单，第一步创建虚拟机；然后执行简单赋值，然后把变量结果通过栈传给应用；关闭虚拟机。
 
-注意：错误操作特容易产生闪退，请及时保存程序！！
+![](images/drf/exclamation.png) 错误操作特容易产生闪退，请及时保存程序！！
 
 ![](images/drf/ichat.png)  解释以下代码？栈有错误吗？
 
@@ -222,9 +269,9 @@ Debug.logger.Log( LuaDLL.lua_tointeger (_L, -1) );
 LuaDLL.lua_pop(_L,1) ;
 ```
 
-`lua_setglobal` ，请翻译[手册描述](http://www.lua.org/manual/5.1/manual.html#lua_setglobal)，并解释 API 行为！
+`lua_setglobal` ，请翻译[手册描述](http://www.lua.org/manual/5.1/manual.html#lua_setglobal)，并解释 API 栈行为！
 
-## 5、 HOST 与 Lua 互操作入门
+### 5。2 相互调用函数
 
 ![](images/drf/movies.png) 操作 14-04，相互调用函数练习：
 
@@ -236,7 +283,7 @@ using System.Collections;
 
 using System;
 using UnityEngine.UI;
-using LuaInterface;         // lua DLL C# 封装
+using SLua;    //using LuaInterface;   // lua DLL C# 封装
 
 public class Lua_func : MonoBehaviour {
 
@@ -290,7 +337,12 @@ end
 }
 ```
 
-应用程序调用 Lua 定义的函数非常简单，将函数变量压入栈底，压入参数，然后 lua_call, 然后从栈顶取回返回值即可！
+* 创建 Lua_func.cs 程序
+* 在场景中放置 text UI 游戏对象
+* 挂入代码，将 text 对象拖入插槽
+* run！
+
+应用程序调用 Lua 定义的函数非常简单，将函数 ***参数的值** 压入栈底，压入参数，然后 lua_call, 然后从栈顶取回 **返回值** 即可！
 
 从 Lua 调用 c# 的函数就不那么简单了。
 
@@ -328,17 +380,17 @@ static int foo (lua_State *L) {
 * 如果 Lua 回调函数中存在异步加载、或继续调用 Lua 虚拟机？ 晕了，难以想象！
 * 为什么必须使用 MonoPInvokeCallbackAttribute 呢？自己搜索！
 
-## 6、结构、数组与数据交换
+### 5.3 复杂数据的交换
 
-简单数据交换很方便，但是 C# 有 命名空间、类、结构、数字、字典等， Lua 的闭包函数与万能的 table、meta table， 它们是如何建立对应关系的呢？
+简单数据交换很方便，但是 C# 有 命名空间、类、结构、数字、字典等。Lua 有 函数 与万能的 table，它们是如何建立对应关系的呢？
 
-为了了解数据交换，了解 lua[|T|S]_[push|to|is][*] 系列函数是必要的。 例如： lua_pushnumber 将 c 语言 double 压入栈成为 lua 认识的 number。 Lua 常见类型：boolean，number，string，nil 都可以处理。
+数据交换，必须了解 lua_[push|to|is][*] 系列 API 函数。 例如： lua_pushnumber 将 c 语言 double 值压入栈成为 lua 认识的 number。 Lua 常见类型值：boolean，number，string，nil, none, cfunction, function, ... 都可以处理。
 
 **1、Lua 表**
 
-如果你熟悉 javascript , lua 表和 javascript 表概念是没有区别的。javascript 每个实例有一个根表 window 而 Lua 是 _G 罢了。
+如果你熟悉 javascript , lua 表和 javascript 表概念是没有区别的。javascript 每个实例有一个根表 `window` 而 Lua 是 `_G` 罢了。
 
-例如 `window.x = 3`、`x = 3` 与 `window["x"]=3` 都是同样语义。
+例如: 在 javascript 中 `window.x = 3`、`x = 3` 与 `window["x"]=3` 都是同样语义。
 
 表就是一个 key-value 对集合的数据结构（字典）。表用 key 索引访问，索引一般是字符串或整数。虽然可以号称任意对象做索引，似乎也没有必要的。
 
@@ -351,7 +403,9 @@ print(point.x)               -- Has exactly the same meaning as line above. The 
                              --     dot notation is just syntactic sugar.
 ```
 
-其中，`{...}` 表示表，是一个字典。dot 符号称为“语法糖”，让人类读起来舒服点。 让案例再复杂点:
+其中，`{...}` 表示表，是一个字典。dot 符号称为“语法糖”，让人类读起来舒服一些，易于理解一些。 
+
+让案例再复杂点:
 
 ```lua
 point = { x = 10, y = 20 }
@@ -370,15 +424,32 @@ print(point[2],point["x"],#point,point[3],point,point[point].x)
 string2 10      2       nil     table: 0x15f1f10        30
 ```
 
-其中，# 操作符是计算数组的大小。 为什么不是 5 ？ 如何知道 point 中有什么 ？
+其中，# 操作符是计算数组的大小。 为什么不是 5 是 2 呢 ？ 
+
+在 lua 执行器运行以下代码：
 
 ```lua
+point = { x = 10, y = 20 }
+point[1] = "string1"
+point[2] = "string2"
+point[5] = "string5"
+point[-1] = nil
+point[point] = { x = 30, y = 40 }
+
+print(point[2],point["x"],#point,point[3],point,point[point].x)
+
 for i,v in pairs(point) do
-    if (type(i) ~= "table") then print (i.." = "..v) end
+    if (type(i) ~= "table") then print ("pair:"..i.." = "..v) end
+end
+
+for i,v in ipairs(point) do
+    if (type(i) ~= "table") then print ("ipair:"..i.." = "..v) end
 end
 ```
 
-其中 `..` 表示字符 cat 操作；pairs 是内置迭代函数。 其实，这样赋值
+其中 `..` 表示字符 cat 操作；pairs 是内置迭代函数。 pairs 迭代表中所有元素对， ipair 迭代从 1 开始连续的整数 key。 `#` 表示有 1，2 两个元素。 
+
+其实，这样赋值：
 
 ```lua
 point = {"string1","string2",nil,x = 10, y = 20,nil,"string5" }
@@ -386,12 +457,41 @@ point = {"string1","string2",nil,x = 10, y = 20,nil,"string5" }
 
 输出也一样。
 
+在 Lua demo 有一个 dump 全局变量的 lua 案例程序 globals， lua 代码如下：
+
+```lua
+-- globals.lua
+-- show all global variables
+
+local seen={}
+
+function dump(t,i)
+	seen[t]=true
+	local s={}
+	local n=0
+	for k in pairs(t) do
+		n=n+1 s[n]=k
+	end
+	table.sort(s)
+	for k,v in ipairs(s) do
+		print(i,v)
+		v=t[v]
+		if type(v)=="table" and not seen[v] then
+			dump(v,i.."\t")
+		end
+	end
+end
+
+dump(_G,"")
+```
+
 **2、结构（记录）、数组的交换**
 
 Lua 应用程序 API 提供以下函数满足交换的要求。因为栈就只有 20 个单元，不可能把所有数据压上。数据处理过程如下:
 
 假设栈内 index 位置元素是一个表（指针指向表）, 常用 API 有 lua_getglobal, lua_createtable；判断 lua_istable
 读表的方法 lua_getTable, 写表就是 lua_settable
+
 下边的代码就是我们读一个 points 数组到 c#
 
 ```cs
@@ -428,6 +528,10 @@ void Start () {
 
 ![](images/drf/ichat.png) 写一段程序，将一个 Vecter3 写到 Lua 中。
 
+## 6、面向对象的编程
+
+todo:
+
 ## 7、C# 函数与 C 函数
 
 Lua 只有 C 接口，没有 C#。那么 lua_pushcfunction 在 C# 中如何实现呢？ 让我们分析 luaDLL.cs 原代码：
@@ -463,5 +567,5 @@ Marshal 类解包得到非托管的函数指针。MSDN 描述是“提供了一�
 
 如何读源代码？首先要读早期的项目的，代码量小，可以让你了解核心理念与解决方案；后期的项目则逻辑严谨，代码量大。到 NLua 就是解决跨平台。 ULua 就是专心做 Unity 平台。 Slua 就是解决 iOS 平台不能动态编译、创建对象，把生成代码前置到编辑器中，比运行也比反射速度快。
 
-本文仅讲述了脚本集成技术的基础，离实战有多大距离，但可以帮助你走好未来的路。
+本文仅讲述了脚本集成技术的基础，离实战有较多距离，但可以帮助你走好未来的路。
 

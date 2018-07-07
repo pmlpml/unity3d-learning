@@ -181,6 +181,9 @@ UI 精灵制作，协程动画都玩的很溜
 
 ### 11.5 DOTween 仿写
 
+* 【推】[2017 DOTween](https://blog.csdn.net/m0_37628648/article/details/71214214)  
+代码简洁，描述清晰。使用了单实例模式、动作管理器原理（组合模式），协程与消息订阅模式等技术
+
 * [2017 DOTween插件仿写 - 造轮子从仿造开始](https://www.jianshu.com/p/2a201125159a)，[个人博客](http://splitmusic.cn/2017/06/08/unity3D-learn5/)  
 作者参考了官方的源代码，并突出了 Tween（补间动画类）核心概念的实现，并结合了动作工厂的思路管理这些 Tween。
 
@@ -258,12 +261,5 @@ _虚席以待_
 * [2018 联网五子棋~~](https://blog.csdn.net/eddie_peng/article/details/80820518)  
 其实我非常相信，花了好多时间
 
-
-
 * [2017 联网拳击游戏（1-4）](http://blog.csdn.net/wqtkod/article/details/71684454)  
 尽管游戏设计与编程技巧不足，对联网游戏一些知识介绍是不错的（共四篇）。
-
-
-
-
- 
