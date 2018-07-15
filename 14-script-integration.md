@@ -25,7 +25,6 @@ title: 集成脚本引擎
 
 _预计时间：6 * 45 min_
 
-
 ## 1、脚本引擎技术简介
 
 ### 1.1 什么是脚本？
@@ -57,7 +56,7 @@ Lua，一种简单、高效的语言，一直是各类游戏引擎钟爱的嵌�
 * 慢。 假设 c 语言完成一个任务要 1 秒， C#，Java 等则需要 3 到 5 秒， Lua 等脚本语言再慢 10 倍 30 - 50 秒。 游戏是讲究 FPS 的啊！
 * 调试难。 无类型语言很爽，但没有强大的静态语法检查，编译不能给你太多帮助。 大程序直接让你从内心崩溃！
 
-典型集成 lua 的游戏产品：
+集成 lua 的一些游戏产品：
 
 * 大话西游2
 * 魔兽世界Wow
@@ -125,12 +124,7 @@ print(factorial(3))
 
 这段代码展示了它的函数定义、局部变量定义、控制语句等。具体有哪些控制结构，参见手册！
 
-
-建议课后继续阅读： 
-
-* [使用 Lua 编写可嵌入式脚本](http://www.ibm.com/developerworks/cn/linux/l-lua.html)
-* [Lua (programming language)](https://en.wikipedia.org/wiki/Lua_(programming_language))
-
+* 建议课后继续阅读 [lua 菜鸟教程](http://www.runoob.com/lua/lua-tutorial.html)
 
 ## 3、Unity 插件技术与 Lua 插件安装
 
@@ -189,11 +183,13 @@ Lua 既可以作为独立应用，但多数情况下会嵌入其他应用，如�
 
 ### 4.2 Lua 虚拟机
 
-**Lua 虚拟机** 即一个 Lua 程序的执行环境 或 沙箱。它由 `lua_newstate` 创建。
+**Lua 虚拟机** 即一个 Lua 脚本程序的执行环境 或 沙箱。它由 `lua_newstate` 创建。
 
 每个线程 **只能有一个 Lua 虚拟机**。因此，仅有且只有第一个 Lua 虚拟机在 **程序主线程** 中，可以访问 Unity 的游戏对象。
 
 ![](images/drf/exclamation.png)  **Unity 不支持除主线程以外的线程访问游戏对象**，或与渲染相关的任何对象。当然，值类型、JsonUtility 通常是线程安全的
+
+![](images/drf/exclamation.png) 不同虚拟机之间是相互隔离的。因此，一个游戏一般仅需要一个 lua 虚拟机实例。
 
 ### 4.2 Lua 栈
 
@@ -221,7 +217,7 @@ api 中 index 参数表示数据在栈中位置，index 为负数，如 -1 表�
 index 为正数，表示位置， 如 1 是栈底，2，3 类推；  
 lua_gettop 返回当前栈的高度；0 表示 空栈。
 
-## 5、 应用（HOST） 与 Lua 虚拟机互操作入门  
+## 5、 应用（host）与 Lua 虚拟机互操作入门  
 
 这部分讲述如何利用虚拟机的栈，实现 应用程序 与 lua 之间数据交换和函数调用。
 
@@ -258,7 +254,7 @@ public class my : MonoBehaviour {
 
 ![](images/drf/ichat.png)  解释以下代码？栈有错误吗？
 
-```
+```cs
 LuaDLL.lua_pushinteger (_L, 2);
 LuaDLL.lua_setglobal (_L, "a");
 LuaDLL.lua_pushinteger (_L, 3);
@@ -271,7 +267,7 @@ LuaDLL.lua_pop(_L,1) ;
 
 `lua_setglobal` ，请翻译[手册描述](http://www.lua.org/manual/5.1/manual.html#lua_setglobal)，并解释 API 栈行为！
 
-### 5。2 相互调用函数
+### 5.2 相互调用函数
 
 ![](images/drf/movies.png) 操作 14-04，相互调用函数练习：
 
@@ -351,7 +347,7 @@ end
 
 [Lua 官方手册](http://www.lua.org/manual/5.1/manual.html#lua_CFunction) 给出了 CFunction 的通讯协议
 
-```
+```c
 typedef int (*lua_CFunction) (lua_State *L);
 ```
 
@@ -384,7 +380,7 @@ static int foo (lua_State *L) {
 
 简单数据交换很方便，但是 C# 有 命名空间、类、结构、数字、字典等。Lua 有 函数 与万能的 table，它们是如何建立对应关系的呢？
 
-数据交换，必须了解 lua_[push|to|is][*] 系列 API 函数。 例如： lua_pushnumber 将 c 语言 double 值压入栈成为 lua 认识的 number。 Lua 常见类型值：boolean，number，string，nil, none, cfunction, function, ... 都可以处理。
+数据交换，必须了解 lua_[push\|to\|is][*] 系列 API 函数。 例如： lua_pushnumber 将 c 语言 double 值压入栈成为 lua 认识的 number。 Lua 常见类型值：boolean，number，string，nil, none, cfunction, function, ... 都可以处理。
 
 **1、Lua 表**
 
@@ -392,7 +388,7 @@ static int foo (lua_State *L) {
 
 例如: 在 javascript 中 `window.x = 3`、`x = 3` 与 `window["x"]=3` 都是同样语义。
 
-表就是一个 key-value 对集合的数据结构（字典）。表用 key 索引访问，索引一般是字符串或整数。虽然可以号称任意对象做索引，似乎也没有必要的。
+表就是一个 key-value 对集合的数据结构（字典）。表用 key 索引访问，索引一般是字符串或整数。虽然可以号称任意对象做索引，似乎也没有太多的必要。
 
 ![](images/drf/movies.png) 操作 14-04，复杂数据练习：
 
@@ -504,13 +500,13 @@ void Start () {
         String luaStr = @"_g = { {x=1,y=2},{x=3,y=4},{x=5,y=6} }";
         LuaDLL.lua_dostring (_L, luaStr);
         LuaDLL.lua_getglobal (_L, "_g");
-        int index = LuaDLL.lua_gettop (_L);
+        int index = LuaDLL.lua_gettop (_L);   // index of the table on the stack
         Debug.logger.Log ("index = " + index.ToString ());
         for (int i = 0;  i < 3; i++) {
-                LuaDLL.lua_pushinteger (_L, i+1);               // index at 1 in lua
-                LuaDLL.lua_gettable (_L, index);                // [-1, +1, e]
-                int vind = LuaDLL.lua_gettop (_L);
-                Debug.logger.Log ("vec index = " + vind.ToString ());
+                LuaDLL.lua_pushinteger (_L, i+1);           // idx of array _g
+                LuaDLL.lua_gettable (_L, index);            // get _g[idx] [-1, +1, e] on the top
+
+                int vind = LuaDLL.lua_gettop (_L);          // index of the sub table on the stack
                 LuaDLL.lua_pushstring (_L, "x");
                 LuaDLL.lua_gettable (_L, vind);
                 v2 [i].x = (float)LuaDLL.lua_tonumber (_L, -1);
@@ -528,13 +524,11 @@ void Start () {
 
 ![](images/drf/ichat.png) 写一段程序，将一个 Vecter3 写到 Lua 中。
 
-## 6、面向对象的编程
+### 5.4 批量注册宿主的函数
 
-todo:
+**1、c# 委托与 c 函数指针**
 
-## 7、C# 函数与 C 函数
-
-Lua 只有 C 接口，没有 C#。那么 lua_pushcfunction 在 C# 中如何实现呢？ 让我们分析 luaDLL.cs 原代码：
+Lua 只有 C 接口，那么 C# 的安全的“指针”，如何转为 c 的函数指针呢？  让我们分析 luaDLL.cs 的函数  lua_pushcfunction 的原代码：
 
 ```cs
 public static void lua_pushcfunction(IntPtr luaState, LuaCSFunction function)
@@ -547,25 +541,380 @@ public static void lua_pushcfunction(IntPtr luaState, LuaCSFunction function)
 public static extern void lua_pushcclosure(IntPtr l, IntPtr f, int nup);
 ```
 
-Marshal 类解包得到非托管的函数指针。MSDN 描述是“提供了一个方法集合，这些方法用于分配非托管内存、复制非托管内存块、将托管类型转换为非托管类型，此外还提供了在与非托管代码交互时使用的其他杂项方法” [] 。 可见，当我们享受托管带来的编程便利时，似乎忘记了底层关键技术，然而，要让 Lua 与 Unity 无缝交互，你需要知道语言的执行机理、编译技术、复杂的指针转换 ...
+Marshal 类解包得到非托管的函数指针。MSDN 描述是“提供了一个方法集合，这些方法用于分配非托管内存、复制非托管内存块、将托管类型转换为非托管类型，此外还提供了在与非托管代码交互时使用的其他杂项方法” [。 可见，当我们享受托管带来的编程便利时，似乎忘记了底层关键技术，然而，要让 Lua 与 Unity 无缝交互，你需要知道语言的执行机理、编译技术、复杂的指针转换 ...
 
-![](images/drf/ichat.png) C# 有没有闭包？...
+**Marshal 实现的托管对象 与 IntPtr 转换**：
 
-## 8、Lua 集成技术小结
+* 委托 与 函数指针
+    - GetFunctionPointerForDelegate
+    - GetDelegateForFunctionPointer
+* 结构值（值类型） 与 非托管内存（* byte[]） 
+    - StructureToPtr
+    - PtrToStructure 
+    - SizeOf
 
-以上几乎描述了 Lua 与 C# 交互的所有技术。是吗？...
+**2、批量注入 c# 函数**
 
-如果联想到 c# 的扩展函数，每个对象都可以用静态函数访问的啊。 难点是如何在 C# 那么多类和函数，如何包装。 Lua 端如何保持 C# 的习惯。
+lua 只能调用静态的函数，以下代码展示了如何利用表注册一批 C# 函数供 lua 使用。
 
-其实，好早就有人做好了这一切。luanet.dll [工具](http://www.cnblogs.com/sifenkesi/p/3901831.html)使用反射技术，实现了 C# 与 Lua 的无缝交互  。 以下是 Lua 与 Unity 交互一系列开源软件站点，如果你的游戏要顺利发布到各平台，读源代码也是必需的。下表是一些相关开源项目：
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+using SLua;
+
+
+public class lua_register : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		// Create Lua State
+		IntPtr _L = LuaDLL.luaL_newstate ();
+		LuaDLL.luaL_openlibs(_L);	
+
+		lua_register.RegisterLib(_L,"my_math", mathlib);
+
+		LuaDLL.lua_dostring (_L, @"
+a = my_math.my_cos(1)
+"
+		);
+		LuaDLL.lua_getglobal (_L, "a");       // push the lua var named ‘num’ on the stack
+		double ff = LuaDLL.lua_tonumber (_L, -1);  // read return value on the top of stack
+		print( "watch output = " + ff );
+		LuaDLL.lua_pop(_L,1) ;                  // pop, your must maintain the stack carefully!!!
+		// Close Lua State
+		LuaDLL.lua_close (_L);
+	}
+
+	public static void RegisterLib (IntPtr luaState, string libName, LuaL_Reg[] lib) {
+
+		LuaDLL.lua_newtable (luaState);  			// Creates a new empty table and pushes it onto the stack. It is equivalent to lua_createtable(L, 0, 0).
+		int tableIdx = LuaDLL.lua_gettop(luaState);
+
+		foreach (LuaL_Reg reg in mathlib){
+			LuaDLL.lua_pushstring (luaState, reg.funcName);     // set k
+			LuaDLL.lua_pushcfunction (luaState, reg.func);   	// set v = LuaCSFunction
+			LuaDLL.lua_settable(luaState, tableIdx);			// index of table on the stack
+		}	
+
+		LuaDLL.lua_setglobal (luaState, libName);	// set to table
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int my_math_sin (IntPtr L) {
+		LuaDLL.lua_pushnumber(L, Math.Sin(LuaDLL.luaL_checknumber(L, 1)));
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int my_math_cos (IntPtr L) {
+		LuaDLL.lua_pushnumber(L, Math.Cos(LuaDLL.luaL_checknumber(L, 1)));
+		return 1;
+	}
+
+	public static LuaL_Reg[] mathlib = {
+		new LuaL_Reg ( "my_cos",   my_math_cos ),
+		new LuaL_Reg ( "my_sin",   my_math_sin ),
+	};
+
+}
+
+public struct LuaL_Reg
+{
+	public string funcName;
+	public LuaCSFunction func;
+
+	public LuaL_Reg(string name, LuaCSFunction f ) {
+		funcName = name;
+		func = f;
+	}
+};  
+
+```
+
+程序要点：
+
+* RegisterLib 创建一个表作为命名空间，将 C# 函数作为该表的成员函数
+* 编写合格的静态函数，处理 lua 函数使用的调用栈，如 my_math_sin
+
+## 6、lua 面向对象编程与互操作  
+
+Lua 没有类的概念，但可以使用 MetaTable 的特性实现面向对象编程。 它类似 JavaScript 的 ProtoType 机制，加上一些语法糖来方便表示面向对象的概念。
+
+由于 Lua 和 C# 都是带有自动垃圾回收机制的语言，仔细管理对象的生命周期。这几乎是 C# 与 Lua 对象交互编程的噩梦，不小心就会导致非法引用或内存泄漏。 C# 是安全的托管语言， 这导致与 Lua 互操作的复杂性。如值类型（如结构）与引用类型（如对象）指针获取的差异。
+
+### 6.1 元表（MetaTable）机制
+
+Lua 中给个值可以有一个元表。 元表就是一个普通的Lua表，它定义了原始值某些特定操作行为。 例如，当非数字值进行加法操作，如果元表中有一个 `__add` 的函数，则会调用该函数。 
+
+如果访问值类型没有的字段或函数，则会触发事件，交给对应元表执行。
+
+元函数：元表 `__XXX` 形式命名的函数成员是元函数。常用元函数包括：
+
+* `__index` 当访问值中不存在的成员时调用；
+* `__newindex` 当设置值中不存在的成员时调用；
+* `__add` 当操作值的 `+` 操作时调用；
+* 其他运算，详见官方手册 metetable
+
+使用 `getmetatable ` 函数可以获得一个值的元表；  
+使用 `setmetatable ` 函数你智能改变表类型的元表。 在 lua 中你不能改变其他类型的元表，除非你使用 C API。
+
+除了 表 和 userdata 具有单独的元表（尽管多个表和userdata可以共享元表），所有其他类型的值每种类型共享一个 metatable; 也就是说，所有数字只有一个 metatable，用于处理 toString 等操作。
+
+对于一个对象（值），我们可以定义它的方法（成员函数）在元表中。利用语法糖 `:` 定义方法，`function table:func(args)` 它等价于 `function table.func(self, args)`。 使用该方法时 `object:func(args)` 实际调用是 ` object.func(object, args)`
+
+### 6.2 lua 面向对象的实现方法
+
+![](images/drf/movies.png) 操作 14-05，lua 对象练习：
+
+创建一个 vector 对象（值），它有元表 Vector，具体 Lua 代码是：
+
+```lua
+local Vector = {}
+Vector.__index = Vector
+
+function Vector:new(x, y, z)    -- The constructor
+  return setmetatable({x = x, y = y, z = z}, Vector)
+end
+
+function Vector:magnitude()     -- Another method
+  -- Reference the implicit object using self
+  return math.sqrt(self.x^2 + self.y^2 + self.z^2)  --self is the vector not Vector
+end
+
+local vec = Vector:new(0, 1, 0) -- Create a vector
+print(vec:magnitude())          -- Call a method (output: 1)
+print(vec.x)                    -- Access a member variable (output: 0)
+```
+
+![](images/drf/exclamation.png) **vector 和 Vector 都是普通表！** ，当多个值的元表共享 Vector 时， Vector 就产生了类定义的效果。
+
+![](images/drf/ichat.png) 修改以上代码，说明错误的原因。
+
+* 注释第二句 `--Vector.__index = Vector` ，有错误吗？ why？
+* 在后面添加以下代码，会有期望的结果吗？ 如何改？
+
+```lua
+local x = vec.new(3,4,0)
+print(x.magnitude())  
+```
+### 6.3 访问 unity 中的游戏对象
+
+这里我们以游戏对象的访问，研究 lua 如何与面向对象语言互操作。以下代码展示了用 Lua 的 userdata 类型值指定一个 metatable，实现 lua 中操纵游戏面向的方法，具体 C# 代码如下：
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+using System.Runtime.InteropServices;
+using SLua;
+
+public class AccessGameObject : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		IntPtr _L = LuaDLL.luaL_newstate ();
+		LuaDLL.luaL_openlibs(_L);	
+
+		RegisterGameObject (_L);
+
+		LuaDLL.lua_dostring (_L, @"
+a = GameObject.Find('Cube')
+-- GameObject.__index = GameObject
+a:Move(3,4,0)
+b = a.name
+");
+
+		LuaDLL.lua_getglobal (_L, "b");       // push the lua var on the stack
+		print(" watch trieved attribution name = "+ LuaDLL.lua_tostring (_L, -1));  // read return value
+		LuaDLL.lua_pop(_L,1) ;
+
+		LuaDLL.lua_close (_L);
+	}
+	
+	public static void RegisterGameObject (IntPtr luaState) {
+
+		LuaDLL.luaL_newmetatable (luaState, "GameObject");  	//.Only metatable can be set to userdate
+		int tableIdx = LuaDLL.lua_gettop(luaState);
+
+		foreach (LuaL_Reg reg in gameObjectReg){
+			LuaDLL.lua_pushstring (luaState, reg.funcName);     // set k
+			LuaDLL.lua_pushcfunction (luaState, reg.func);   	// set v = LuaCSFunction
+			LuaDLL.lua_settable(luaState, tableIdx);			// index of table on the stack
+		}	
+			
+		LuaDLL.lua_setglobal (luaState, "GameObject");	// set to table
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int gameObjectFind (IntPtr L) {
+		String name = LuaDLL.lua_tostring (L, -1);
+		print (name);
+		GameObject o = GameObject.Find (name);
+		if (o == null) {
+			LuaDLL.lua_pushnil (L);
+			return 1;
+		}
+		// https://stackoverflow.com/questions/17339928/c-sharp-how-to-convert-object-to-intptr-and-back
+		GCHandle handle = GCHandle.Alloc(o);
+		IntPtr parameter = (IntPtr) handle;
+		// set metatable for userdate
+		LuaDLL.lua_pushlightuserdata(L, parameter); 
+		LuaDLL.luaL_getmetatable(L, "GameObject");
+		LuaDLL.lua_setmetatable (L, -2);
+		print ("o=" + o);
+		print ("g=" + parameter);
+		//handle.Free();     //free it before Lua release it, but we don't known!
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int gameObjectMove (IntPtr L) {
+		print (LuaDLL.lua_gettop (L));
+		float z = (float)LuaDLL.lua_tonumber (L, -1);  
+		float y = (float)LuaDLL.lua_tonumber (L, -2);  
+		float x = (float)LuaDLL.lua_tonumber (L, -3);  
+		IntPtr parameter = LuaDLL.lua_touserdata (L, -4);
+
+		GCHandle handle = (GCHandle) parameter;  // convert to original object
+		GameObject o = handle.Target as GameObject;
+
+		o.transform.position = new Vector3 (x, y, z);
+		return 0; // non return value
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int GetValue (IntPtr L) {
+		string fname = LuaDLL.lua_tostring (L, -1);        // stack 2
+		IntPtr parameter = LuaDLL.lua_touserdata (L, -2);  // stack 1
+
+		print ("fname = " + fname); 
+		LuaDLL.lua_getmetatable (L, -2);   // meta stack 3  
+		LuaDLL.lua_pushstring (L, fname);  // meta stack 4
+		LuaDLL.lua_rawget (L, -2);
+		if (!LuaDLL.lua_isnil (L,-1)) {    // get from meta
+			LuaDLL.lua_remove (L, -2);     // remove metatable index
+			return 1;			
+		} 
+		// not found in meta
+		LuaDLL.lua_pop(L,2);
+		GCHandle handle = (GCHandle) parameter;  // convert to original object
+		GameObject o = handle.Target as GameObject;
+		if (fname == "name") {
+			LuaDLL.lua_pushstring (L, o.name);
+			return 1;
+		}
+		LuaDLL.lua_pushnil (L);
+		return 1;
+	}
+
+	public static LuaL_Reg[] gameObjectReg = {
+		new LuaL_Reg ( "Find",  gameObjectFind ),
+		new LuaL_Reg ( "Move",  gameObjectMove ),
+		new LuaL_Reg ( "__index",  GetValue ),
+		//new LuaL_Reg ( "__newindex",  SetValue ),
+	};
+}
+
+public struct LuaL_Reg
+{
+	public string funcName;
+	public LuaCSFunction func;
+
+	public LuaL_Reg(string name, LuaCSFunction f ) {
+		funcName = name;
+		func = f;
+	}
+}; 
+```
+
+程序要点：
+
+* RegisterGameObject 创建一个元表对象
+    - **非表值的元表必须使用 luaL_newmetatable 创建元表**
+    - 添加该类的成员函数或你自定义的函数的静态封装， 如 gameObjectMove
+* 编写 Lua 对象生产函数
+    - 这里的案例是 gameObjectFind
+    - 第一步：处理参数，从左至右入栈
+    - 第二步：生产或使用已有游戏对象，转换 Object 到 Intptr
+        - 这里有一个潜在内存泄露点，GCHandle.Alloc 没有对应的 Free（关键是不能 Free）
+        - 注意，如果一个对象以 alloc 是否需要继续 alloc ？？？
+    - 第三步：将句柄入栈为 userdata 并添加元表
+    - 第四步：将对象返回 Lua
+* 编写 Lua 对象成员函数
+    - 这里的案例  gameObjectMove
+    - 请先了解 `:` 语法糖的含义，因此栈底一定是 Lua 调用对象
+    - 第一步：处理参数，从左至右入栈
+    - 第二步：将 Lua 调用对象转为对应的 GameObject 实例
+    - 第三步：执行操作，返回参数
+* 编写元表的 `__index` 和 `__newindex`
+    - 这里的案例 GetValue，它实现了 **对象属性访问** 与 **成员函数的调用**
+    - 如果没有 `__index` 元函数，Lua 对象将找不到它元表中的方法
+    - 第一步：处理参数，分别是 索引值、调用对象
+        - 索引值可能是字串、整数、或任意对象的值，一般只有前两种
+        - 调用对象只有可能是 userdata 或 table
+    - 第二步：取调用对象的元表，检查是否有该成员。如存在，直接返回该成员值
+    - 第三步：如果是该对象属性，取值并返回，否则返回 nil 或设置 LuaError
+* 编写元表的 `__gc`
+    - 当 lua 垃圾收集启动，释放该对象时使用。 函数形式：`function gc_event (udata)`
+    - Free 为该 Lua 对象分配的 Handle。 如何编程？
+    - 注意：**并没有销毁对象！**
+
+其实编写上述程序非常困难，且 bug 很多，栈错误、栈中数据处理不当，都会导致游戏退出。不得不说，c# 托管对象节约了程序员很多时间，也不用太专注空间回收。好在这样的程序很有规律，可以用程序自动生成。
+
+## 7、Lua 集成技术小结
+
+以上描述了 Lua 与 C# 交互的主要关键技术。但这样编程太艰难了！
+
+事实上，好早就有人做好了这一切。早期，luanet.dll [工具](http://www.cnblogs.com/sifenkesi/p/3901831.html)使用反射技术，实现了 C# 与 Lua 的无缝交互 。 以下是按时间组织的 Lua 与 Unity 交互的部分项目：
 
 * LuaInterface (2004~2009) http://luaforge.net/projects/luainterface/
 * Lua for Windows (2008~2010) http://luaforge.net/projects/luaforwindows/
 * NLua (2009~2014) http://nlua.org/ 或 https://github.com/NLua/NLua
+* CsToLua（2014.10~2015） https://github.com/topameng/CsToLua
 * ULua (2015~2016.3) http://ulua.org/ 或 https://github.com/topameng/tolua
 * SLua (2015~2016) https://github.com/pangweiwei/slua
 
-如何读源代码？首先要读早期的项目的，代码量小，可以让你了解核心理念与解决方案；后期的项目则逻辑严谨，代码量大。到 NLua 就是解决跨平台。 ULua 就是专心做 Unity 平台。 Slua 就是解决 iOS 平台不能动态编译、创建对象，把生成代码前置到编辑器中，比运行也比反射速度快。
+如何选择开源项目?
+
+* 活跃度 ： 在 Github 上打开项目， 菜单 Insights -\> Contributors 看 Commits 
+* 成熟度 ： 分指数、release 数目
+
+按上述标准，ULua 和 Slua 都是可选的！
+
+如何阅读修改源代码？
+
+* 从早期项目开始，如 CsToLua 作为起点，代码会简单一些。
+* 然后，适当阅读一些博客
 
 本文仅讲述了脚本集成技术的基础，离实战有较多距离，但可以帮助你走好未来的路。
+
+## 8、作业与练习
+
+**1、检查你的学习成果**
+
+阅读以下博客
+
+* [Unity3d中使用Lua](http://www.cnblogs.com/cqgreen/p/3483026.html)
+    - 这个程序有没有 bug，如有请指出并解决它！
+* [用好lua+unity，让性能飞起来——lua与c#交互篇](http://www.cnblogs.com/zwywilliam/p/5999924.html)
+    - 阅读这样的文章是不错的，但效果好不好，真不知道啊！
+    - 个人认为，让 lua GC 释放对象指针的 GCHanle 成本小，内存比较可控。 因此文中观点 2 在 Unity 中不一定成立，因为设计合理的游戏程序几乎不销毁游戏对象。
+    - 你都赞成作者观点吗？如不，给出1-2点你的观点
+    - 所以，要保持批判性思维，以自己的实践为基础讨论问题。不能人云我云，道听途说，这是做工程的大忌哦！
+
+**2、编程题**
+
+用搜索引擎搜 “luacomponent”，不使用 Ulua 或 SLua 高层封装条件下，用 lua 代码完成一个游戏对象的简单运动，
+例如: 在 5 秒内，一个 Cube 从 (0,0,0) 匀速移动到 (3,4,0) 。
+
+要求： 编写一个简单 luaComponent C# 代码，在 update 中调用一个 lua 表的中 `lua_update` 函数,  lua_update 会 调用 cube 对象的 SetPostion 方法。
+
+## 课后参考阅读
+
+1. [Lua游戏AI编程入门](https://book.douban.com/subject/26722255/)  绝对是 NB 程序员必读！ 
+2. [Lua游戏开发实践指南](https://book.douban.com/subject/20392269/)  Lua 游戏入门指南
+
 
