@@ -21,6 +21,10 @@ title: 集成脚本引擎
 
 ![](images/drf/open_alt.png) [sLua](https://github.com/pangweiwei/slua)
 
+**2、相关知识**
+
+* [托管资源、垃圾回收]()
+
 **本节课内容属于游戏高级技术。如果你不打算从事游戏行业，了解即可**
 
 _预计时间：6 * 45 min_
@@ -900,14 +904,174 @@ public struct LuaL_Reg
 * [Unity3d中使用Lua](http://www.cnblogs.com/cqgreen/p/3483026.html)
     - 这个程序有没有 bug，如有请指出并解决它！
 * [用好lua+unity，让性能飞起来——lua与c#交互篇](http://www.cnblogs.com/zwywilliam/p/5999924.html)
-    - 阅读这样的文章是不错的，但效果好不好，真不知道啊！
+    - 阅读这样的文章是不错的，但它的观点都正确吗？保持批判性思维，以自己的实践为基础讨论问题。人云我云，道听途说，是做工程的大忌！
     - 个人认为，让 lua GC 释放对象指针的 GCHanle 成本小，内存比较可控。 因此文中观点 2 在 Unity 中不一定成立，因为设计合理的游戏程序几乎不销毁游戏对象。
-    - 你都赞成作者观点吗？如不，给出1-2点你的观点
-    - 所以，要保持批判性思维，以自己的实践为基础讨论问题。不能人云我云，道听途说，这是做工程的大忌哦！
+    - 你都赞成作者3-4的观点吗？请阅读以下 lua 访问 C# 结构类型 的交互程序（Vector3），指出让性能泪崩的要点
+
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+using System.Runtime.InteropServices;
+using SLua;
+
+public class AccessStruct : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		IntPtr _L = LuaDLL.luaL_newstate ();
+		LuaDLL.luaL_openlibs(_L);	
+
+		RegisterVector3 (_L);
+
+		LuaDLL.lua_dostring (_L, @"
+local v = Vector3.New()
+v.x = 3
+v.y = 4
+v1 = v.normalized
+collectgarbage()
+b = v1.x
+");
+
+		LuaDLL.lua_getglobal (_L, "b");       // push the lua var on the stack
+		print(" watch trieved attribution name = "+ LuaDLL.lua_tostring (_L, -1));  // read return value
+		LuaDLL.lua_pop(_L,1) ;
+
+		LuaDLL.lua_close (_L);
+	}
+
+	public static void RegisterVector3 (IntPtr luaState) {
+
+		LuaDLL.luaL_newmetatable (luaState, "Vector3");  	//.Only metatable can be set to userdate
+		int tableIdx = LuaDLL.lua_gettop(luaState);
+
+		foreach (LuaL_Reg reg in gameObjectReg){
+			LuaDLL.lua_pushstring (luaState, reg.funcName);     // set k
+			LuaDLL.lua_pushcfunction (luaState, reg.func);   	// set v = LuaCSFunction
+			LuaDLL.lua_settable(luaState, tableIdx);			// index of table on the stack
+		}	
+
+		LuaDLL.lua_setglobal (luaState, "Vector3");	// set to table
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int untiy_Vector3_New (IntPtr L) {
+		//there are some bug here for checking parameters
+		Vector3 v = new Vector3();
+
+		// https://msdn.microsoft.com/en-us/library/4ca6d5z7(v=vs.110).aspx
+		// Initialize unmanged memory to hold the struct.
+		IntPtr pnt = Marshal.AllocHGlobal(Marshal.SizeOf(v));
+		// Copy the struct to unmanaged memory.
+		Marshal.StructureToPtr(v, pnt, false);
+
+		// set metatable for userdate
+		LuaDLL.lua_pushlightuserdata(L, pnt); 
+		LuaDLL.luaL_getmetatable(L, "Vector3");
+		LuaDLL.lua_setmetatable (L, -2);
+		print ("v=" + v);
+		print ("pnt=" + pnt);
+		//free pnt before Lua release it, but we don't known!
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int GetValue (IntPtr L) {
+		string fname = LuaDLL.lua_tostring (L, -1);        // stack 2
+		IntPtr pnt = LuaDLL.lua_touserdata (L, -2);  // stack 1
+
+		print ("fname = " + fname); 
+		LuaDLL.lua_getmetatable (L, -2);   // meta stack 3  
+		LuaDLL.lua_pushstring (L, fname);  // meta stack 4
+		LuaDLL.lua_rawget (L, -2);
+		if (!LuaDLL.lua_isnil (L,-1)) {    // get from meta
+			LuaDLL.lua_remove (L, -2);     // remove metatable index
+			return 1;			
+		} 
+		// not found in meta
+		LuaDLL.lua_pop(L,2);
+		// Create another Vector3 v.
+		// Set this Point to the value of the 
+		// Point in unmanaged memory. 
+		Vector3 v = (Vector3)Marshal.PtrToStructure(pnt, typeof(Vector3));
+		if (fname == "x") {
+			LuaDLL.lua_pushnumber (L, v.x);
+			return 1;
+		}
+		if (fname == "y") {
+			LuaDLL.lua_pushnumber (L, v.y);
+			return 1;
+		}
+		if (fname == "z") {
+			LuaDLL.lua_pushnumber (L, v.z);
+			return 1;
+		}
+		if (fname == "magnitude") {
+			LuaDLL.lua_pushnumber (L, v.magnitude);
+			return 1;
+		}
+		if (fname == "normalized") {
+			Vector3 v1 = v.normalized;
+			IntPtr p1 = Marshal.AllocHGlobal(Marshal.SizeOf(v1));
+			// Copy the struct to unmanaged memory.
+			Marshal.StructureToPtr(v1, p1, false);
+			// set metatable for userdate
+			LuaDLL.lua_pushlightuserdata(L, p1); 
+			LuaDLL.luaL_getmetatable(L, "Vector3");
+			LuaDLL.lua_setmetatable (L, -2);
+			return 1;
+		}
+		LuaDLL.lua_pushnil (L);
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int SetValue (IntPtr L) {
+		//function(table, key, value)
+		string fname = LuaDLL.lua_tostring (L, -2);        // stack 2
+		IntPtr pnt = LuaDLL.lua_touserdata (L, -3);  // stack 1
+
+		print ("fname = " + fname); 
+
+		// Create another Vector3 v.
+		// Set this Point to the value of the 
+		// Point in unmanaged memory. 
+		Vector3 v = (Vector3)Marshal.PtrToStructure(pnt, typeof(Vector3));
+		if (fname == "x") {
+			v.x = (float)LuaDLL.lua_tonumber (L, -1);
+		} 
+		if (fname == "y") {
+			v.y = (float)LuaDLL.lua_tonumber (L, -1);
+		}
+		if (fname == "z") {
+			v.z = (float)LuaDLL.lua_tonumber (L, -1);
+		}
+		// Copy the struct to unmanaged memory.
+		Marshal.StructureToPtr(v, pnt, false);
+		return 0;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	public static int ReleaseUdata (IntPtr L) {
+		IntPtr pnt = LuaDLL.lua_touserdata(L, -1);        // get user data
+		print("release = " + pnt );
+		Marshal.FreeHGlobal(pnt);
+		return 0;
+	}
+
+	public static LuaL_Reg[] gameObjectReg = {
+		new LuaL_Reg ( "New",  untiy_Vector3_New ),
+		new LuaL_Reg ( "__index",  GetValue ),
+		new LuaL_Reg ( "__newindex",  SetValue ),
+		new LuaL_Reg ( "__gc",  ReleaseUdata ),
+	};
+}
+```
 
 **2、编程题**
 
-用搜索引擎搜 “luacomponent”，不使用 Ulua 或 SLua 高层封装条件下，用 lua 代码完成一个游戏对象的简单运动，
+用搜索引擎搜 “luacomponent”，在不使用 Ulua 或 SLua 高层封装条件下，用 lua 代码完成游戏对象的简单运动，
 例如: 在 5 秒内，一个 Cube 从 (0,0,0) 匀速移动到 (3,4,0) 。
 
 要求： 编写一个简单 luaComponent C# 代码，在 update 中调用一个 lua 表的中 `lua_update` 函数,  lua_update 会 调用 cube 对象的 SetPostion 方法。
