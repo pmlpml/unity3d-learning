@@ -906,7 +906,7 @@ public struct LuaL_Reg
 * [用好lua+unity，让性能飞起来——lua与c#交互篇](http://www.cnblogs.com/zwywilliam/p/5999924.html)
     - 阅读这样的文章是不错的，但它的观点都正确吗？保持批判性思维，以自己的实践为基础讨论问题。人云我云，道听途说，是做工程的大忌！
     - 个人认为，让 lua GC 释放对象指针的 GCHanle 成本小，内存比较可控。 因此文中观点 2 在 Unity 中不一定成立，因为设计合理的游戏程序几乎不销毁游戏对象。
-    - 你都赞成作者3-4的观点吗？请阅读以下 lua 访问 C# 结构类型 的交互程序（Vector3），指出让性能泪崩的要点
+    - 你都赞成作者3-4的观点吗？请阅读以下 lua 访问 C# 结构类型 的交互程序（Vector3），指出感觉性能被掏空的要点
 
 ```cs
 using System.Collections;
