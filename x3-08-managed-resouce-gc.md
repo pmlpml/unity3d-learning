@@ -94,11 +94,111 @@ Microsoft为非托管资源的回收专门定义了一个接口：IDisposable，
 
 ### 3.2 值类型（struct）互操作
 
-参见正文第十四章案例
+由于数值类型在栈上，当变量出了作用域就可能被回收了。 `Marshal.PtrToStructure Method` 给出了标准的互操作案例：
+
+```cs
+using System;
+using System.Runtime.InteropServices;
+
+public struct Point
+{
+    public int x;
+    public int y;
+}
+
+class Example
+{
+    static void Main()
+    {
+        // Create a point struct.
+        Point p;
+        p.x = 1;
+        p.y = 1;
+
+        Console.WriteLine("The value of first point is " + p.x + " and " + p.y + ".");
+
+        // Initialize unmanged memory to hold the struct.
+        IntPtr pnt = Marshal.AllocHGlobal(Marshal.SizeOf(p));
+
+        try
+        {
+            // Copy the struct to unmanaged memory.
+            Marshal.StructureToPtr(p, pnt, false);
+
+            // do something here
+
+            // Create another point.
+            Point anotherP;
+            // Set this Point to the value of the 
+            // Point in unmanaged memory. 
+            anotherP = (Point)Marshal.PtrToStructure(pnt, typeof(Point));
+
+            Console.WriteLine("The value of new point is " + anotherP.x + " and " + anotherP.y + ".");
+
+        }
+        finally
+        {
+            // Free the unmanaged memory.
+            Marshal.FreeHGlobal(pnt);
+        }
+    }
+}
+```
+
+lua 互操作参见正文第十四章 Vector3 案例
 
 ### 3.3 对象（Object）互操作
 
-参见正文第十四章案例
+对象在堆中，它可能被 GC 整理，修改了位置，也可能被释放。因此需要需要将它的一个指针与一个 handle 绑定。由于有一个指针引用，所以它不会释放。即使被 GC 修改了存储位置，用 handle 查的指针依然是正确的。  `GCHandle.Alloc Method (Object)` MSDN 官方案例：
+
+```cs
+public delegate bool CallBack(int handle, IntPtr param);
+
+public class LibWrap
+{
+	// passing managed object as LPARAM
+	// BOOL EnumWindows(WNDENUMPROC lpEnumFunc, LPARAM lParam);
+
+	[DllImport("user32.dll")]
+	public static extern bool EnumWindows(CallBack cb, IntPtr param);
+}
+
+public class App
+{
+	public static void Main()
+	{
+		Run();
+	}
+
+        [SecurityPermission(SecurityAction.Demand, UnmanagedCode=true)]
+	public static void Run()
+        {
+		TextWriter tw = System.Console.Out;
+        //钉住对象 tw
+		GCHandle gch = GCHandle.Alloc(tw);
+
+		CallBack cewp = new CallBack(CaptureEnumWindowsProc);
+
+		// platform invoke will prevent delegate to be garbage collected
+		// before call ends
+		LibWrap.EnumWindows(cewp, GCHandle.ToIntPtr(gch));
+		gch.Free();
+        }
+
+	private static bool CaptureEnumWindowsProc(int handle, IntPtr param)
+	{
+		GCHandle gch = GCHandle.FromIntPtr(param);
+		TextWriter tw = (TextWriter)gch.Target;
+		tw.WriteLine(handle);
+		return true;
+	}
+}
+```
+
+
+lua 互操作参见正文第十四章 GameObject 案例。
+
+注：官方也有 bug 的！ `gch.Free()` 如果先执行了，`TextWriter tw = (TextWriter)gch.Target;` 就有可能查不到 Target 对象了。当然，这个案例对的。
 
 
 
