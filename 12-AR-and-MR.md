@@ -86,6 +86,7 @@ title: AR/MR
 
 （请编程大神自己对照，然后补脑。付出越大，机遇越多！）
 
+
 ### 1.3 AR与游戏创新
 
 早在1990年，增强现实（AR）技术就已经被提出，直到2016年任天堂发布的游戏《精灵宝可梦GO》，让AR技术真正的进入到数百万智能手机用户的生活中。
@@ -106,8 +107,135 @@ AR 三大顶级企业：**苹果**、**谷歌**和**微软**。但这不是巨�
 
 ## 2、AR SDK 与应用
 
+1、 主流AR SDK
+(1) 视辰的EasyAR
 
+	* 比较年轻，15年推出第一版
+	
+	* 目前只能识别图片
+	
+	* 支持大部分主流平台
+	
+	* 入门门槛低，使用简单，适合新手
+	
+	* 本地服务丰富，云支持强大
+	
+	* 支持国产，未来可期
+	
+![](images/ch12/easy-ar-introduction1.png)
+![](images/ch12/easy-ar-introduction2.png)
+(2) PTC的Vuforia
 
+	* 发展时间长，功能强大
+	
+	* 使用人数多，技术支持强
+	
+	* 云管理数据库，随时下载
+	
+	* 支持平台多，从大众到小众
+	
+	* 有免费版本，但有水印
+	
+![](images/ch12/vuforia-features1.png)
+![](images/ch12/vuforia-features1.png)
+
+2、 vuforia使用
+
+	* 注册登录(https://developer.vuforia.com/)
+	
+	(1)注册登录后可见如下开发管理界面
+	
+![](images/ch12/vuforia-develop1.png)
+
+	(2)创建证书，用于获取License Key。Vuforia在Unity中需要相应的Key对SDK进行配置，否则无法使用。
+	
+![](images/ch12/vuforia-develop2-1.png)
+![](images/ch12/vuforia-develop2-2.png)
+
+	(3)创建目标数据库,用于对所有Target及其特征数据进行管理和保存
+	
+![](images/ch12/vuforia-develop3-1.png)
+![](images/ch12/vuforia-develop3-2.png)
+
+	(4)Vuforia要求将特定识别的目标提前上传至数据库进行特征提取。目标有多种类型，此处选择image，以对单幅图像进行识别。
+	
+![](images/ch12/vuforia-develop4-1.png)
+![](images/ch12/vuforia-develop4-2.png)
+![](images/ch12/vuforia-develop4-3.png)
+
+	(5)创建Unity新项目,在Vuforia官网中下载Unity扩展包并导入项目中
+	
+![](images/ch12/vuforia-develop5-1.png)
+![](images/ch12/vuforia-develop5-2.png)
+
+	(6)以unity package形式从Target Manger页面下载目标数据库并导入项目
+	
+![](images/ch12/vuforia-develop6-1.png)
+![](images/ch12/vuforia-develop6-2.png)
+
+	(7)删除场景中原有的摄像机，并拖入Vuforia的ARCamera预制体，此时运行项目，可以看到场景为摄像头实景
+	
+![](images/ch12/vuforia-develop7-1.png)
+
+	(8)从ARCamera的检视面板中打开Vuforia配置文件，将证书管理器中获取的Key写入配置文件同时激活相应数据集
+	
+![](images/ch12/vuforia-develop8-1.png)
+![](images/ch12/vuforia-develop8-2.png)
+
+	(9)将准备好的龙模型挂载到ImageTarget下作为子对象，调整模型大小后运行项目，结果如下：
+	
+![](images/ch12/vuforia-develop9-1.png)
+![](images/ch12/vuforia-develop9-2.png)
+![](images/ch12/vuforia-develop9-1.gif)
+
+	* 额外追踪
+	
+	通过对ImageTarget进行设置，即使目标在摄像头外也能维持场景
+	
+![](images/ch12/vuforia-extend-tracking1.png)
+![](images/ch12/vuforia-extend-tracking2.png)
+![](images/ch12/vuforia-extend-tracking3.png)
+
+	* 脚本处理
+	
+![](images/ch12/script_processing1.png)
+	
+	上述简单案例，可以在不进行任何编码情况下实现最基础的AR运用。整个过程不需要任何计算机视觉的知识，ARCamera自动对ImageTarget进行检测，且通过其挂载事件脚本对模型渲染与否进行处理。
+	
+![](images/ch12/script_processing2.png)
+
+	脚本在Start()初始化的过程中对另一组件Image Target Behavior脚本获取，并通过其将当前类注册为事情处理器，使得可以通过ITrackableEventHandler接口的OnTrackableStateChange函数接收到目标检测状态的变化。
+
+![](images/ch12/script_processing3.png)
+	
+	当前状态为检测、追踪或额外追踪时，OnTrackingFound()获取ImageTarget下所有模型的渲染及碰撞器组件并启用，显示模型；否则，OnTrackingLost()将目标下所有模型的渲染及碰撞器组件关闭，模型消失。
+
+	* Virtual Button
+	
+	对于不同类型Target的识别已经足以让游戏变得酷炫，然而Vuforia还可以使用virtual button功能让虚拟与现实的交互变得更加的丰富。virtual button是Vuforia中唯一一个可交互的组件，玩家可以通过摄像头用手指触碰虚拟按钮，从而触发相应的动作或事件，开发者可以利用这个功能创造出很多有趣的应用。接下来便在前述案例的基础上，加入虚拟按钮让dragon飞起来。
+	
+	(1)将Vuforia的Virtual button预制体挂载到ImageTarget下作为子对象，同时调整至合适大小和位置。为了使虚拟按钮可见，可以在按钮下添加相应大小的平面并附着材质
+	
+![](images/ch12/vuforia-virtual-button1.png)
+![](images/ch12/vuforia-virtual-button2.png)
+	
+	(2)创建脚本，对IVuforiaButtonEventHandler接口进行实现，以对虚拟按钮的按下与释放事件进行监听并处理，挂载到ImageTarget下并对变量进行指定
+
+![](images/ch12/vuforia-virtual-button3.png)
+	
+	(3)由于dragon已经具有Animator组件，直接在脚本中进行获取，并在相应的按钮事件中对飞行与降落的动画分别进行触发
+	
+![](images/ch12/vuforia-virtual-button4.png)
+	
+![](images/ch12/vuforia-virtual-button5.gif)
+	
+	* small terrain
+	
+	它可以对图片进行识别，依据图片参数在图片所在平面生成地表网格，同时对地表范围内的实物进行持续的追踪检测，生成相应大小的长方体包围盒。
+	
+![](images/ch12/vuforia-small-terrain1.png)
+![](images/ch12/vuforia-small-terrain2.png)
+	
 ## 3、作业与练习
 
 1、 图片识别与建模
