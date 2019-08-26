@@ -75,6 +75,7 @@ title: 前言
 
 * ★★★★☆ Ernest Adams / Andrew Rollings _游戏设计基础_ [豆瓣读书](https://book.douban.com/subject/3529767/)
 * ★★★★★ Tracy Fullerton _游戏设计梦工厂_ [豆瓣读书](https://book.douban.com/subject/26780782/)
+* ★★★☆☆ Jesse Schell _游戏设计艺术（第2版）_ [豆瓣读书](https://book.douban.com/subject/26791007/)
 
 **2) 3D建模与计算机动画（CG）**
 
