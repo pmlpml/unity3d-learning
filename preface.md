@@ -92,7 +92,7 @@ CG 课程范围比较广泛，数字媒体专业包括计算机原画设计、3D
 
 * ★★★☆☆ 戈德  _面向对象的游戏开发_  [豆瓣读书](https://book.douban.com/subject/1392493/)
 * ★★★★☆ Jason Gregory _游戏引擎架构_ [豆瓣读书](https://book.douban.com/subject/25815142/)
-* ★★★★☆ Bob Nystrom  _游戏编程模式_ [中文翻译在线](https://gpp.tkchu.me/) 
+* ★★★★☆ Bob Nystrom  _游戏编程模式_ [中文翻译在线电子书](https://gpp.tkchu.me/) 
 
 类似课程推荐：
 
