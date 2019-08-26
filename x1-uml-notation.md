@@ -195,9 +195,9 @@ _visibility name (parameter-list) : return-type {property-string}_
 
 属性字符串通常对现有属性进一步修饰或限定。例如对类名、方法给与 {abstract}，读者就明白这是抽象的。对方法使用 {leaf} 表示不可重写的，作用于类就是不可继承的。
 
-## 3.4 综合案例
+## 4 综合案例
 
-### 3.4.1 设计目标
+### 4.1 设计目标
 
 利用 MVC 思想，使得游戏结构更加清晰。
 
@@ -208,11 +208,11 @@ _visibility name (parameter-list) : return-type {property-string}_
 * 由 IUserAction 描述游戏规则对应操作
 * 建立统一的场景控制接口，支持不同场景不同的业务逻辑
 
-### 3.4.2 设计方案
+### 4.2 设计方案
 
 ![mvc](images/ch03/mvc-priests-devils.png)
 
-### 3.4.3 对应代码实现
+### 4.3 对应代码实现
 
 ISceneController 接口的脚本文件 ISceneController.cs
 
@@ -326,9 +326,13 @@ public class SSDirector : System.Object {
 
 ## 3.5 小结
 
-**UML符号体系是复杂的**
+**UML符号体系**
 
 作为可以描述任何语言的语言与符号系统。即严格定义的 UML 图可自动生成程序，也可由程序逆工程到 UML 图。因此，UML 存在复杂的语法与语义。
+
+UML在设计实践中使用的符号通常比较简单，上述内容基本可以满足课程需要。
+
+但UML符号体系是严密与复杂的，深入研究需要花费大量时间。
 
 **UML作为设计思想表达工作**
 
