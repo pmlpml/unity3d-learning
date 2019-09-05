@@ -114,14 +114,96 @@ Unity 的成功吸引了其他企业进入手游市场，其他包括：
 * Unity 3D
 * Torque
 
-## 2、游戏殷勤核心-离散仿真引擎
+## 2、游戏引擎核心-离散仿真
 
+游戏就是模拟世界或构建虚拟世界。用计算机技术呈现现实或虚拟世界的动态场景，统称“离散仿真系统”
 
+### 2.1 离散仿真的程序直观
 
+这是一个简单的游戏世界，飞机打坦克的场景，如图所示：
 
+![](images/ch02/ch02-horizen-motion.jpg)
 
+为了呈现炮弹打击坦克的过程，
 
+![](images/ch02/ch02-computing-motion.png)
 
+需要不断计算炮弹的位置，并在屏幕上画出炮弹。当游戏的引擎每 1/60 秒计算出所有游戏对象的位置、形态，并在屏幕上画出来，我们就看到了如电影一般飞机打坦克的动态场景。
+
+**游戏循环**
+
+先看仿真系统底层运作的伪代码，在游戏引擎中称为游戏循环（Game Loop）：
+
+```
+initialize()
+WHILE not end of game DO {
+  updateGameObjects(t) //创建、删除、修改游戏对象
+  drawGameObjects(t)   //绘制游戏对象
+}
+```
+
+这么简单（难以置信）。是，微软 XNA 游戏引擎的基本框架就是这样，如图所示：
+
+![](images/ch02/ch02-game-loop.jpg)
+
+所有，XNA 游戏编程的模板如下：
+
+```c
+public class Game1 : Microsoft.Xna.Framework.Game {
+
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+        public Game1() {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+        }
+
+        protected override void Initialize() {        
+            base.Initialize();
+        }
+
+        protected override void LoadContent() {  
+            spriteBatch = new SpriteBatch(GraphicsDevice); 
+        }
+
+        protected override void UnloadContent(){           
+        }
+
+        protected override void Update(GameTime gameTime)
+        {           
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
+
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime) {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            base.Draw(gameTime);
+        }
+    }
+```
+
+* GraphicsDeviceManager 图形设备管理器，用于访问图形设备的通道。
+* GraphicsDevice 图形设备。
+* Sprite 精灵，绘制在屏幕上的的2D或3D图像，比如游戏场景中的一个怪兽就是一个Sprite。
+* SpriteBatch 它使用同样的方法来渲染一组Sprite对象。
+
+既然游戏执行过程是固定的，但每步骤的具体内容是用户定义的，这就是“设计模式”教材上典型的模板方法模式设计！
+
+尽管现代游戏引擎的游戏循环非常复杂，但作为开发者必须明白，所有复杂的代码均建立在这样简单的基础代码之上。
+
+![](images/drf/library_bookmarked.png) 无论引擎怎么强大，其游戏循环一定是单线程的。即有仅有一个线程渲染画面，由于渲染过程中计算线程不能修改游戏对象状态，所以过多 CPU 很难被利用。 
+
+### 2.2 离散仿真与离散事件仿真
+
+“Discrete”是离散，在一个离散的系统中，我们总是能够找到一个时间点来标注系统的变化，比如研究对象进入系统和离开系统的时间点，进入队列和离开队列的时间点，开始加工和完成加工的时间点等等。这些时间点在时间轴上是离散而非连续的，而系统状态仅在离散的时间点上发生变化。
+
+**离散仿真**
+
+时间被分成为若干小的时间片，系统状态被这段时间内发生的系列活动而改变。称为基于活动的仿真（activity-based simulation）
 
 
 
@@ -192,7 +274,7 @@ Unity 的成功吸引了其他企业进入手游市场，其他包括：
 * 将游戏对象组成树型结构，每个节点都是游戏对象（或数）。
     - 尝试解释组合模式（Composite Pattern / 一种设计模式）。
     - 使用 BroadcastMessage() 方法，向子对象发送消息。你能写出 BroadcastMessage() 的伪代码吗?
-* 一个游戏对象用许多部件描述不同方面的特征。我们设计坦克（Tank）游戏对象不是继承于GameObject对象，而是 GameObject 添加一组行为部件。
+* 一个游戏对象用许多部件描述不同方面的特征。我们设计坦克（Tank）游戏对象不是继承于GameObject对象，而是 GameObject 添加一组行为部件（Component）。
     - 这是什么设计模式？
     - 为什么不用继承设计特殊的游戏对象？
 
