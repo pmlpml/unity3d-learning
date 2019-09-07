@@ -15,6 +15,8 @@ title: 离散仿真引擎基础
 * 目录
 {:toc}
 
+_预计时间：3-4 * 45 min_
+
 ## 1、游戏引擎
 
 ### 1.1 游戏引擎概念与结构
@@ -207,7 +209,7 @@ public class Game1 : Microsoft.Xna.Framework.Game {
 
 为了研究系统动态，时间被分成为若干小的时间片，系统状态被这段时间内发生的系列活动而改变。称为基于活动的仿真（activity-based simulation）
 
-* **时间轴** 为了解释或预测系统变化的规律，必须选择合适的时间轴并在上选择一组点观察或记录系统状态。不同系统时间轴选择不一样，如模拟古代气候变化，可能以千年为单位，研究微观世界，如化学反应则可能以纳秒为单位。对于游戏，可能有两个以上时间轴
+* **时间轴（线）** 为了解释或预测系统变化的规律，必须选择合适的时间轴并在上选择一组点观察或记录系统状态。不同系统时间轴选择不一样，如模拟古代气候变化，可能以千年为单位，研究微观世界，如化学反应则可能以纳秒为单位。对于游戏，可能有两个以上时间轴
     - 游戏时间，如：石器时代、铁器时代、火器时代、太空时代
     - 渲染时间，游戏引擎根据系统状态，绘制游戏画面的时间
 * **FPS（Frames PerSecond）** 是视频游戏最重要的概念，它是每秒钟游戏循环执行 DrawGameObjects 的次数。如果低于 30次/秒，玩家则会看到明显的动作不流畅。在特定性能机器上，它是评价游戏优化的指标；在不同机器上，它是机器游戏性能的综合指标。
@@ -216,7 +218,7 @@ public class Game1 : Microsoft.Xna.Framework.Game {
 离散仿真存在一些显而易见的问题：
 
 * 跳帧。无论 UpdateGameObjects 或 DrawGameObjects 花费的时间过多，就会产生帧间隔超出给定时间问题。
-* 失真。可能失去两次计算之间存在重要的状态，例如：当炸弹速度很快时，在上一个时刻，计算到炸弹在坦克上面，接下来一个时刻炸弹已坦克下面，问题是坦克打中了吗？这时，不仅需要计算两个时刻对象状态（位置），而且要判断炸弹轨迹与坦克轨迹是否相交？然而，轨迹用直线表示，还是进一步内插补计算？
+* 穿越。可能失去两次计算之间存在重要的状态，例如：当炸弹速度很快时，在上一个时刻，计算到炸弹在坦克上面，接下来一个时刻炸弹已坦克下面，问题是坦克打中了吗？这时，不仅需要计算两个时刻对象状态（位置），而且要判断炸弹轨迹与坦克轨迹是否相交？然而，轨迹用直线表示，还是进一步内插补计算？
 
 这里仅给出游戏离散仿真中两个典型问题。你必须明白，无论游戏编程或引擎开发都需要认真学习相关知识，避免 “too young too naive”
 
@@ -261,11 +263,178 @@ unloadContent()
 
 现代游戏引擎由于要管理许多游戏对象，空间管理与性能优化无疑是巨大的挑战。所幸的是程序员编写游戏正在一步步变得更简单！
 
-### 3、Unity 离散仿真引擎实现与应用
+## 3、Unity 离散仿真引擎实现与应用
+
+![](images/drf/info.png) Unity 的使用与操作细节请移步 Unity 用户手册，这里仅关注相关内容
+
+* 官方用户手册 [Manual](https://docs.unity3d.com/Manual/)
+* [中文手册](http://docs.manew.com/Manual/)。【善意提示：翻译总是落后技术发展的】 
+
+### 3.1 Unity 3D 操作快速入门
+
+**1、了解 Unity 3D 基本界面**
+
+如果你是新手，先阅读 [Getting Started](https://docs.unity3d.com/Manual/UnityBasics.html)
+
+安装完成后，创建一个 3D 项目。[Unity 主界面](https://docs.unity3d.com/Manual/LearningtheInterface.html)如图所示：
+
+![Learning the interface](https://docs.unity3d.com/uploads/Main/Editor-Breakdown.jpg)
+
+* 项目视图（Project Window）：管理游戏项目资源的地方。
+    - 创建游戏需要的材料
+    - 参见 菜单 -\> Assets -\> Create
+* 场景视图（Scene View）：编辑游戏对象的视口
+* 层次视图（Hierarchy Window）：组织游戏对象的地方。
+    - 游戏运行时需要的游戏对象
+    - 参见 菜单 -\>  GameObject
+* 属性视图（Inspector Window）：观察游戏对象和资源属性的地方
+    - 游戏运行时，可实时修改属性改变游戏对象行为，但不会影响设计内容
+    - 参见 菜单 -\>  Component
+* 工具栏（Tools Bar）：工具。新手会用运行、停止即可
+
+**2、初识游戏对象与资源**
+
+任务是在游戏场景中放置一个物体（如 Cube）并赋予红色，运行游戏。
+
+![](images/drf/movies.png) 操作 02-01 ，GameObject 练习：
+
+* 使用 菜单 -\> GameObject -\> 3D Object -\> Cube  或 在层次视图点右键（上下文菜单 -\> 3D Object -\> Cube）
+    - 层次视图增加了 Cube 游戏对象， 同时我们在场景视图中看到了一个白色的正方型
+* 选择 层次视图 中主摄像机对象（Main Camera）, 场景视图右下方就是摄像机拍摄的画面
+* 使用 菜单 -\> Assets -\> Create -\> Material 或 项目视图（Assets）的上下文菜单 -\> Create -\> Material
+    - 项目视图（Assets）下新增了一个白色的材料，点击它观察属性视图
+    - 在属性视图找到 Albedo 并双击颜色板，出现一个 Color 窗口
+    - 选择一个你喜欢的颜色，如红色
+    - 项目视图（Assets）中该材料色彩变化
+    - 重命名为 RedMaterial
+* 拖动（Drag） RedMaterial 放落（Drop）Cube（层次视图或场景视图）上，Cube变成红色。
+* 点击工具栏 Play 按钮运行游戏，游戏视图出现（正是摄像机拍摄到的内容）
+* 再点 Play 按钮 终止游戏
+
+### 3.2 Unity 离散仿真引擎快速入门
+
+**1、游戏对象的表示**
+
+Unity 游戏对象主要涉及三钟类:
+
+* [GameObject](https://docs.unity3d.com/ScriptReference/GameObject.html): Unity 场景中所有实体的基类
+* [Component](https://docs.unity3d.com/ScriptReference/Component.html): 能附加到游戏对象的部件的基类
+* Component 的各种子类。包括空间与变换部件 [Transform](https://docs.unity3d.com/ScriptReference/Transform.html)、各种 渲染部件[Reander](https://docs.unity3d.com/ScriptReference/Renderer.html) ，脚本部件 [MonoBehaviour](https://docs.unity3d.com/ScriptReference/MonoBehaviour.html) 的子类等等。
+
+它们之间的关系如图所示：
+
+![](images/ch02/ch02-gameobject-component.png)
+
+直观上，游戏对象继承非常直观，例如：96A主站坦克继承抽象坦克，抽象坦克继承游戏对象基类，似乎是天经地义的设计。然而，游戏引擎能仅能与游戏对象基类打交道。游戏引擎做的事越多，游戏对象基类必然要承担许多职责，导致基类过于庞大。
+
+现在，游戏对象用一组部件来表达不同的方面的要求，能更好满足游戏世界的复杂性，提升游戏对象的灵活性，便于与引擎协作。例如：游戏对象位置等由 Transform 管理，形态网格由  Mesh 管理， 绘制由 Render 等部件协作完成，行为则由 MonoBehaviour 的子类管理。这些部件，仅需要才加入游戏对象的定义。
+
+**组合优于继承** 
+
+为什么要这样设计？在设计模式的装饰模式器描述了这样的设计场景：“装饰器模式（Decorator Pattern）允许向一个现有的对象添加新的功能，同时又不改变其结构。” 动态地给一个对象添加一些额外的职责。就增加功能来说，装饰器模式相比生成子类更为灵活。
+
+这个设计充分体现了这条软件设计原则“组合优于继承”。然而，众多的部件对象也带来管理复杂性与性能优化问题。
+
+【注】装饰器模式的案例多数是该设计场景的特例，“Wrapper”模式。
+
+现在，做一些任务验证上图设计:
+
+![](images/drf/movies.png) 操作 02-02 ，GameObject 与 Component 关系练习：
+
+* 在层次视图选择 Cube 游戏对象
+* 在属性视图观察它有哪些部件？
+* 修改 Tranform 部件中 Postion 的 x，y，z。观察游戏对象在场景视图中的变化
+* 在属性视图点击 “添加部件（Add Component）” 按钮，... 有哪几大类部件？
+* 在层次视图选择 Cube 游戏对象，在属性视图观察它有哪些部件？
+
+**2、赋予游戏对象行为**
+
+游戏对象行为是游戏对象的一个部件，都是脚本部件 [MonoBehaviour](https://docs.unity3d.com/ScriptReference/MonoBehaviour.html) 的子类。
+
+下面的任务就是创建一个简单的脚本，并挂载到 Cube 对象。
+
+![](images/drf/movies.png) 操作 02-03 ，c# Script 编写练习：
+
+* 在资源视图创建一个脚本。上下文菜单 -\> Create -\> c# script
+* 修改脚本名称 FisrtBeh。然后双击它，编辑它。
+* 修改代码如下：
+
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FisrtBeh : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		Debug.Log("This Start!");
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		// Debug.Log("This Update!");	
+	}
+
+	void OnEnable () {
+		Debug.Log("This Enabled!");	
+	}
+
+	void OnDisable () {
+		Debug.Log("This Disabled!");	
+	}
+}
+```
+
+你可能注意到 FisrtBeh 是 MonoBehaviour 的子类。我们怎么知道引擎调用了哪些方法和事件呢？ MonoBehaviour 就是一个编程模板，Unity API 的 Messages 一节给出了它可以处理的引擎回调（callback）与事件句柄（OnXXX）。
+
+由于 Update 在每个游戏循环都会被调用，为了避免大量输出，所以暂时注释了。
+
+* 如果这个代码没有编译错误，现在可拖动（Drag）它到任何游戏对象（如 Cube）上，属性面板自动添加该部件。
+* 运行游戏
+* Console 面板（control + shift + c）中，你看到消息顺序是 Enabled，Start。
+* 点击 Cube 属性面板最上面 checkbox，你得到消息 Disabled 
+* 点击 Cube 属性面板最上面 checkbox，你得到消息 Enabled
+* 点击 FisrtBeh 部件前面 checkbox，你得到消息 Disabled
+* 点击 FisrtBeh 部件前面 checkbox，你到消息 Disabled
+* 结束游戏，你得到消息 Disabled
+
+修改代码，让 update 中语句执行， 重复上述过程。
+
+![](images/drf/library_bookmarked.png) 脚本文件名称必须与类名一致，否则 ...
+
+
+**3、游戏脚本对象方法与事件执行顺序**
+
+你可能想知道这些消息在游戏循环的什么时候发生，它们之间的顺序，Unity 官方手册这样描述了游戏循环、事件、引擎部件之间的关系：
+
+* [Order of Execution for Event Functions](https://docs.unity3d.com/Manual/ExecutionOrder.html)
+
+这是一张可怕的大图，对入门者极其不友好。知道以下事件就够用了：
+
+| 事件名称 | 执行条件或时机 |
+| --- | --- |
+| Awake | 当一个脚本实例被载入时Awake被调用。或者脚本构造时调用 |
+| Start | 第一次进入游戏循环时调用 |
+| FixUpdate | 每个游戏循环，由物理引擎调用 |
+| Update | 所有 Start 调用完后，被游戏循环调用 |
+| LastUpdate | 所有 Update 调用完后，被游戏循环调用 |
+| OnGUI | 游戏循环在渲染过程中，场景渲染之后调用 |
+
+![](images/drf/library_bookmarked.png) 由于游戏对象与部件之间是组合关系，Compnonent 对象子类的构建、释放必须由对应 GameObject 完成。程序员不能创建它们
+
+![](images/drf/help.png) 为什么不能让程序员用 new 创建部件？
+
+### 3.3 游戏对象的组织与构建
 
 
 
-### 3.1 Unity 3D 基本界面
+
+
+
+
+游戏对象及其组织
+
 
 
 
