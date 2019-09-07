@@ -315,7 +315,7 @@ unloadContent()
 
 **1、游戏对象的表示**
 
-Unity 游戏对象主要涉及三钟类:
+Unity 游戏对象主要涉及三种类:
 
 * [GameObject](https://docs.unity3d.com/ScriptReference/GameObject.html): Unity 场景中所有实体的基类
 * [Component](https://docs.unity3d.com/ScriptReference/Component.html): 能附加到游戏对象的部件的基类
@@ -327,7 +327,7 @@ Unity 游戏对象主要涉及三钟类:
 
 直观上，游戏对象继承非常直观，例如：96A主站坦克继承抽象坦克，抽象坦克继承游戏对象基类，似乎是天经地义的设计。然而，游戏引擎能仅能与游戏对象基类打交道。游戏引擎做的事越多，游戏对象基类必然要承担许多职责，导致基类过于庞大。
 
-现在，游戏对象用一组部件来表达不同的方面的要求，能更好满足游戏世界的复杂性，提升游戏对象的灵活性，便于与引擎协作。例如：游戏对象位置等由 Transform 管理，形态网格由  Mesh 管理， 绘制由 Render 等部件协作完成，行为则由 MonoBehaviour 的子类管理。这些部件，仅需要才加入游戏对象的定义。
+这里，游戏对象用一组部件来表达不同的方面的要求，能更好满足游戏世界的复杂性，提升游戏对象的灵活性，便于与引擎协作。例如：游戏对象位置等由 Transform 管理，形态网格由  Mesh 管理， 绘制由 Render 等部件协作完成，行为则由 MonoBehaviour 的子类管理。这些部件，仅需要时才加入游戏对象的定义。
 
 **组合优于继承** 
 
@@ -386,7 +386,7 @@ public class FisrtBeh : MonoBehaviour {
 }
 ```
 
-你可能注意到 FisrtBeh 是 MonoBehaviour 的子类。我们怎么知道引擎调用了哪些方法和事件呢？ MonoBehaviour 就是一个编程模板，Unity API 的 Messages 一节给出了它可以处理的引擎回调（callback）与事件句柄（OnXXX）。
+你可能注意到 FisrtBeh 是 MonoBehaviour 的子类。我们怎么知道引擎调用了哪些方法和事件呢？ MonoBehaviour 基类就是一个编程模板，Unity API 的 Messages 一节给出了它可以处理的引擎回调（callback）与事件句柄（OnXXX）。
 
 由于 Update 在每个游戏循环都会被调用，为了避免大量输出，所以暂时注释了。
 
@@ -425,32 +425,133 @@ public class FisrtBeh : MonoBehaviour {
 
 ![](images/drf/help.png) 为什么不能让程序员用 new 创建部件？
 
-### 3.3 游戏对象的组织与构建
+### 3.3 游戏对象的组织、预制与场景
+
+**1、用脚本创建 Primitive 游戏对象**
+
+![](images/drf/movies.png) 操作 02-04 ，创建 Primitive 游戏对象练习：
+
+* 修改 FisrtBeh 类的 Start 方法，如图所示
+
+![](images/ch02/ch02-code-create-gameobject.png)
+
+* 运行游戏
+* 展开层次视图，找到创建的游戏对象
+* 终止游戏
+* 在层次视图中观察，运行期的变化都消失了！
+
+![](images/drf/library_bookmarked.png) 菜单能作的工作，利用 API 编程也能做到！
+
+**2、游戏对象组合与预制**
+
+如果我们每次都从基础游戏对象构建游戏，这需要多少代码，而且不易于修改。我们可以把基本的游戏对象组合起来，制作成 **预制**，以后把预制当作一个游戏对象使用。
+
+![](images/drf/library_bookmarked.png) 如果说基本游戏对象是原材料，预制就是半成品。因此，预制的概念在 Unity 中及其重要，也是游戏制作最基础的知识！
+
+下图就是本节的任务，制作一个座椅的预制
+
+![](images/ch02/ch02-prefabs.png)
 
 
+![](images/drf/movies.png) 操作 02-05 ，创建 Prefabs 练习：
+
+* 将 Cube 命名为 table
+* 从菜单创建新的 Cube 游戏对象，并命名为 chair
+* 将 chair 拖动并放置在 table 之上，我们发现 chair 变为子对象
+* 改变 chair 位置（如 position.x = -2）；大小（如 scale.y = 0.2)
+* 采用复制粘贴，生成其他三个 chair 并修改位置
+* 【重要】将 table 拖动并放置 在 Assets 面板之上，就生成了一个 table 预制
+* 将 table 预制 拖动并放置 到层次视图，我们观察到座椅游戏对象同时生成了
+* 修改 table 的位置，chair 如何变化？
+
+![](images/drf/info.png) 在层次视图中，预制的颜色与普通游戏对象不同！！！
+
+![](images/drf/ichat.png) 父对象坐标与子对象坐标的关系（世界坐标、相对坐标）？
+
+事实上，游戏都是一些预制好的对象进一步组合而成，我们的代码不过是胶水，控制作这些事物的变化。
+
+![](images/drf/help.png) 思考题：从对象设计角度，称为“组合模式（Composite Pattern）”。例如，行政区是一个抽象概念，国家、省、市、县都是行政区。这些行政区对象按树形结构组合，每个高级别的行政区都由几个低级别的行政区组合构成。
+
+![](images/drf/info.png) 许多同学（包括网上绝大多数博客）都从编程特征来理解设计模式，而不像设计模式作者们那样从现实社会设计问题中去理解，忽视具体问题的业务场景与上下问。23 种面向对象设计模式的强大，就是这么多年来大家都觉得足够用了！
+
+**3、游戏场景、预制与资源**
+
+**游戏场景的保存与恢复**
+
+与戏剧一样，一个游戏由一个与多个场景（Scenes）。场景中包含背景、静态游戏对象与动态游戏对象。Unity 场景视图就是场景中所有事物的可视化设计器。层次视图则是从对象的角度，描述了游戏对象树林这种数据结构。
+
+![](images/drf/movies.png) 操作 02-06 ，创建与恢复 Scene 练习：
 
 
+* 菜单 -\> File -\> Save Scenes
+* 将设计好的场景起名 TestScene，这时在资源中看到 Unity 图标的场景
+* 在当前设计场景中，添加、删除或修改游戏对象
+* 双击资源中场景图标，选不保存当前场景，这是场景恢复到保存时的状态
 
+**资源、预制与场景**
 
+到开游戏项目资源所在的目录，例如： `D:\mywork\unity\New Unity Project 2\Assets`
 
-游戏对象及其组织
+![](images/ch02/ch02-resources-files.png)
 
+发现每个游戏资源都对应了响应的文件。因此，资源是存在的硬盘的文件。
 
+* 脚本（.cs）。用文本编辑器修改它，属性编辑器中代码会同步更新哦！
+* 材料（.mat）, 预制（.frefab）, 场景（.unity）
 
+对于 Unity 预知和场景都是一样的文件。预制是游戏对象及其树上所有对象的文本定义（可以翻译成任何文本，如 YAML，XML，JSON]）;场景是场景中所有游戏对象的文本定义。默认它们以压缩格式保存。
 
+【高级话题】文本化资源文件 [Text-Based Scene Files](https://docs.unity3d.com/Manual/TextSceneFormat.html) 
 
+### 3.4 游戏对象动态构建
 
+游戏代码的基本任务是根据资源动态加载游戏对象，并控制它们。本次的任务是掌握用代码创建游戏对象的基本技巧。
 
+首先创建如下代码资源 `LoadBeh`：
 
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
+public class LoadBeh : MonoBehaviour {
 
+	public Transform res;
 
+	// Use this for initialization
+	void Start () {
+		// Load Resources
+		GameObject newobj = Instantiate<Transform> (res, this.transform).gameObject;
+		newobj.transform.position = new Vector3 (0, Random.Range (-5, 5), 0);
+	}
+}
+```
 
+![](images/drf/info.png) 随着版本更新，Unity 越来越喜欢使用模板，可能导致部分版本不兼容。例如：Instantiate 方法的定义 `public static T Instantiate(T original, Transform parent);`
 
+![](images/drf/movies.png) 操作 02-07 ，从预制创建游戏对象 练习：
 
+* 在仅场景中仅保留摄像机和光源
+* 菜单 -\> GameObject -\> Create Empty
+* 将空（PlaceHolder）游戏对象命名为 init
+* 将 LoadBeh 拖放至 init
+* init 的属性面板多出一个 Load Beh（Script） 的组件，有一个属性 res
+* 将 table 预制拖放至 res 属性
+* 运行游戏
 
+这是，我们将观察到座椅随机出现在 Game 视图中。
 
-## X、作业与练习
+![](images/drf/splash_green.png) 编程练习 02-08，使用砖块构建一面5*10 的墙
+
+编程要求：
+
+* 阅读 [Instantiate 方法 API](https://docs.unity3d.com/ScriptReference/Object.Instantiate.html) 中的案例
+* 使用 Cube 制作一个长方形带材料的预制 brick
+* 编写一段代码 BuildWall 生成 5*10 的墙
+
+最后，对 Unity 3D 离散引擎做精简总结：游戏循环遍历所有游戏对象的所有部件，驱动游戏运行。
+
+## 4、作业与练习
 
 **Unity 常用资源**
 
@@ -474,9 +575,6 @@ public class FisrtBeh : MonoBehaviour {
         - 本题目要求是把可视化图形编程界面与 Unity API 对应起来，当你在 Inspector 面板上每一个内容，应该知道对应 API。
         - 例如：table 的对象是 GameObject，第一个选择框是 activeSelf 属性。
     - 用 UML 图描述 三者的关系（请使用 UMLet 14.1.1 stand-alone版本出图）
-
-![workwork](images/ch02/ch02-homework.png)
-
 * 整理相关学习资料，编写简单代码验证以下技术的实现：
     - 查找对象
     - 添加子对象
