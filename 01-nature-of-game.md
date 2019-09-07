@@ -6,9 +6,9 @@ title: 游戏的本质
 # 一、游戏的本质
 {:.no_toc}
 
-> **_倘若A代表人生的成功，那么公式是：A=X+Y+Z。X是工作，Y是游戏，Z是保持缄默_**  
+> **_It was beautiful, historical, artistically subtle in a way that science can't capture, and I found it fascinating_**  
 >   
-> --- 爱因斯坦 《我的世界观》
+> --- Steve Jobs, Stanford Report, June 14, 2005
 
 * 目录
 {:toc}

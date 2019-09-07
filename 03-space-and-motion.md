@@ -6,13 +6,35 @@ title: 空间与运动
 # 三、空间与运动
 {:.no_toc}
 
+>   
+> **_I stumbled into by following my curiosity and intuition turned out to be priceless later on_**  
+>   
+> --- Steve Jobs, Stanford Report, June 14, 2005
+>  
+
+* 目录
+{:toc}
+
+_预计时间：2-3 * 45 min_
+
 ## 课程相关资源
 
 [资源与代码下载](https://github.com/pmlpml/unity3d-learning/tree/motion)
 
 
+## 1、游戏世界空间模型
 
-## 作业与练习
+## 2、坐标变化与运动
+
+## 3、课堂实验（模拟太阳系）
+
+
+## 4、面向对象的编程思考
+
+
+## 5、小结
+
+## 6、作业与练习
 
 **c# 自学**
 
@@ -59,7 +81,7 @@ title: 空间与运动
 **作业提交要求**
 
 * 仅能用博客或在线文档提交作业，建议使用 Github 提交代码和作业。**不能使用docx、pdf等需要下载阅读的格式**
-* deadline 下周二 24 点前
+* deadline 问课程 TA
 
 &nbsp;
 

@@ -549,9 +549,11 @@ public class LoadBeh : MonoBehaviour {
 * 使用 Cube 制作一个长方形带材料的预制 brick
 * 编写一段代码 BuildWall 生成 5*10 的墙
 
-最后，对 Unity 3D 离散引擎做精简总结：游戏循环遍历所有游戏对象的所有部件，驱动游戏运行。
+## 4、小结
 
-## 4、作业与练习
+对 Unity 3D 离散引擎做精简总结：游戏循环遍历所有游戏对象的所有部件，驱动游戏运行。
+
+## 5、作业与练习
 
 **Unity 常用资源**
 
@@ -607,6 +609,7 @@ public class LoadBeh : MonoBehaviour {
 **作业提交要求**
 
 * 仅能用博客或在线文档提交作业，建议使用 Github 提交代码和作业。**不能使用docx、pdf等需要下载阅读的格式**
+* deadline 问课程 TA
 
 &nbsp;
 
