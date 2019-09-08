@@ -543,7 +543,7 @@ public class LoadBeh : MonoBehaviour {
 
 ![](images/drf/splash_green.png) 编程练习 02-08，使用砖块构建一面5*10 的墙
 
-编程要求：
+编程要求与提示：
 
 * 阅读 [Instantiate 方法 API](https://docs.unity3d.com/ScriptReference/Object.Instantiate.html) 中的案例
 * 使用 Cube 制作一个长方形带材料的预制 brick

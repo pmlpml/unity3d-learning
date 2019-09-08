@@ -24,7 +24,179 @@ _预计时间：2-3 * 45 min_
 
 ## 1、游戏世界空间模型
 
+### 1.1 游戏世界的设计维度（文化与艺术）
+
+游戏世界是一个虚拟的世界、假想的世界、甚至其中部分是真实的世界。玩家控制部分游戏物体。按游戏世界或现实世界的规则交互，以达成目标。当虚拟世界与现实世界交融时，我们就称为增强现实（Augmented Reality）游戏。例如：我们在大富翁中继承现实股票行情，使用虚拟币在游戏中交易，更有利于玩家感受现实规则的意义；当现实商家优惠卷（Coopons）与《精灵宝可梦》这样的游戏机制相集合，就可以利用现实地图和玩家GPS位置，结合大数据技术推荐，产生实际的商用引流效果。
+
+不管游戏世界是虚拟的或显示的，游戏世界中所有物体（游戏对象）都必须在特定的空间、时间下出现、变化、消失。因此，游戏设计必须定义空间、时间等。 Adams 在其教材中把游戏设计分为几个维度：
+
+* 空间维度：
+    - 自由度：2d 或 2d卷轴，3d, 2.5d(如 Aircraft)，4d（？）
+    - 尺度：游戏世界的度量单位，如米、公里、光年。特别是其他物体与玩家对象的相对大小设计
+    - 边界：玩家可以看到的地图与场景
+* 时间维度
+    - ...
+* 环境维度
+    - 年代与文化背景
+    - 艺术风格与形式
+    - 场景与物体搭配
+* 情感维度
+    - ...
+* 道德维度
+    - ...
+
+![](images/ch03/ch03-space-design.png)
+
+良好的空间设计，玩家体验的基础
+
+![](images/drf/info.png) 如果你的这些维度感兴趣，请阅读游戏设计教材！
+
+### 1.2 游戏世界空间模型（技术）
+
+**世界坐标**：一个游戏或游戏场景的 **绝对坐标** 系统。每个游戏对象的位置、角度、比例的值都这个坐标系下是唯一的。
+
+**对象坐标**：游戏对象相对父游戏对象的位置、角度、比例。又称为 **相对坐标**
+
+**3D 空间**
+
+坐标比较简单，典型 3D 正交坐标系统
+
+* Z 轴：深度维度，前后方向。Z 越小越靠前
+* Y 轴：高度维度，上下方向。Y 越大越高
+* X 轴：水平维度，左右方向。
+
+![](images/drf/library_bookmarked.png) **左手、右手坐标系统**
+
+掌握此非常重要，相对坐标系中可快速确定位置
+
+![](images/ch03/ch03-coordinate-system.png)
+
+![](images/drf/help.png) Unity 是左手坐标系统？右手坐标系统？
+
+**2D 空间**
+
+2D 空间会复杂一些
+
+* 离散 2D 坐标。瓦片空间，或网格空间，或棋盘空间都是一个概念。即使用整数完成游戏对象运动、碰撞等计算（早期计算机浮点性能很差哦），特别是蜂窝状六边形地图（你玩过的！）
+* 连续 2D 坐标
+* 混合坐标系统。看上去游戏对象连续运动，但内部计算是网格模型。例如，3D象棋
+
 ## 2、坐标变化与运动
+
+游戏运动本质就是使用矩阵变换（平移、旋转、缩放）改变游戏对象的空间属性。
+
+### 2.1 体验简单运动与叠加
+
+![](images/drf/movies.png) 操作 03-01 ，简单运动练习：
+
+```csharp
+public class MoveLeft : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		this.transform.position += Vector3.left * Time.deltaTime;
+	}
+}
+```
+
+* 先准备如上脚本 MoveLeft 
+    - 这个代码每秒钟使得游戏对象向左移动一个单位
+    - Vector3 是一个类，Vector3.left 是单位常数
+    - Time 是离散引擎的核心类，Time.deltaTime 这个循环与上个循环之间的时间差
+* 将代码拖放到任意游戏对象之上
+* 运行游戏
+* 观察，游戏对象左移了
+* 终止游戏
+
+![](images/drf/splash_green.png) 编程练习 03-02，复合运动：
+
+编程要求与提示：
+
+* 参照 MoveLeft 创建脚本 MoveUp
+* 将脚本拖放到 MoveLeft 或它的子对象上
+* 观察效果
+
+### 2.2 Transform 部件
+
+[TransForm 部件](https://docs.unity3d.com/ScriptReference/Transform.html) – **1、属性**
+
+* 位置、欧拉角、比例、旋转
+    - 世界坐标：position, eulerAngles, scale, rotation
+    - 相对坐标：localposition, local…
+* 对象空间轴（单位向量）
+    - up, right, forward
+* 空间依赖
+    - parent, childCount
+
+欧拉角（eulerAngles）：x、y和z角表示围绕z轴的旋转z度、围绕x轴的旋转x度和围绕y轴的旋转y度。
+
+![](images/drf/movies.png) 操作 03-03 ，欧拉角练习：
+
+* 在场景视图中放置一个长方体，如 scale = (4,1,1)
+* 用左手握住 z 轴方向，修改 z 角度，如 45 度
+
+转动（Rotation）：四元数（Quaternion）。 [Quaternion](https://docs.unity3d.com/ScriptReference/Quaternion.html) 使用向量（x,y,z,w）表示物体旋转，维基百科说它与欧拉角等价。所以：
+
+* Quaternion.Euler(x,y,z) 可以得到四元数表示
+* 一个四元数也可以使用方法 eulerAngles 的到欧拉角
+
+反正你不要尝试修改四个元素的值，官方描述：`Don't modify this directly unless you know quaternions inside out.`
+
+![](images/drf/help.png) 思考：四元素与三个元素的欧拉角等价，为什么要浪费空间用四个元素表示旋转？
+
+**2、方法**
+
+与直接修改游戏对象属性相比，TransForm 部件提供相关的方法，让程序猿编写更利于理解的运动程序。主要方法包括：
+
+* 平移：[Translate](https://docs.unity3d.com/ScriptReference/Transform.Translate.html)
+* 旋转：[Rotate](https://docs.unity3d.com/ScriptReference/Transform.Rotate.html)
+* 围绕：[RotateAround](https://docs.unity3d.com/ScriptReference/Transform.RotateAround.html)
+* 面向：[LookAt](https://docs.unity3d.com/ScriptReference/Transform.LookAt.html)
+
+Unity 每个 API 都给出了丰富的案例解释这些方法，每个方法都有几个重载。
+
+![](images/drf/library_bookmarked.png) API 设计者要以使用者易于理解、使用方便为目标，重载函数或方法是重要设计手段。
+
+![](images/drf/splash_green.png) 编程练习 03-04，围绕运动：
+
+* 阅读 RotateAround 方法 API 案例
+* 用一个球体表示太阳，一个球体表示地球
+* 使用 RotateAround 让地球围绕太阳运动
+
+**3、向量与变换**
+
+如果程序员线性代数还过得去，一定会首选向量与变换控制运动，这毕竟是万能和高效的方法，虽然不易于理解。
+
+**Vector3** 是一个结构体。尽管 c# 把它化妆成对象模样，事实上我们仅需关心它的静态常数、成员与成员函数、静态方法即可
+
+* 静态常数：zero, up, left, forward
+* 成员与成员函数：x, y, z, normalized, magnitude
+* 静态方法与算子:
+    - Dot, Cross，Project，ProjectOnPlane
+    - Distance，Angle，Normalize，Reflect
+    - MoveTowards，RotateTowards
+    - Lerp，Slerp
+
+![](images/drf/splash_green.png) 编程练习 03-04，移动A到B运动：
+
+编程要求与提示：
+
+* 在设计器中放置两个游戏对象，A是一个球，B是空对象
+* 阅读 Vector3.MoveTowards API 说明
+* 编写一段程序让 A 使用 5 秒移动到 B 所在的位置
+
+**Quaternion** 是一个结构体。
+
+
+
+
+### 2.3 游戏对象的空间组合
+
 
 ## 3、课堂实验（模拟太阳系）
 
