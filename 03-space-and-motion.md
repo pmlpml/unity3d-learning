@@ -217,14 +217,88 @@ Vector3是三维向量，是一个结构体。尽管 c# 把它化妆成对象模
 * 阅读 Vector3.MoveTowards API 说明
 * 编写一段程序让 A 使用 5 秒移动到 B 所在的位置
 
-**Quaternion** 
+**2、Quaternion** 
 
-Quaternion 是一个四维向量，是一个结构体。它表示了一个旋转变换，有着与矩阵运算类似的计算特性，能高效完成旋转变换
+Quaternion 是一个四维向量，是一个结构体。它表示了一个旋转变换，有着与矩阵运算类似的计算特性，能高效完成旋转变换。
+
+**Quaternion 物理意义与基础编程**
+
+物体在对象空间中旋转，事实上仅需要知道 **旋转轴单位向量** `e = (x,y,z)` **角度** `a`，如下图所示。 四元素 `q = ((x,y,z)sin(a/2),cos(a/2))` 。这样表示有许多好处。 建议参考维基百科。
+
+![](images/ch03/ch03-quaternion.png)
+
+【注意】 维基百科图使用的是右手坐标系！
+
+我们先看一个特例，欧拉角（0，0，90）表示围绕 z 轴转 90度。 `q = ((0,0,1)sina(45),cos(45))` ，这样我们用四个数表示了旋转矩阵。因此，我们用一些代码检验我们的想法：
+
+![](images/drf/movies.png) 操作 03-06 ，理解 Quaternion 练习：
+
+* 先录入以下代码，注意了解使用的 Quaternion 方法含义：
+
+```csharp
+	void Start () {
+		float anyF = 2.0f;
+		Vector3 e = Vector3.forward * anyF;
+		Quaternion q = Quaternion.AngleAxis (90, e);
+		Debug.Log (q); //(0,0,0.7,0.7) expected
+
+		Vector3 p1 = new Vector3 (1, 0, 0);
+		// maxtrix left multify to a vetcor 
+		Debug.Log (q * p1); // (0,1,0) expected
+
+		Quaternion q1 = Quaternion.AngleAxis (45, e);
+		// 90 rotate around z , and then 45
+		Debug.Log (q1 * q * p1); // (0.7,.7,0,0) expected
+
+        Quaternion q2 = Quaternion.Inverse (q);
+		// Quaternion.identity
+		Debug.Log (q2 * q); // (0.0, 0.0, 0.0, 1.0) expected
+		Debug.Log (Quaternion.identity);
+	}
+```
+
+你完全可以将 Quaternion 看成一个非常直观的旋转矩阵，利用矩阵乘向量得到旋转后的位置，矩阵连乘得到复合旋转！
+
+四元素一个有以下特性：
+
+* q 的长度是 1 
+* q 就是旋转矩阵的一种表示，仅需要四个元数
+
+因此，我们只要将左手握住物体的旋转轴，确定角度就可以方便的旋转了！！！它是旋转运动编程的第一选择。（与菜鸟区别的标志之一）
+
+* 录入让物体按任意方向旋转的代码
+* 挂入一个对象，运行它！
+
+```csharp
+public class RotateBeh : MonoBehaviour {
+
+	public int speed = 20;
+	public Vector3 e = Vector3.forward;
+
+	// Update is called once per frame
+	void Update () {
+		Quaternion q = Quaternion.AngleAxis (speed * Time.deltaTime, e);
+		transform.localRotation *= q; 
+	}
+}
+```
+
+* 在运行过程中修改速度和方向轴
 
 
+![](images/drf/splash_green.png) 编程练习 03-07，编写 RotateAround 运动：
 
+编程要求与提示：
+
+* 在设计器中放置两个游戏对象，A是一个球，B是空对象
+* 给定一个 speed 和 e
+* 编写一段程序让 A 围绕 B 旋转
+
+![](images/drf/help.png) 思考：四元素有哪些成员函数和静态方法是比较有用的？
 
 ### 2.4 游戏对象的空间组合
+
+
 
 
 ## 3、课堂实验（模拟太阳系）
