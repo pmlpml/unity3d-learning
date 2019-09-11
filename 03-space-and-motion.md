@@ -221,9 +221,11 @@ Vector3是三维向量，是一个结构体。尽管 c# 把它化妆成对象模
 
 Quaternion 是一个四维向量，是一个结构体。它表示了一个旋转变换，有着与矩阵运算类似的计算特性，能高效完成旋转变换。
 
+玩过抽陀螺吗？也许会更好理解四元组
+
 **Quaternion 物理意义与基础编程**
 
-物体在对象空间中旋转，事实上仅需要知道 **旋转轴单位向量** `e = (x,y,z)` **角度** `a`，如下图所示。 四元素 `q = ((x,y,z)sin(a/2),cos(a/2))` 。这样表示有许多好处。 建议参考维基百科。
+物体在对象空间中旋转，事实上仅需要知道 **旋转轴单位向量** `e = (x,y,z)` **角度** `a`，如下图所示。 四元素 `q = ((x,y,z)sin(a/2),cos(a/2))` 。这样表示有许多好处与数学。 建议参考维基百科（复杂问题博客介绍 90% 不到位）。
 
 ![](images/ch03/ch03-quaternion.png)
 
@@ -285,7 +287,6 @@ public class RotateBeh : MonoBehaviour {
 
 * 在运行过程中修改速度和方向轴
 
-
 ![](images/drf/splash_green.png) 编程练习 03-07，编写 RotateAround 运动：
 
 编程要求与提示：
@@ -294,20 +295,82 @@ public class RotateBeh : MonoBehaviour {
 * 给定一个 speed 和 e
 * 编写一段程序让 A 围绕 B 旋转
 
-![](images/drf/help.png) 思考：四元素有哪些成员函数和静态方法是比较有用的？
+**更深理解四元素**
+
+API 提供静态方法 Quaternion.Euler(x,y,z)，直观上按 z、x、y 轴旋转的一个序列。数学上就是 `q = qy * qx * qz`。【注意】不可交换。同样  q.eulerAngles 给出了一个四元素的欧拉角表示。
+
+Quaternion.FromToRotation API 给了两个向量计算 q 的方法。直观上，有一个物体围绕三角型 c 点从 ca 方向转到 cb 方向，显然 e 就是三角面过 c 点的法向量， a 就是角 acb。
+
+现在我们设想有一个物体先绕 x 轴转动，渐变到围绕 y 轴转动。似乎是 Quaternion.RotateTowards 静态方法
+
+![](images/drf/splash_green.png) 编程练习 03-08， 验证 RotateTowards 练习：
+
+编程要求与提示：
+
+* 理解 Quaternion
+* 阅读 Quaternion.Angle 两个四元数夹角是两个旋转轴夹角吗？
+* 编写你的测试程序
+
+![](images/drf/help.png) 思考：四元素有哪些成员函数和静态方法是比较有用的？你能让某个物体按螺旋线向外运动吗？
+
+温馨提示：
+
+* 根据 e, a 计算 q
+* 在旋转中心物体坐标下，给出单位向量 b
+* 螺旋线坐标 `V = Vc + q * b * l`， 其中 l 是到旋转点的距离
 
 ### 2.4 游戏对象的空间组合
 
+在游戏层次视图中，游戏对象按树组织似乎天经地义。事实上，游戏对象是按它的空间关系组织设计。对象设计图如下：
 
+![](images/ch03/ch03-space-tree.png)
 
+首先，Transform 类的对象有 root，parent，childrens 的概念与相关操作。由于每个 transform 对象唯一绑定了一个 gameObject 对象，所以，直观上让使用者理解为游戏对象层次是 GameObject 完成的。 使用空间树，可方便不同对象空间坐标到绝对坐标或其他对象坐标的转换，如果程序员需要经常实现两个空间的坐标的转换，直接用该树的结构构造一个变换矩阵，提升程序效率。
+
+其次，如果你细心，你可能以发现 Component、TransForm 都没有提供公共的构造函数，则意味者 Unity 设计师不希望你构建这些对象，我们怎么办呢？按组合关系（强聚合关系）的原则，自然创建与回收 Component 的任务是由 GameObject 完成的。阅读 GameObject.AddComponent API，它只有用类型作为参数，并没有添加一个对象的方法。
+
+再次，gameObject，transform, 和 components 是紧密耦合的，在编程中经常相互引用。因此，tranform，gameObject 等属性都是只读的，有 gameObject 管理和维护。即使不是只读的，任何修改都可能造成不可预测的结果。
+
+![](images/drf/library_bookmarked.png) 你必须知道的 TransForm 属性与方法：
+
+* 属性 
+    - localToWorldMatrix
+    - worldToLocalMatrix
+* 方法
+    - TransformVector
+    - InverseTransformVector
+
+![](images/drf/help.png) 思考题：构建一个矩阵实现两个对象空间坐标的转换；
 
 ## 3、课堂实验（模拟太阳系）
 
+任务结果要求：
+
+![](images/ch03/ch03-sun-system.png)
+
+![](images/drf/splash_green.png) 编程练习 03-09， 简单太阳系练习：
+
+编程要求与提示：
+
+* 搜索关键字 “[太阳系贴图](https://cn.bing.com/search?q=%e5%a4%aa%e9%98%b3%e7%b3%bb%e8%b4%b4%e5%9b%be&FORM=HDRSC1)”
+* 选择设计素材，如 [红动网](http://so.redocn.com/taiyang/ccabd1f4cfb5c7e5cefaccf9cdbc.htm)。只要是长方形图片（低分辨）即可，将地球图片另存到本地
+* 创建 3 个球分别命名 sun, earth, moon
+* 按你自己理解设置它们的大小、位置等
+* 将地图图片拖入 Assets，再拖放到 球体对象 上，我们看到地球了。系统会自动生成一个材料目录，将图片变为贴图材料。
+* 如上方法，加入太阳、月亮、金星等
+* 添加脚本，大致如图所示
+
+![](images/ch03/ch03-sun-system-refcode.png)
+
+![](images/drf/help.png) 思考题：太阳系是否要组成空间树呢？例如：地球在太阳的空间中，月球在地球的空间中。请给出你的理由
 
 ## 4、面向对象的编程思考
 
 
 ## 5、小结
+
+* 给出了直接修改坐标、Transfrom 部件方法、向量与变换三种控制运动的方法
+* 使用面向对象方法，构建小游戏
 
 ## 6、作业与练习
 

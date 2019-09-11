@@ -577,11 +577,6 @@ public class LoadBeh : MonoBehaviour {
         - 本题目要求是把可视化图形编程界面与 Unity API 对应起来，当你在 Inspector 面板上每一个内容，应该知道对应 API。
         - 例如：table 的对象是 GameObject，第一个选择框是 activeSelf 属性。
     - 用 UML 图描述 三者的关系（请使用 UMLet 14.1.1 stand-alone版本出图）
-* 整理相关学习资料，编写简单代码验证以下技术的实现：
-    - 查找对象
-    - 添加子对象
-    - 遍历对象树
-    - 清除所有子对象
 * 资源预设（Prefabs）与 对象克隆 (clone)
     - 预设（Prefabs）有什么好处？
     - 预设与对象克隆 (clone or copy or Instantiate of Unity Object) 关系？
