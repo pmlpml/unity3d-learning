@@ -31,7 +31,7 @@ Tracy Fullerton 在《游戏设计工坊》用原型设计描述这个步骤
 
 ![](images/ch04/ch04-physical-prototype.png)
 
-游戏原型设计将设计师从编程或技术细节中解脱出来，聚焦于 MDA ：MDA的含义是指机制（Mechanics）、动态（Dynamics）和美学（Aesthetics）
+游戏原型设计将设计师从编程或技术细节中解脱出来，聚焦于 MDA ：机制（Mechanics）、动态（Dynamics）和美学（Aesthetics）
 
 判断一下你成为游戏设计师的概率：
 
