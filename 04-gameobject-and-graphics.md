@@ -61,7 +61,7 @@ Tracy Fullerton 在《游戏设计工坊》用原型设计描述这个步骤
 * 游戏快速设计工具，Unity 3D, construct2...
 * 专用游戏设计工具，...（游戏引擎都这么来的）
 
-### 1.4 构建游戏 demo 的重要性
+### 1.3 构建游戏 demo 的重要性
 
 游戏开发是高风险（必须进入排名头部10~20%）、高投入（资源制作、市场开发与运维）的行业。
 
@@ -86,7 +86,7 @@ GameObject 菜单上游戏元素是最基础的。尽管实际游戏生产中我
     - 创建一个新的对象空间
 * 3D 物体
     - 基础 3D 物体（Primitive Object）：立方体（Cube）、球体（Sphere）、胶囊体（Capsule）、圆柱体（Sylinder）、平面（Plane）、四边形（Quad）
-    - 构造 3D 物体：由三角形网格构建的物体：
+    - 构造 3D 物体：由三角形网格构建的物体：如地形等
 * Camera 摄像机，观察游戏世界的窗口
 * Light 光线，游戏世界的光源
 * Audio 声音
@@ -196,8 +196,118 @@ Unity可以与用建模软件创建的任何形状的3D模型一起工作。但�
 * 原文 [Using Multiple Unity Cameras – Why This May Be Important?](http://blog.theknightsofunity.com/using-multiple-unity-cameras-why-this-may-be-important/)
 
 
+### 2.3 天空盒
 
+天空是任何游戏离不开的设定，而且要按季节与时间变化，是表示时间的重要工具。从 Unity 5 开始，官方不再资源天空提供资源，一般从 Asset Store 获取
+使用 skybox 在 Store 中搜索，下载你喜欢的天空，例如：
 
+* Skybox
+* Fantasy Skybox FREE
+
+**1、天空盒的原理与制作**
+
+天空盒是一种材料，例如：我们通过六面体构建一个天空盒。
+
+![](images/drf/movies.png) 操作 04-03，创建天空盒练习：
+
+* 先下载天空盒，它会包含一些天空贴图（免去自己制作麻烦）
+* Assets 上下文菜单 -\> create -\> Material 起名 mysky
+* 在 Inspector 视图中选择 Shader -\> Skybox -\> 6Sided
+* 结果如图
+
+![](images/ch04/ch04-skybox-creation.png)
+
+* 在资源贴图中选择合适的图片，拖放到对应位置！
+
+使用天空盒非常简单，在 Camera 对象中添加部件 Rendering -\> Skybox，将天空盒拖进去！
+
+**2、设置恢复系统默认天空**
+
+* 删除摄像机自定义天空
+* 菜单 -\> window -\> lighting
+* Scene -\> skybox -\> Default-skybox
+
+### 2.4 光源与光照贴图
+
+光与影是让游戏世界富有魅力。灯光是每个场景的重要组成部分。网格和纹理定义了场景的形状和外观，而灯光定义了3D环境的颜色和情绪。你可能会在每个场景中使用不止一盏灯。让他们一起工作需要一些练习，可能是相当惊人的结果。
+
+![](https://docs.unity3d.com/uploads/Main/LightTwoLights.jpg)
+
+两个光源的案例，具体细节参见 [Lights](https://docs.unity3d.com/Manual/Lights.html)
+
+**1、创建一个灯光**
+
+以下两种方法一样：
+
+* 菜单 GameObject -\> Light
+* 创建一个空对象，添加灯光组件
+
+**2、光源组件的基本属性**
+
+![](https://docs.unity3d.com/uploads/Main/LightInspectorV3.png)
+
+* 灯光类型（type）
+    - 平行光（类似太阳光）
+    - 聚光灯（spot）
+    - 点光源（point）
+    - 区域光（area）
+* 阴影（shallow）
+* 剪影（cookies
+
+光组件的更多细节：[官方](https://docs.unity3d.com/Manual/class-Light.html)，[中文](http://docs.manew.com/Manual/index.htm)
+
+**3、光照贴图**
+
+光照贴图（Lightmapping）是预先计算场景中表面的亮度，并将结果存储在图表或“光映射”中，以备以后使用的过程。
+
+![](images/drf/advanced.png) 维护中的章节
+
+因为 Unity 4.0、5.0、以及 2019.2 版本的光照贴图界面都有些不一样。
+
+[2019.2 Lightmapping: Getting started](https://docs.unity3d.com/Manual/Lightmapping.html)
+
+[Unity 5 光照贴图快速入门](http://docs.manew.com/Manual/Lightmapping.html)
+
+[4.0,5.0 Unity光照贴图Lightmapping](https://blog.csdn.net/andyhebear/article/details/50480348)
+
+### 2.5 3D 物体 – 3D Objects
+
+**1、网格与物体形状**
+
+三角网格是游戏物体表面的唯一形式。将场景视图从 Shade -\> Wirframe 就看到所有物体包括立方体，圆都是网格。
+
+![](images/ch04/ch04-mesh.png)
+
+3D 物体显示部件：
+
+* Mesh 部件：
+    - 物体表面三角网格，形成物体形状
+* Mesh Renderer部件：
+    - 表面渲染器，显示物体色彩
+    - 其中：Material 和 Shader 对象
+    - （材料与着色器 Shader）则是绘制物体的工具
+
+**2、材质与着色器（Materials and Shaders）**
+
+* 纹理（Texture）：位图，表示物体本身的色彩。
+* 材质（Material）：包含一个或一组 Texture，以及元数据（meta-data）属性，着色程序（Shader）。
+* 其中 meta-data 定义了 Texture 与 mesh 的映射关系，材料的光线吸收、透明度、反射与漫反射、折射、自发光、眩光等特性
+* Shader 是着色程序。它能利用显卡硬件渲染特性，按 meta-data 将材质按物体纹理、光线特性，结合游戏场景中的光线生成用户感知的位图（像素点）。
+* Shader 的编程超出了本课程的范围，涉及大量图形学与显卡计算的知识。一句话，物体发光、质感、层次、镜像等效果取决于Shader。
+
+更多知识参见：[Materials, Shaders & Textures](https://docs.unity3d.com/Manual/Shaders.html)
+
+![](images/drf/advanced.png) 维护中的章节
+
+材料与着色变化较大，需要进一步维护
+
+**3、资源导入与创建**
+
+![](images/drf/advanced.png) 维护中的章节
+
+### 2.6 地形系统 – 创建与编辑
+
+参见 ppt
 
 ## 3、面向对象的游戏编程
 
