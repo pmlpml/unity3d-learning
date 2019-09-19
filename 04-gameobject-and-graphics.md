@@ -71,7 +71,7 @@ Tracy Fullerton 在《游戏设计工坊》用原型设计描述这个步骤
 
 Unity提供的资源和工具，可帮助你快速构建设想的游戏世界！
 
-## 2、游戏常见对象构建与渲染
+## 2、游戏常见对象构建
 
 游戏世界构建在 Unity 中主要涉及两个菜单 GameObject 和 Assets。 当然最重要的还是 **Asset Store**！ 它不只是资源，更是我们学习构建游戏世界的素材。因为你未来可能在上面发布资源，成为贡献者或受益者。
 
@@ -227,7 +227,7 @@ Unity可以与用建模软件创建的任何形状的3D模型一起工作。但�
 * 菜单 -\> window -\> lighting
 * Scene -\> skybox -\> Default-skybox
 
-### 2.4 光源与光照贴图
+### 2.4 光源
 
 光与影是让游戏世界富有魅力。灯光是每个场景的重要组成部分。网格和纹理定义了场景的形状和外观，而灯光定义了3D环境的颜色和情绪。你可能会在每个场景中使用不止一盏灯。让他们一起工作需要一些练习，可能是相当惊人的结果。
 
@@ -256,21 +256,16 @@ Unity可以与用建模软件创建的任何形状的3D模型一起工作。但�
 
 光组件的更多细节：[官方](https://docs.unity3d.com/Manual/class-Light.html)，[中文](http://docs.manew.com/Manual/index.htm)
 
-**3、光照贴图**
+### 2.5 地形系统 – 创建与编辑
 
-光照贴图（Lightmapping）是预先计算场景中表面的亮度，并将结果存储在图表或“光映射”中，以备以后使用的过程。
 
-![](images/drf/advanced.png) 维护中的章节
 
-因为 Unity 4.0、5.0、以及 2019.2 版本的光照贴图界面都有些不一样。
 
-[2019.2 Lightmapping: Getting started](https://docs.unity3d.com/Manual/Lightmapping.html)
 
-[Unity 5 光照贴图快速入门](http://docs.manew.com/Manual/Lightmapping.html)
 
-[4.0,5.0 Unity光照贴图Lightmapping](https://blog.csdn.net/andyhebear/article/details/50480348)
+## 3、3D物体与渲染
 
-### 2.5 3D 物体 – 3D Objects
+Unity 几乎支持所有工具构建的3D模型与动画
 
 **1、网格与物体形状**
 
@@ -301,19 +296,32 @@ Unity可以与用建模软件创建的任何形状的3D模型一起工作。但�
 
 材料与着色变化较大，需要进一步维护
 
+**3、光照贴图**
+
+光照贴图（Lightmapping）是预先计算场景中表面的亮度，并将结果存储在图表或“光映射”中，以备以后使用的过程。
+
+![](images/drf/advanced.png) 维护中的章节
+
+因为 Unity 4.0、5.0、以及 2019.2 版本的光照贴图界面都有些不一样。
+
+[2019.2 Lightmapping: Getting started](https://docs.unity3d.com/Manual/Lightmapping.html)
+
+[Unity 5 光照贴图快速入门](http://docs.manew.com/Manual/Lightmapping.html)
+
+[4.0,5.0 Unity光照贴图Lightmapping](https://blog.csdn.net/andyhebear/article/details/50480348)
+
 **3、资源导入与创建**
 
 ![](images/drf/advanced.png) 维护中的章节
 
-### 2.6 地形系统 – 创建与编辑
 
 参见 ppt
 
-## 3、面向对象的游戏编程
+## 4、面向对象的游戏编程
 
+## 5、小结
 
-
-## 作业与练习
+## 6、作业与练习
 
 **自学资源**
 
@@ -331,14 +339,20 @@ Unity可以与用建模软件创建的任何形状的3D模型一起工作。但�
 
 **作业内容**
 
-1、操作与总结
+1、基本操作演练【建议做】
 
-* 参考  Fantasy Skybox FREE 构建自己的游戏场景
+* 下载  Fantasy Skybox FREE， 构建自己的游戏场景
 * 写一个简单的总结，总结游戏对象的使用
 
 2、编程实践
 
 * 牧师与魔鬼 动作分离版
+
+3、材料与渲染联系【可选】
+
+* 从 Unity 5 开始，使用新的 Standard Shader 作为自然场景的渲染。
+    - 阅读官方 [Standard Shader](https://docs.unity3d.com/Manual/shader-StandardShader.html) 手册 。
+    - 选择合适内容，如 [Albedo Color and Transparency](https://docs.unity3d.com/Manual/StandardShaderMaterialParameterAlbedoColor.html)，寻找合适素材，用博客展示相关效果的呈现
 
 **作业提交要求**
 
