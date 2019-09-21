@@ -19,7 +19,7 @@ _预计时间：2-3 * 45 min_
 
 ## 课程相关资源
 
-[资源与代码下载](https://github.com/pmlpml/unity3d-learning/tree/motion)
+
 
 
 ## 1、游戏世界空间模型
@@ -374,6 +374,8 @@ Quaternion.FromToRotation API 给了两个向量计算 q 的方法。直观上�
 既然 Unity 引擎的设计中到处都是设计模式，现在我们也期望我们的游戏满满有设计感！
 
 本节介绍的游戏编程框架将贯穿整个教程。本节仅是一个基础结构，随着课程进展，将有越来越多部件加入该框架，以适应越来越复杂的游戏。也许开始你会觉得痛苦，因为这么简单的事情用这么复杂的代码。师兄、师姐的经验会告诉你，这付出绝对值得，因为你也能一周出品一个有相当代码量的游戏了！不是因为我编程速度快，而是前期的许多类一直在重复使用。
+
+![](images/drf/folder_smart.png)  具体程序代码：[motion](https://github.com/pmlpml/unity3d-learning/tree/motion)
 
 ### 4.1 游戏编程的挑战
 

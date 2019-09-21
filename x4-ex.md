@@ -79,6 +79,9 @@ AI?
 
 ### 6.2 第二版（添加动作管理）
 
+* 【推】[牧师与魔鬼V2(动作分离版)](https://blog.csdn.net/C486C/article/details/79854679)  
+直观、简洁
+
 * [分离动作管理器的3D版牧师与魔鬼](http://blog.csdn.net/zzj051319/article/details/63268398)  
 UML图很好，程序略有过度设计。
 
