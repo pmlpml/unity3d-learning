@@ -219,9 +219,7 @@ Unity可以与用建模软件创建的任何形状的3D模型一起工作。但�
 
 * 在资源贴图中选择合适的图片，拖放到对应位置！
 
-**2、
-
-使用天空盒非常简单
+**2、使用天空盒**
 
 * 在 Camera 对象中添加部件 Rendering -\> Skybox
 * 将天空盒拖放入 Shybox！
@@ -452,7 +450,7 @@ Unity 几乎支持所有工具构建的3D模型与动画。
 
 这是动作对象管理器的基类，实现了所有动作的基本管理
 
-![]()
+![](images/drf/advanced.png) 维护中的章节
 
 ## 5、小结
 
@@ -487,7 +485,7 @@ Unity 几乎支持所有工具构建的3D模型与动画。
     - 选择合适内容，如 [Albedo Color and Transparency](https://docs.unity3d.com/Manual/StandardShaderMaterialParameterAlbedoColor.html)，寻找合适素材，用博客展示相关效果的呈现
 * Unity 5 声音
     - 阅读官方 [Audio](https://docs.unity3d.com/Manual/Audio.html) 手册
-    - 用博客给出游戏中呈现声效的案例
+    - 用博客给出游戏中利用 Reverb Zones 呈现车辆穿过隧道的声效的案例
 
 **作业提交要求**
 
