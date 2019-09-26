@@ -84,7 +84,7 @@ Apple 就不用说了。手机游戏几乎伴随智能手机成长。手机中�
 * 热门故事（通常与历史、热门电影、政治事件绑定）
 * 满足各种脑残粉（如：开心消消乐、国内所有页游）
 
-**4、输入设备的重要性与选择**
+**4、创新选择**
 
 **体验、体验、新体验！！！**
 
@@ -94,6 +94,8 @@ Apple 就不用说了。手机游戏几乎伴随智能手机成长。手机中�
     - 触摸交互，重力交互，语音交互，体感交互
 * AR/VR
     - 沉浸式体验技术，最热
+
+游戏基本形式：
 
 * 经济性驱动的游戏
     - 选择手机及其智能设备创新游戏
@@ -131,11 +133,156 @@ Apple 就不用说了。手机游戏几乎伴随智能手机成长。手机中�
 
 ## 2、Unity 输入处理
 
-## 3、
+![](images/drf/advanced.png) 维护中的章节
+
+### 2.1 输入信息处理基本模型
+
+### 2.2 JoyStick – 虚拟轴与按键
+
+```csharp
+public class Joystick : MonoBehaviour {
+
+	public float speedX = 10.0F;
+	public float speedY = 10.0F;
+
+	// Update is called once per frame
+	void Update () {
+		float translationY = Input.GetAxis("Vertical") * speedY;
+		float translationX = Input.GetAxis("Horizontal") * speedX;
+		translationY *= Time.deltaTime;
+		translationX *= Time.deltaTime;
+		//transform.Translate(0, translationY, 0);
+		//transform.Translate(translationX, 0, 0);
+		transform.Translate(translationX, translationY, 0);
+
+		if (Input.GetButtonDown ("Fire1")) {
+			Debug.Log ("Fired Pressed");
+		}
+	}
+}
+```
 
 
+### 2.3 拾取游戏世界的对象
 
-## 作业与练习
+**光标拾取物体程序**
+
+```csharp
+public class PickupObject : MonoBehaviour {
+
+	public GameObject cam;
+
+	// Update is called once per frame
+	void Update () {
+		if (Input.GetButtonDown("Fire1")) {
+			Debug.Log ("Fired Pressed");
+			Debug.Log (Input.mousePosition);
+
+			Vector3 mp = Input.mousePosition; //get Screen Position
+
+			//create ray, origin is camera, and direction to mousepoint
+			Camera ca;
+			if (cam != null ) ca = cam.GetComponent<Camera> (); 
+			else ca = Camera.main;
+
+			Ray ray = ca.ScreenPointToRay(Input.mousePosition);
+
+			//Return the ray's hit
+			RaycastHit hit;
+			if (Physics.Raycast(ray, out hit)) {
+				print (hit.transform.gameObject.name);
+				if (hit.collider.gameObject.tag.Contains("Finish")) { //plane tag
+					Debug.Log ("hit " + hit.collider.gameObject.name +"!" ); 
+				}
+				Destroy (hit.transform.gameObject);
+			}
+		}
+	}
+}
+```
+
+程序要点：
+
+* mousePosition 是 Vector3 ，请不要修改 z 坐标
+* 获取摄像机的 Camera 部件，构建 Ray
+* Camera 部件支持正确生成世界坐标的射线
+* Raycast 函数使用了变参（值参与变参），为什么 hit 必须用变参？
+* 为了优化性能，Raycast 支持在特定层扫描对象 
+
+**光标拾取多个物体程序**
+
+```csharp
+public class PickupMultiObjects : MonoBehaviour {
+
+	public GameObject cam;
+
+	// Update is called once per frame
+	void Update () {
+		if (Input.GetButtonDown("Fire1")) {
+			Debug.Log ("Fired Pressed");
+			Debug.Log (Input.mousePosition);
+
+			Vector3 mp = Input.mousePosition; //get Screen Position
+
+			//create ray, origin is camera, and direction to mousepoint
+			Camera ca;
+			if (cam != null ) ca = cam.GetComponent<Camera> (); 
+			else ca = Camera.main;
+
+			Ray ray = ca.ScreenPointToRay(Input.mousePosition);
+
+			//Return the ray's hits
+			RaycastHit[] hits = Physics.RaycastAll (ray);
+
+			foreach (RaycastHit hit in hits) {
+				print (hit.transform.gameObject.name);
+				if (hit.collider.gameObject.tag.Contains("Finish")) { //plane tag
+					Debug.Log ("hit " + hit.collider.gameObject.name +"!" ); 
+				}
+				Destroy (hit.transform.gameObject);
+			}
+		}		
+	}
+}
+```
+
+**性能与优化**
+
+
+## 3、面向对象的游戏编程
+
+### 场景单实例
+
+运用模板，可以为每个 MonoBehaviour子类 创建一个对象的实例。`Singleten<T>` 代码如图所示：
+
+```csharp
+public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+{
+
+	protected static T instance;
+
+	public static T Instance {  
+		get {  
+			if (instance == null) { 
+				instance = (T)FindObjectOfType (typeof(T));  
+				if (instance == null) {  
+					Debug.LogError ("An instance of " + typeof(T) +
+					" is needed in the scene, but there is none.");  
+				}  
+			}  
+			return instance;  
+		}  
+	}
+}
+```
+
+场景单实例的使用很简单，你仅需要将 MonoBehaviour 子类对象挂载任何一个游戏对象上即可。
+
+然后在任意位置使用代码 `Singleton<YourMonoType>.Instance` 获得该对象。
+
+## 4、小结
+
+## 5、作业与练习
 
 1、编写一个简单的鼠标打飞碟（Hit UFO）游戏
 
