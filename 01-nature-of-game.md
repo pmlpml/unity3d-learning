@@ -6,7 +6,7 @@ title: 游戏的本质
 # 一、游戏的本质
 {:.no_toc}
 
-> **_It was beautiful, historical, artistically subtle in a way that science can't capture, and I found it fascinating_**  
+> **_Dropping in on the ones that looked interesting_**  
 >   
 > --- Steve Jobs, Stanford Report, June 14, 2005
 
