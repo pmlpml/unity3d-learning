@@ -115,7 +115,7 @@ UML图很好，程序略有过度设计。
 
 ## 9、巡逻兵（Patrolman） 
  
-* 【推】[2018 单巡魔兵](https://blog.csdn.net/c486c/article/details/80153548)  
+* 【推】[2018 简单巡逻兵](https://blog.csdn.net/c486c/article/details/80153548)  
 使用了Unity官方教程巡逻兵资源，编出了官方教程无法企及的编程水平！ 
 
 * [2018 智能巡逻兵](https://xungerrrr.github.io/2018/05/11/Unity-3D-％E6％99％BA％E8％83％BD％E5％B7％A1％E9％80％BB％E5％85％B5/)  
@@ -137,7 +137,7 @@ UML图很好，程序略有过度设计。
 
 ### 10.1 粒子效果制作
 
-* [2018 简单粒子制作](https://shimo.im/sheet/1WnryzlOYbcfzmSC)  
+* [2018 简单粒子制作](https://blog.csdn.net/C486C/article/details/80488236)  
 仿佛看到了 Balala 魔杖的效果。在平凡素材上做出一样的效果，才是我们的追求。 AnimationCurve 好强大的工具！
 
 ### 10.2 模拟物理控制
