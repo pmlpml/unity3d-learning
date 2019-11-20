@@ -16,7 +16,7 @@ title: 协程与Unity
 
 > 线程（Thread）是进程中并发执行的函数（任务），有自己的栈和上下文环境，是操作系统能够进行资源调度的最小单位。一个进程至少有一个线程（main），应用线程可直接由操作系统线程库管理，也可由编程语言提供的库调度，线程之间共享进程的所拥有的资源。多线程可跟好的利用多CPU资源，但协同机制大大提升了编程难度
 
-> 协程（Coroutine）是一个有应用程序自己调度的并发函数，有自己的栈和上下文环境，采用非抢占式调度。协程的优势是避免了频繁线程调度的开销，单线程也能产生并发效果，由于在一个线程中能仅能有一个协程执行，减少的资源冲突。它功能虽然很像线程，但是必须由编译或用户编程代码切换线程。
+> 协程（Coroutine）是一个有应用程序自己调度的并发函数，有自己的栈和上下文环境，采用 **非抢占式调度**。协程的优势是避免了频繁线程调度的开销，单线程也能产生并发效果，由于在一个线程中能仅能有一个协程执行，减少的资源冲突。它功能虽然很像线程，但是必须由编译或用户编程代码切换线程。维基百科的解释是：协同程序是一种计算机程序组件，它通过允许暂停和恢复执行，将子程序泛化以实现无优先级的多任务处理。协同程序非常适合实现类似的程序组件，如协作任务、异常、事件循环、迭代器、无限列表和管道。 
 
 > go-routine 或 fiber 是协程，它们有一个单线程或多线程的调度器调度，当协程被挂起后自动执行其他协程。
 
@@ -24,7 +24,7 @@ title: 协程与Unity
 
 ### 2.1 C# 生成器模式与 yield 关键字
 
-C# 使用生成器（Generator）模式协同机制，使用 yield 关键字生成一个 IEnumerator 接口对象的序列。yield 语句的原理是把下一条语句的地址放入协程函数上下文，并把函数返回值发送到 IEnumerator 对象。调度者读取 IEnumerator 对象返回的值，并通过 IEnumerator 的 MoveNext() 方法执行生成器函数的后续语句，直到生成器函数执行完毕。
+C# 使用生成器（Generator）模式协同机制，一个函数使用 yield 关键字产生一个对象的序列，通过 IEnumerator 接口对象遍历这个序列。以下是 Unity 中的一个脚本，它管理了 Generator 函数的两个实例，并调度它们运行。代码如下：
 
 ```cs
 using System.Collections;
@@ -63,15 +63,44 @@ public class CoroutineDemo : MonoBehaviour {
 
 请运行以上代码。
 
-显然，执行 yield 关键字返回的函数，直接返回了一个可迭代的对象或迭代器，并在函数上下文中记录了函数起始执行地址。当调度者（这里是 update 函数）使用迭代器的 MoveNext 方法执行当前协程（Generator函数），直到 yield 语句出现，并把放回值放置到 Current 中。表面上，两个 Generator 函数是并发的，但执行顺序是代码控制的（多线程调度器执行顺序不一定有序）。
+**语法**
+
+* C# 的协程就是一个函数。函数必须返回实现迭代器接口（[IEnumerator](https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerator?view=netframework-4.8)）的匿名对象（协程上下文）
+* 协程函数必须使用 [yield](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield) 关键字返回一个值（yield return value）或 终止协程（yield break）
+
+**创建协程**
+
+* 编译器确定一个函数是协程，编译后协程函数执行过程是：
+    - 在堆上创建协程上下文对象和函数实例（栈），并不执行代码
+	- 返回协程上下文（包含协程ID，将执行函数代码指针，当前返回值，函数实例的栈指针等）对象引用给调用者。
+* 案例中，start 函数中创建了两个 Generator 协程，并返回了它们的上下文对象
+    - 这时函数并没有执行
+	- 每个协程实例在堆中有独立的函数栈，并压入了参数
+	- 代码指针指向首行代码
+	- 当前返回值为默认值或 null
+* 由于 Generator 函数没有执行，所以先打印 `exec start work or not ?` 
+
+**调度、执行协程**
+
+* 案例中，update 函数在调度并执行协程
+* 上下文对象实现了 IEnumerator 接口
+    - 当调用 MoveNext() 方法后，该协程执行直到遇到 yield 或 协程结束（yield break）
+	- yield 语句的任务是将 return value 写入上下文对象当前值，代码指针指向下一行
+	- 程序返回调度程序
+* 调度程序根据上下文对象返回值决定下一次调度
+
+表面上，两个 Generator 函数是并发的，但执行顺序是代码控制的（多线程调度器执行顺序不一定有序）。
 
 * 这个[博客](https://blog.csdn.net/bdss58/article/details/74779606) 给出了 python、nodejs、golang 生成器的实现
 
 ### 2.2 Unity 协程实现与游戏循环
 
-现在阅读 MonoBehaviour 的 [StartCoroutine 方法](https://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html)就很清晰了。它的参数就是 IEnumerator 接口对象，通常是 Generator 函数的返回值。这样做的目的就是在游戏调度器（游戏循环）中维持一个 Generator 函数（协程）列表，游戏循环根据 yield return 的返回值（[YieldInstruction](https://docs.unity3d.com/ScriptReference/YieldInstruction.html)）决定什么时刻决定继续执行该函数。
+现在阅读 MonoBehaviour 的 [StartCoroutine 方法](https://docs.unity3d.com/ScriptReference/MonoBehaviour.StartCoroutine.html)就很清晰了。
 
-Unity 引擎预定义一些返回值，我们可以从 [Execution Order of Event Functions](https://docs.unity3d.com/Manual/ExecutionOrder.html) 中找到它们：
+* StartCoroutine 将协程的上下文添加到该行为协程管理器中
+* 游戏循环会驱动该行为中协程的执行
+
+Unity 引擎预定义一些协程返回值，我们可以从 [Execution Order of Event Functions](https://docs.unity3d.com/Manual/ExecutionOrder.html) 中找到它们：
 
 * yield null The coroutine will continue after all Update functions have been called on the next frame.
 * yield WaitForSeconds Continue after a specified time delay, after all Update functions have been called for the frame
@@ -79,7 +108,7 @@ Unity 引擎预定义一些返回值，我们可以从 [Execution Order of Event
 * yield WWW Continue after a WWW download has completed.
 * yield StartCoroutine Chains the coroutine, and will wait for the MyFunc coroutine to complete first.
 
-在游戏循环 Physics 阶段最后处理
+在游戏循环 Physics 阶段的最后处理
 
 * yield WaitForFixedUpdate
 
@@ -88,14 +117,12 @@ Unity 引擎预定义一些返回值，我们可以从 [Execution Order of Event
 * yield null
 * yield WaitForSeconds
 * yield WWW Continue
-* yield WWW Continue
 
 在游戏循环 End of frame 阶段
 
 * yield WaitForEndOfFrame
 
 当然你可以自己定义协程执行条件，仅需要继承 [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html)
-
 
 ## 3、Unity 协程的应用
 
@@ -105,4 +132,8 @@ Unity 引擎预定义一些返回值，我们可以从 [Execution Order of Event
 
 事实是 Coroutines 有生命周期的（从创建到函数执行结束），而且是每个协程都是独立的函数实例。如果游戏对象的基本动作都用协程管理？。。。
 
-不错！Dotweem 这个产品就是这样思考的！
+不错！[Dotweem](http://dotween.demigiant.com/) 这个产品就是这样思考的！
+
+协程、方法扩展、Lambda 表达式 等编程技巧，让 Unity 编程产生了梦幻般的效果。
+
+
