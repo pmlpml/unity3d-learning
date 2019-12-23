@@ -12,6 +12,8 @@ title: 作业优秀博客汇总
 
 ## 1、最有价值个人博客（Valuable Person Blogs）
 
+* 2019 最佳技术博客 [StarashZ](https://blog.csdn.net/qq_20549085/category_9335597.html)
+* 2019 优秀博客 [yuxy36](https://blog.csdn.net/yuxy36/category_7210336.html)、[Swordsman](https://sentimentalswordsman.github.io/)、[x2713](https://whichxjy.com/)、[Mr.Tseng](https://blog.jiahonzheng.cn/)的 Unity 标签、[Jenny_Shirunhao](https://blog.csdn.net/jenny_shirunhao/category_9313897.html)、[Tifinity](https://blog.csdn.net/tifinity/category_9339368.html)、[danielxu](https://danielxuuuuu.github.io/)
 * 2018 最佳技术博客 [c486c](https://blog.csdn.net/c486c/article/category/7540020)
 * 2018 优秀博客 [zhongwq](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-%E5%8F%AF%E5%B1%95%E5%BC%80%E5%85%AC%E5%91%8A%E7%89%88/)、[yaoxh6](https://blog.csdn.net/yaoxh6/article/category/6451113)、[bkjs626](https://blog.csdn.net/bkjs626/article/category/7536863)、[lossatsea](https://blog.csdn.net/lossatsea)、[wonderful_sky](https://blog.csdn.net/wonderful_sky/article/category/7580033)
 * 2017 最佳技术博客 [zzj051319](https://blog.csdn.net/zzj051319/article/category/6787969)
@@ -85,6 +87,11 @@ AI?
 * [分离动作管理器的3D版牧师与魔鬼](http://blog.csdn.net/zzj051319/article/details/63268398)  
 UML图很好，程序略有过度设计。
 
+### 6.3 游戏对象与渲染
+
+* [2019 3D Game 4 - 游戏对象与图形基础](https://sentimentalswordsman.github.io/2019/10/02/3dG4-游戏对象与图形基础/)  
+要抄作业的就抄吧，这里都有。作为老师还是喜欢对某一问题的深入研究
+
 ## 7、飞碟（UFO）
 
 ### 7.1 基础版（仅使用射线，动作管理）
@@ -97,6 +104,9 @@ UML图很好，程序略有过度设计。
 
 ### 7.2 运动与物理兼容版
 
+* 【推】[2019 Unity实现简易打飞碟改进版(Hit UFO)](https://blog.csdn.net/qq_20549085/article/details/102540163)  
+良好的设计，良好的结果
+
 * 游戏持续改进：[打飞碟游戏](http://blog.csdn.net/x2_yt/article/details/66969242)；[打飞碟游戏改进版](http://blog.csdn.net/x2_yt/article/details/69049672)；  
 这个系列博客，是不断学习，不断进步的最佳体现！
 
@@ -104,7 +114,10 @@ UML图很好，程序略有过度设计。
 
 ## 8、射箭/第一人称（Arrow）
 
-* [2018 打靶游戏](https://blog.csdn.net/c486c/article/details/80058316)   
+* [2019 射箭游戏](https://blog.csdn.net/Jenny_Shirunhao/article/details/102540538)  
+详细的靶，箭的制作介绍，特别是颤抖效果的制作。
+
+* 【推】[2018 打靶游戏](https://blog.csdn.net/c486c/article/details/80058316)   
 游戏设计融汇贯穿了前面所有面向对象设计的技巧，结构清晰，可作为学习参考！！！ 
 
 * [射箭游戏](http://blog.csdn.net/zzj051319/article/details/68953009)  
@@ -114,7 +127,16 @@ UML图很好，程序略有过度设计。
 设计好，博客表达好。
 
 ## 9、巡逻兵（Patrolman） 
- 
+
+* 【推】[人物模型与动画](https://blog.csdn.net/Tifinity/article/details/102762493)  
+给出了 YBoy 资源，课程总算有第二个人物模型资源了。介绍了模型与动画的使用！
+
+* 【推】[2019 Unity巡逻兵游戏-与怪兽战斗!](https://blog.csdn.net/qq_20549085/article/details/102798334)  
+该同学特别注意程序的结构（见作者类图），无师自通的注意到攻击延时（见教程AI），选择的模型也很美。
+
+* [2019 巡逻兵](https://blog.csdn.net/yuxy36/article/details/102691463)  
+几乎就是为标准答案而生，但读者可能期望有多一些的创意。 
+
 * 【推】[2018 简单巡逻兵](https://blog.csdn.net/c486c/article/details/80153548)  
 使用了Unity官方教程巡逻兵资源，编出了官方教程无法企及的编程水平！ 
 
@@ -137,6 +159,13 @@ UML图很好，程序略有过度设计。
 
 ### 10.1 粒子效果制作
 
+* 【推】[2019 Unity3D -- ParticleSystem 烛光制作](https://blog.csdn.net/abc15837998448/article/details/102780661)  
+完整，有趣！值得你学习！
+
+* 【推】[2019 学习笔记 - 粒子系统初探](https://blog.csdn.net/yuxy36/article/details/102727015)  
+整理了粒子系统的常用属性及操作，有利于你快速学习！
+
+
 * [2018 简单粒子制作](https://blog.csdn.net/C486C/article/details/80488236)  
 仿佛看到了 Balala 魔杖的效果。在平凡素材上做出一样的效果，才是我们的追求。 AnimationCurve 好强大的工具！
 
@@ -153,6 +182,9 @@ UML图很好，程序略有过度设计。
 ## 11、UI系统
 
 ### 11.1 血条制作
+
+* [2019 血条预制制作](https://blog.csdn.net/yuxy36/article/details/103186295)  
+作业标准答案一样
 
 * [2018 分别使用IMGUI和UGUI实现血条的预制设计](https://blog.csdn.net/Runner1st/article/details/80582780)   
 表达清晰，易于学习
@@ -186,6 +218,8 @@ UI 精灵制作，协程动画都玩的很溜
 效果不错
 
 ### 11.5 DOTween 仿写
+* 【推】[2019 DOTween 动画引擎仿写](https://whichxjy.com/my-dotween/)  
+对DOTween官网源代码做了仔细分析与研究，采用了游戏动作管理器、方法扩展、Lambda 函数实现。尽管没有使用协程，因为实现方法是多样的。
 
 * 【推】[2017 DOTween](https://blog.csdn.net/m0_37628648/article/details/71214214)  
 代码简洁，描述清晰。使用了单实例模式、动作管理器原理（组合模式），协程与消息订阅模式等技术
@@ -207,6 +241,9 @@ UI 精灵制作，协程动画都玩的很溜
 老师不会玩这么复杂的设置，自学、相互学习就对了。
 
 ### 12.2 坦克对战
+
+* [2019 3D游戏制作——AI坦克对战](https://blog.csdn.net/Jenny_Shirunhao/article/details/103337423)  
+Kawaii Tank 是为数不多的精密坦克模型，虽然仅使用 AI 寻路，而它的炮塔是可操控的，是做感知、思考、动作 AI较好的模型。
 
 * [2017 unity3d 没有navMesh的AI坦克大战的实现](https://blog.csdn.net/kunailin/article/details/72528913)  
 如此逼真的坦克模型，从AI设计到模型控制，一定很爽。
@@ -236,6 +273,17 @@ _虚席以待_
 _虚席以待_
 
 ## 14、AR 技术与创新
+* [2019 AR技术](https://blog.csdn.net/Jenny_Shirunhao/article/details/103572614)  
+unity 2018 版后龙之召唤新操作 
+
+* [2019 3D Game 11 - AR/MR 技术](https://sentimentalswordsman.github.io/2019/12/19/3dG11-AR-MR%E6%8A%80%E6%9C%AF/)  
+Unity 2018 版以后 vuforia 工具的使用！
+
+* [2019 AR游戏制作 - Sikuto's Farm](https://blog.csdn.net/yuxy36/article/details/103646061)  
+之所以推荐，是因为 OnGUI 的使用。代码简单而高效
+
+* 【推】[2019 AR 版超级玛丽](https://whichxjy.com/super-mario-in-ar/)  
+简单，酷。交互有点意思！
 
 * [2018 简单AR游戏](https://blog.csdn.net/c486c/article/details/80738535)  
 入门好教程哦
