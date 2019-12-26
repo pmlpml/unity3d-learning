@@ -13,7 +13,7 @@ title: 作业优秀博客汇总
 ## 1、最有价值个人博客（Valuable Person Blogs）
 
 * 2019 最佳技术博客 [StarashZ](https://blog.csdn.net/qq_20549085/category_9335597.html)
-* 2019 优秀博客 [yuxy36](https://blog.csdn.net/yuxy36/category_7210336.html)、[Swordsman](https://sentimentalswordsman.github.io/)、[x2713](https://whichxjy.com/)、[Mr.Tseng](https://blog.jiahonzheng.cn/)的 Unity 标签、[Jenny_Shirunhao](https://blog.csdn.net/jenny_shirunhao/category_9313897.html)、[Tifinity](https://blog.csdn.net/tifinity/category_9339368.html)、[danielxu](https://danielxuuuuu.github.io/)
+* 2019 优秀博客 [yuxy36](https://blog.csdn.net/yuxy36/category_7210336.html)、[Jenny_Shirunhao](https://blog.csdn.net/jenny_shirunhao/category_9313897.html)、[Tifinity](https://blog.csdn.net/tifinity/category_9339368.html)、[Swordsman](https://sentimentalswordsman.github.io/)、[x2713](https://whichxjy.com/)、[Mr.Tseng](https://blog.jiahonzheng.cn/)的 Unity 标签、[danielxu](https://danielxuuuuu.github.io/)
 * 2018 最佳技术博客 [c486c](https://blog.csdn.net/c486c/article/category/7540020)
 * 2018 优秀博客 [zhongwq](https://zhongwq.github.io/unity3D-learning/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B012-%E5%8F%AF%E5%B1%95%E5%BC%80%E5%85%AC%E5%91%8A%E7%89%88/)、[yaoxh6](https://blog.csdn.net/yaoxh6/article/category/6451113)、[bkjs626](https://blog.csdn.net/bkjs626/article/category/7536863)、[lossatsea](https://blog.csdn.net/lossatsea)、[wonderful_sky](https://blog.csdn.net/wonderful_sky/article/category/7580033)
 * 2017 最佳技术博客 [zzj051319](https://blog.csdn.net/zzj051319/article/category/6787969)

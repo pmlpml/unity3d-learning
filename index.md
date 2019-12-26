@@ -42,7 +42,7 @@ layout: default
 ### [X3-06、协程、线程](x3-06-coroutine.md)
 ### [X3-07、方法扩展、Lambda 表达式](x3-07-method-extend-lambda.md)
 ### [X3-08、托管资源、垃圾回收](x3-08-managed-resouce-gc.md)
-## [附件4、作业优秀博客汇总](x4-ex.md)
+## [附件4、作业优秀博客汇总](https://blog.csdn.net/pmlpml/article/details/72236930)
 
 
 &nbsp; &nbsp;
